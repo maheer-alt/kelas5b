@@ -1,4 +1,3 @@
-```js
 import { supabase } from "./supabase.js";
 
 
@@ -713,4 +712,3 @@ avatarInput.addEventListener(
 loadSidebar();
 
 loadProfile();
-```
