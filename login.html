@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login — Kelas 5B</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <!-- Login CSS -->
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+
+    <!-- BACKGROUND -->
+    <div class="background"></div>
+    <div class="background-overlay"></div>
+
+    <!-- DECORATION -->
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+    <div class="orb orb-three"></div>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+
+    <!-- LOGIN PAGE -->
+    <main class="login-page">
+
+        <section class="login-card">
+
+            <!-- LOGO -->
+            <div class="logo-container">
+
+                <div class="logo-glow"></div>
+
+                <img
+                    src="assets/logo.jpeg"
+                    alt="Logo Kelas 5B"
+                    class="class-logo"
+                >
+
+            </div>
+
+
+            <!-- TITLE -->
+            <div class="title-area">
+
+                <p class="eyebrow">
+                    WELCOME BACK
+                </p>
+
+                <h1>
+                    Kembali ke
+                    <span>Kelas 5B.</span>
+                </h1>
+
+                <p class="subtitle">
+                    Masuk untuk melanjutkan
+                    perjalananmu.
+                </p>
+
+            </div>
+
+
+            <!-- LOGIN FORM -->
+            <form id="loginForm">
+
+                <!-- EMAIL -->
+                <div class="input-group">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-envelope input-icon"></i>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="nama@email.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+                <div class="input-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-lock input-icon"></i>
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="••••••••"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="passwordToggle"
+                            aria-label="Tampilkan password"
+                        >
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOGIN BUTTON -->
+                <div class="highlight-button">
+
+                    <button
+                        type="submit"
+                        class="login-button"
+                        id="loginButton"
+                    >
+
+                        <span>
+                            Masuk
+                        </span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <!-- LOGIN MESSAGE -->
+            <div
+                id="loginMessage"
+                class="message"
+            ></div>
+
+
+            <!-- DIVIDER -->
+            <div class="divider">
+
+                <span>
+                    atau masuk dengan
+                </span>
+
+            </div>
+
+
+            <!-- GOOGLE LOGIN -->
+            <div class="highlight-button google-highlight">
+
+                <div
+                    id="googleButtonContainer"
+                    class="google-button-container"
+                ></div>
+
+            </div>
+
+
+            <!-- GUEST LOGIN -->
+            <div class="highlight-button guest-highlight">
+
+                <button
+                    type="button"
+                    class="guest-button"
+                    id="guestButton"
+                >
+
+                    <i class="fa-solid fa-user-secret"></i>
+
+                    <span>
+                        Masuk sebagai Guest
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <!-- REGISTER -->
+            <p class="register-text">
+
+                Belum punya akun?
+
+                <a href="register.html">
+                    Daftar sekarang
+                </a>
+
+            </p>
+
+
+            <!-- SECURITY -->
+            <div class="security-note">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <span>
+                    Protected by Supabase Auth
+                </span>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- GOOGLE IDENTITY SERVICES -->
+    <script
+        src="https://accounts.google.com/gsi/client"
+        async
+        defer
+    ></script>
+
+
+    <!-- AUTH -->
+    <script
+        type="module"
+        src="js/auth.js"
+    ></script>
+
+</body>
+
+</html>

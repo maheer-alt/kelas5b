@@ -1,0 +1,796 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --black: #080808;
+    --white: #f4f3ed;
+    --yellow: #d8ff00;
+
+    --muted: #8b8b84;
+    --line: rgba(244, 243, 237, 0.16);
+}
+
+
+/* =========================================
+   BODY
+========================================= */
+
+body {
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            rgba(8, 8, 8, 0.88),
+            rgba(8, 8, 8, 0.95)
+        ),
+        url("/background.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    color: var(--white);
+
+    font-family:
+        "Google Sans",
+        system-ui,
+        sans-serif;
+}
+
+
+/* =========================================
+   GRID BACKGROUND
+========================================= */
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background-image:
+        linear-gradient(
+            rgba(244, 243, 237, 0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(244, 243, 237, 0.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 32px 32px;
+
+    z-index: -1;
+}
+
+
+/* =========================================
+   DASHBOARD
+========================================= */
+
+.dashboard {
+    margin-left: 260px;
+
+    width: calc(100% - 260px);
+
+    min-height: 100vh;
+
+    padding: 35px;
+
+    max-width: 1400px;
+}
+
+
+/* =========================================
+   TOPBAR
+========================================= */
+
+.topbar {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 35px;
+}
+
+.mini-label {
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    color: var(--yellow);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+}
+
+.topbar h1 {
+    color: var(--white);
+
+    font-size: 30px;
+
+    font-weight: 900;
+
+    line-height: 1;
+
+    margin-top: 7px;
+
+    letter-spacing: -1px;
+}
+
+
+/* =========================================
+   MINI PROFILE
+========================================= */
+
+.profile-mini {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: var(--white);
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.profile-mini div {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 0;
+
+    background:
+        var(--yellow);
+
+    color: var(--black);
+
+    border:
+        2px solid var(--white);
+
+    box-shadow:
+        4px 4px 0 var(--white);
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-weight: 900;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
+    min-height: 310px;
+
+    padding: 45px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 30px;
+
+    background:
+        rgba(8, 8, 8, 0.82);
+
+    border:
+        1px solid var(--line);
+
+    border-left:
+        5px solid var(--yellow);
+
+    border-radius: 0;
+
+    box-shadow:
+        9px 9px 0 var(--yellow);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.hero:hover {
+    transform:
+        translate(-3px, -3px);
+
+    box-shadow:
+        13px 13px 0 var(--yellow);
+}
+
+
+/* =========================================
+   HERO DECORATION
+   menggantikan orb
+========================================= */
+
+.hero::after {
+    content: "01";
+
+    position: absolute;
+
+    right: 35px;
+    bottom: 20px;
+
+    color:
+        rgba(244, 243, 237, 0.08);
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 90px;
+
+    font-weight: 900;
+
+    line-height: 1;
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   HERO CONTENT
+========================================= */
+
+.hero > div:first-child {
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 720px;
+}
+
+.hero-label {
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    color: var(--yellow);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 18px;
+
+    text-transform: uppercase;
+}
+
+.hero h2 {
+    color: var(--white);
+
+    font-size:
+        clamp(35px, 5vw, 65px);
+
+    line-height: 0.98;
+
+    letter-spacing: -3px;
+
+    font-weight: 900;
+}
+
+.hero h2 span {
+    color: var(--yellow);
+}
+
+.hero p {
+    color: var(--muted);
+
+    margin-top: 20px;
+
+    max-width: 600px;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   HERO ORB
+   hidden supaya HTML lama tetap aman
+========================================= */
+
+.hero-orb {
+    width: 150px;
+    height: 150px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+
+    border: 4px solid #d8ff00;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    box-shadow: none;
+
+    animation:
+        brutalFloat 4s ease-in-out infinite;
+}
+
+.hero-orb img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+}
+
+@keyframes brutalFloat {
+
+    0% {
+        transform:
+            translateY(0)
+            rotate(0deg);
+    }
+
+    50% {
+        transform:
+            translateY(-8px)
+            rotate(-2deg);
+    }
+
+    100% {
+        transform:
+            translateY(0)
+            rotate(0deg);
+    }
+
+}
+
+
+/* =========================================
+   STATS
+========================================= */
+
+.stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-top: 25px;
+}
+
+
+/* =========================================
+   STAT CARD
+========================================= */
+
+.stat-card {
+    min-height: 150px;
+
+    padding: 25px;
+
+    background:
+        rgba(244, 243, 237, 0.035);
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 0;
+
+    position: relative;
+
+    transition:
+        transform 0.18s ease,
+        background 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.stat-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: -1px;
+    left: -1px;
+
+    width: 8px;
+    height: 8px;
+
+    background:
+        var(--yellow);
+}
+
+.stat-card:hover {
+    transform:
+        translate(-3px, -3px);
+
+    background:
+        rgba(216, 255, 0, 0.045);
+
+    border-color:
+        rgba(216, 255, 0, 0.5);
+
+    box-shadow:
+        5px 5px 0 var(--yellow);
+}
+
+
+/* =========================================
+   STAT LABEL
+========================================= */
+
+.stat-card span {
+    color: var(--yellow);
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================
+   STAT VALUE
+========================================= */
+
+.stat-card strong {
+    display: block;
+
+    color: var(--white);
+
+    font-size: 20px;
+
+    font-weight: 900;
+
+    margin-top: 25px;
+
+    line-height: 1;
+}
+
+
+/* =========================================
+   STAT DESCRIPTION
+========================================= */
+
+.stat-card p {
+    color: var(--muted);
+
+    font-size: 12px;
+
+    margin-top: 8px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   SELECTION
+========================================= */
+
+::selection {
+    background:
+        var(--yellow);
+
+    color:
+        var(--black);
+}
+
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background:
+        var(--black);
+}
+
+::-webkit-scrollbar-thumb {
+    background:
+        var(--yellow);
+
+    border:
+        2px solid var(--black);
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 850px) {
+
+    .dashboard {
+        margin-left: 0;
+
+        width: 100%;
+
+        padding: 25px;
+
+        padding-bottom: 100px;
+    }
+
+    .hero {
+        padding: 30px;
+
+        min-height: 280px;
+
+        box-shadow:
+            6px 6px 0 var(--yellow);
+    }
+
+    .hero:hover {
+        box-shadow:
+            8px 8px 0 var(--yellow);
+    }
+
+    .hero-orb {
+        width: 110px;
+        height: 110px;
+
+        font-size: 25px;
+
+        box-shadow:
+            5px 5px 0 var(--white);
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* =========================================
+   602px
+========================================= */
+
+@media (max-width: 602px) {
+
+    .dashboard {
+        padding: 25px;
+
+        padding-bottom: 100px;
+    }
+
+    .topbar {
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .topbar h1 {
+        font-size: 28px;
+    }
+
+    .profile-mini {
+        font-size: 0;
+    }
+
+    .profile-mini div {
+        width: 36px;
+        height: 36px;
+    }
+
+    .hero {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        min-height: 300px;
+
+        padding: 27px;
+    }
+
+    .hero h2 {
+        font-size: 42px;
+
+        letter-spacing: -2px;
+    }
+
+    .hero-orb {
+        width: 85px;
+        height: 85px;
+
+        font-size: 21px;
+
+        box-shadow:
+            4px 4px 0 var(--white);
+    }
+
+    .hero::after {
+        font-size: 65px;
+
+        right: 20px;
+        bottom: 15px;
+    }
+
+    .stat-card {
+        min-height: 130px;
+
+        padding: 22px;
+    }
+
+}
+
+
+/* =========================================
+   340px
+========================================= */
+
+@media (max-width: 340px) {
+
+    .dashboard {
+        padding: 20px;
+
+        padding-bottom: 90px;
+    }
+
+    .topbar h1 {
+        font-size: 25px;
+    }
+
+    .mini-label {
+        font-size: 8px;
+
+        letter-spacing: 2px;
+    }
+
+    .hero {
+        padding: 21px;
+
+        min-height: 275px;
+
+        border-left-width: 4px;
+
+        box-shadow:
+            5px 5px 0 var(--yellow);
+    }
+
+    .hero h2 {
+        font-size: 34px;
+
+        letter-spacing: -1.5px;
+    }
+
+    .hero p {
+        font-size: 12px;
+    }
+
+    .hero-orb {
+        width: 70px;
+        height: 70px;
+
+        font-size: 18px;
+    }
+
+    .stat-card {
+        padding: 18px;
+    }
+
+}
+
+
+/* =========================================
+   330px
+========================================= */
+
+@media (max-width: 330px) {
+
+    .dashboard {
+        padding: 16px;
+
+        padding-bottom: 85px;
+    }
+
+    .topbar {
+        margin-bottom: 25px;
+    }
+
+    .topbar h1 {
+        font-size: 23px;
+    }
+
+    .profile-mini div {
+        width: 32px;
+        height: 32px;
+
+        box-shadow:
+            3px 3px 0 var(--white);
+    }
+
+    .hero {
+        padding: 18px;
+
+        min-height: 250px;
+
+        box-shadow:
+            4px 4px 0 var(--yellow);
+    }
+
+    .hero h2 {
+        font-size: 30px;
+    }
+
+    .hero-label {
+        font-size: 8px;
+
+        letter-spacing: 2px;
+    }
+
+    .hero p {
+        font-size: 11px;
+    }
+
+    .hero-orb {
+        width: 60px;
+        height: 60px;
+
+        font-size: 16px;
+
+        box-shadow:
+            3px 3px 0 var(--white);
+    }
+
+    .stat-card {
+        padding: 16px;
+    }
+
+    .stat-card strong {
+        font-size: 18px;
+    }
+
+}

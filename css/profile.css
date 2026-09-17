@@ -1,0 +1,615 @@
+/* =========================================
+   PROFILE — NEW BRUTALISM DESIGN SYSTEM
+   mengikuti login.css
+========================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --black: #080808;
+    --white: #f4f3ed;
+    --yellow: #d8ff00;
+
+    --muted: #8b8b84;
+    --line: rgba(244, 243, 237, 0.16);
+
+    --element-width: 320px;
+}
+
+
+/* =========================================
+   BODY
+========================================= */
+
+body {
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            rgba(8, 8, 8, 0.88),
+            rgba(8, 8, 8, 0.94)
+        ),
+        url("/background.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    color: var(--white);
+
+    font-family:
+        "Google Sans",
+        system-ui,
+        sans-serif;
+}
+
+
+/* =========================================
+   GRID BACKGROUND
+========================================= */
+
+body::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    background-image:
+        linear-gradient(
+            rgba(244, 243, 237, 0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(244, 243, 237, 0.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 32px 32px;
+
+    z-index: -1;
+}
+
+
+/* =========================================
+   PROFILE PAGE
+========================================= */
+
+.profile-page {
+    margin-left: 260px;
+
+    width: calc(100% - 260px);
+
+    min-height: 100vh;
+
+    padding: 40px;
+
+    max-width: 1260px;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+header p {
+    color: var(--yellow);
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+}
+
+header h1 {
+    margin-top: 8px;
+
+    color: var(--white);
+
+    font-size: 35px;
+
+    line-height: 1;
+
+    font-weight: 900;
+
+    letter-spacing: -1px;
+}
+
+
+/* =========================================
+   PROFILE CARD
+========================================= */
+
+.profile-card {
+    margin-top: 35px;
+
+    width: 100%;
+
+    min-height: 190px;
+
+    padding: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+
+    background:
+        rgba(8, 8, 8, 0.78);
+
+    border:
+        1px solid var(--line);
+
+    border-left:
+        5px solid var(--yellow);
+
+    border-radius: 0;
+
+    position: relative;
+
+    box-shadow:
+        8px 8px 0 rgba(216, 255, 0, 0.9);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.profile-card:hover {
+    transform: translate(-3px, -3px);
+
+    box-shadow:
+        12px 12px 0 var(--yellow);
+}
+
+
+/* =========================================
+   SMALL CARD LABEL
+========================================= */
+
+.profile-card::before {
+    content: "PROFILE";
+
+    position: absolute;
+
+    top: -11px;
+    right: 18px;
+
+    padding: 4px 8px;
+
+    background: var(--yellow);
+
+    color: var(--black);
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================
+   AVATAR
+========================================= */
+
+.avatar {
+    width: 110px;
+    height: 110px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        var(--yellow);
+
+    color: var(--black);
+
+    border:
+        3px solid var(--white);
+
+    border-radius: 0;
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 40px;
+
+    font-weight: 900;
+
+    box-shadow:
+        6px 6px 0 var(--white);
+
+    transition:
+        transform 0.2s ease;
+}
+
+.avatar:hover {
+    transform:
+        translate(-3px, -3px)
+        rotate(-2deg);
+}
+
+
+/* =========================================
+   PROFILE INFO
+========================================= */
+
+.profile-info {
+    min-width: 0;
+}
+
+.profile-info h2 {
+    color: var(--white);
+
+    font-size: 28px;
+
+    font-weight: 900;
+
+    line-height: 1.1;
+
+    letter-spacing: -0.5px;
+
+    overflow-wrap: anywhere;
+}
+
+.profile-info span {
+    display: block;
+
+    margin-top: 7px;
+
+    color: var(--yellow);
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+.profile-info p {
+    margin-top: 18px;
+
+    max-width: 600px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   DETAILS GRID
+========================================= */
+
+.profile-details {
+    margin-top: 25px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+
+/* =========================================
+   DETAIL BOX
+========================================= */
+
+.profile-details > div {
+    min-height: 100px;
+
+    padding: 22px;
+
+    background:
+        rgba(244, 243, 237, 0.035);
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 0;
+
+    position: relative;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.profile-details > div::before {
+    content: "";
+
+    position: absolute;
+
+    left: -1px;
+    top: -1px;
+
+    width: 7px;
+    height: 7px;
+
+    background: var(--yellow);
+}
+
+.profile-details > div:hover {
+    transform: translate(-3px, -3px);
+
+    background:
+        rgba(216, 255, 0, 0.045);
+
+    border-color:
+        rgba(216, 255, 0, 0.5);
+}
+
+
+/* =========================================
+   DETAIL LABEL
+========================================= */
+
+.profile-details small {
+    display: block;
+
+    color: var(--yellow);
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================
+   DETAIL VALUE
+========================================= */
+
+.profile-details p {
+    margin-top: 10px;
+
+    color: var(--white);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================
+   SELECTION
+========================================= */
+
+::selection {
+    background: var(--yellow);
+
+    color: var(--black);
+}
+
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--black);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--yellow);
+
+    border:
+        2px solid var(--black);
+}
+
+
+/* =========================================
+   TABLET
+   602px+
+========================================= */
+
+@media (max-width: 850px) {
+
+    .profile-page {
+        margin-left: 0;
+
+        width: 100%;
+
+        padding: 30px;
+
+        padding-bottom: 110px;
+    }
+
+    .profile-card {
+        box-shadow:
+            6px 6px 0 var(--yellow);
+    }
+
+}
+
+
+/* =========================================
+   602px
+========================================= */
+
+@media (max-width: 602px) {
+
+    .profile-page {
+        padding: 25px;
+
+        padding-bottom: 100px;
+    }
+
+    header h1 {
+        font-size: 30px;
+    }
+
+    .profile-card {
+        padding: 25px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+
+        box-shadow:
+            5px 5px 0 var(--yellow);
+    }
+
+    .avatar {
+        width: 90px;
+        height: 90px;
+
+        font-size: 32px;
+
+        box-shadow:
+            5px 5px 0 var(--white);
+    }
+
+    .profile-details {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+    }
+
+}
+
+
+/* =========================================
+   340px
+========================================= */
+
+@media (max-width: 340px) {
+
+    .profile-page {
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 27px;
+    }
+
+    .profile-card {
+        padding: 20px;
+
+        margin-top: 28px;
+    }
+
+    .profile-info h2 {
+        font-size: 24px;
+    }
+
+    .profile-details > div {
+        padding: 18px;
+    }
+
+}
+
+
+/* =========================================
+   330px
+========================================= */
+
+@media (max-width: 330px) {
+
+    .profile-page {
+        padding: 16px;
+    }
+
+    header p {
+        font-size: 8px;
+
+        letter-spacing: 2px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    .profile-card {
+        padding: 17px;
+
+        border-left-width: 4px;
+
+        box-shadow:
+            4px 4px 0 var(--yellow);
+    }
+
+    .avatar {
+        width: 75px;
+        height: 75px;
+
+        font-size: 27px;
+
+        box-shadow:
+            4px 4px 0 var(--white);
+    }
+
+    .profile-info h2 {
+        font-size: 21px;
+    }
+
+    .profile-info span {
+        font-size: 10px;
+    }
+
+    .profile-info p {
+        font-size: 12px;
+    }
+
+    .profile-details > div {
+        padding: 16px;
+    }
+
+    .profile-details small {
+        font-size: 8px;
+    }
+
+    .profile-details p {
+        font-size: 12px;
+    }
+
+}

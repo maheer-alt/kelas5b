@@ -1,0 +1,1177 @@
+import { supabase } from "./supabase.js";
+
+
+// ======================================================
+// GOOGLE CLIENT ID
+// ======================================================
+
+const GOOGLE_CLIENT_ID =
+    "87730206128-6ceakvkipdtcsdpqn0u15p88g2fa52vs.apps.googleusercontent.com";
+
+
+// ======================================================
+// VERCEL BACKEND
+// ======================================================
+
+const GOOGLE_BACKEND_URL =
+    "/api/google-login.js";
+
+// ======================================================
+// ELEMENT
+// ======================================================
+
+const loginForm =
+    document.getElementById("loginForm");
+
+const registerForm =
+    document.getElementById("registerForm");
+
+const loginMessage =
+    document.getElementById("loginMessage");
+
+const loginButton =
+    document.getElementById("loginButton");
+
+const googleButton =
+    document.getElementById("googleButton");
+
+const guestButton =
+    document.getElementById("guestButton");
+
+const passwordToggle =
+    document.getElementById("passwordToggle");
+
+const passwordInput =
+    document.getElementById("password");
+
+
+// ======================================================
+// EMAIL LOGIN
+// ======================================================
+
+if (loginForm) {
+
+    loginForm.addEventListener(
+        "submit",
+        async (event) => {
+
+            event.preventDefault();
+
+            const email =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim();
+
+            const password =
+                passwordInput
+                    ? passwordInput.value
+                    : "";
+
+            if (!email || !password) {
+                return;
+            }
+
+            if (loginButton) {
+                loginButton.disabled = true;
+            }
+
+            if (loginMessage) {
+                loginMessage.textContent =
+                    "Memeriksa akun...";
+            }
+
+            try {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabase.auth
+                        .signInWithPassword({
+                            email,
+                            password
+                        });
+
+                if (error) {
+                    throw error;
+                }
+
+                if (!data.user) {
+                    throw new Error(
+                        "Akun tidak ditemukan."
+                    );
+                }
+
+                // Bersihkan session Google
+                localStorage.removeItem(
+                    "googleSession"
+                );
+
+                localStorage.removeItem(
+                    "googleToken"
+                );
+
+                sessionStorage.removeItem(
+                    "guestMode"
+                );
+
+                if (loginMessage) {
+                    loginMessage.textContent =
+                        "Login berhasil!";
+                }
+
+                setTimeout(() => {
+
+                    window.location.href =
+                        "dashboard.html";
+
+                }, 500);
+
+            } catch (error) {
+
+                console.error(
+                    "Email Login:",
+                    error
+                );
+
+                if (loginMessage) {
+                    loginMessage.textContent =
+                        "Login gagal: " +
+                        (
+                            error.message ||
+                            "Terjadi kesalahan."
+                        );
+                }
+
+                if (loginButton) {
+                    loginButton.disabled =
+                        false;
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+// ======================================================
+// GOOGLE IDENTITY SERVICES
+// ======================================================
+
+let googleInitialized = false;
+
+let googleReady = false;
+
+
+// ======================================================
+// INITIALIZE GOOGLE SEKALI SAJA
+// ======================================================
+
+function initializeGoogle() {
+
+    if (googleInitialized) {
+        return true;
+    }
+
+    if (
+        !window.google ||
+        !window.google.accounts ||
+        !window.google.accounts.id
+    ) {
+        return false;
+    }
+
+    try {
+
+        window.google.accounts.id.initialize({
+
+            client_id:
+                GOOGLE_CLIENT_ID,
+
+            callback:
+                handleGoogleCredential,
+
+            auto_select:
+                false,
+
+            cancel_on_tap_outside:
+                true,
+
+            use_fedcm_for_button:
+                true
+
+        });
+
+        googleInitialized =
+            true;
+
+        googleReady =
+            true;
+
+        console.log(
+            "Google Identity Services siap."
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Google Initialize Error:",
+            error
+        );
+
+        return false;
+    }
+}
+
+
+// ======================================================
+// GOOGLE CALLBACK
+// ======================================================
+
+async function handleGoogleCredential(
+    response
+) {
+
+    if (
+        !response ||
+        !response.credential
+    ) {
+
+        console.error(
+            "Google tidak memberikan credential."
+        );
+
+        if (loginMessage) {
+            loginMessage.textContent =
+                "Google tidak memberikan ID Token.";
+        }
+
+        return;
+    }
+
+    try {
+
+        if (loginMessage) {
+            loginMessage.textContent =
+                "Mengirim ke server...";
+        }
+
+
+        // ==================================================
+        // KIRIM ID TOKEN KE BACKEND
+        // ==================================================
+
+        const serverResponse =
+            await fetch(
+                GOOGLE_BACKEND_URL,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        // Backend kita menggunakan
+                        // nama id_token
+                        id_token:
+                            response.credential
+
+                    })
+                }
+            );
+
+
+        // ==================================================
+        // BACA RESPONSE
+        // ==================================================
+
+        let result = null;
+
+        try {
+
+            result =
+                await serverResponse.json();
+
+        } catch (error) {
+
+            throw new Error(
+                "Server memberikan response yang tidak valid."
+            );
+
+        }
+
+
+        // ==================================================
+        // CEK RESPONSE
+        // ==================================================
+
+        if (!serverResponse.ok) {
+
+            throw new Error(
+                result?.message ||
+                "Google Login gagal di server."
+            );
+
+        }
+
+
+        if (!result) {
+
+            throw new Error(
+                "Response server kosong."
+            );
+
+        }
+
+
+        if (!result.user) {
+
+            throw new Error(
+                "Data user Google tidak ditemukan."
+            );
+
+        }
+
+
+        // ==================================================
+        // SIMPAN USER GOOGLE
+        // ==================================================
+
+        localStorage.setItem(
+            "googleSession",
+            JSON.stringify(
+                result.user
+            )
+        );
+
+
+        // Simpan JWT dari backend
+        if (result.token) {
+
+            localStorage.setItem(
+                "googleToken",
+                result.token
+            );
+
+        }
+
+
+        // Guest tidak boleh aktif
+        sessionStorage.removeItem(
+            "guestMode"
+        );
+
+
+        // ==================================================
+        // BERHASIL
+        // ==================================================
+
+        console.log(
+            "Google Login berhasil:",
+            result.user
+        );
+
+
+        if (loginMessage) {
+            loginMessage.textContent =
+                "✓ Google Login berhasil!";
+        }
+
+
+        // ==================================================
+        // DASHBOARD
+        // ==================================================
+
+        setTimeout(() => {
+
+            window.location.href =
+                "dashboard.html";
+
+        }, 600);
+
+
+    } catch (error) {
+
+        console.error(
+            "Google Login:",
+            error
+        );
+
+        if (loginMessage) {
+
+            loginMessage.textContent =
+                "Google Login gagal: " +
+                (
+                    error.message ||
+                    "Terjadi kesalahan."
+                );
+
+        }
+
+        restoreGoogleButton();
+
+    }
+
+}
+
+
+// ======================================================
+// RENDER GOOGLE BUTTON
+// ======================================================
+
+function renderGoogleButton() {
+
+    if (!initializeGoogle()) {
+
+        setTimeout(
+            renderGoogleButton,
+            300
+        );
+
+        return;
+    }
+
+
+    // Cari tombol Google lama
+    const oldButton =
+        document.getElementById(
+            "googleButton"
+        );
+
+
+    // Cari container kalau sudah ada
+    let container =
+        document.getElementById(
+            "googleButtonContainer"
+        );
+
+
+    // Kalau container belum ada,
+    // buat otomatis.
+
+    if (!container) {
+
+        container =
+            document.createElement(
+                "div"
+            );
+
+        container.id =
+            "googleButtonContainer";
+
+        container.className =
+            "google-button-container";
+
+
+        // Kalau tombol lama ada,
+        // letakkan container di tempatnya.
+
+        if (oldButton) {
+
+            oldButton.parentNode.insertBefore(
+                container,
+                oldButton
+            );
+
+            oldButton.style.display =
+                "none";
+
+        } else {
+
+            const loginCard =
+                document.querySelector(
+                    ".login-card"
+                );
+
+            if (loginCard) {
+
+                loginCard.appendChild(
+                    container
+                );
+
+            } else {
+
+                document.body.appendChild(
+                    container
+                );
+
+            }
+
+        }
+
+    }
+
+
+    // Bersihkan container
+    container.innerHTML = "";
+
+
+    // Render tombol resmi Google
+
+    window.google.accounts.id.renderButton(
+
+        container,
+
+        {
+            type:
+                "standard",
+
+            theme:
+                "outline",
+
+            size:
+                "large",
+
+            text:
+                "signin_with",
+
+            shape:
+                "rectangular",
+
+            logo_alignment:
+                "left",
+
+            width:
+                320
+        }
+
+    );
+
+
+    console.log(
+        "Google Button berhasil dirender."
+    );
+
+}
+
+
+// ======================================================
+// RESTORE GOOGLE BUTTON
+// ======================================================
+
+function restoreGoogleButton() {
+
+    if (googleButton) {
+
+        googleButton.disabled =
+            false;
+
+    }
+
+}
+
+
+// ======================================================
+// START GOOGLE
+// ======================================================
+
+function startGoogle() {
+
+    if (googleReady) {
+        renderGoogleButton();
+        return;
+    }
+
+    renderGoogleButton();
+
+}
+
+
+// ======================================================
+// TUNGGU GOOGLE IDENTITY SERVICES
+// ======================================================
+
+function waitForGoogle() {
+
+    if (
+        window.google &&
+        window.google.accounts &&
+        window.google.accounts.id
+    ) {
+
+        startGoogle();
+
+        return;
+    }
+
+
+    setTimeout(
+        waitForGoogle,
+        300
+    );
+
+}
+
+
+// ======================================================
+// MULAI SAAT HALAMAN SIAP
+// ======================================================
+
+window.addEventListener(
+    "load",
+    () => {
+
+        waitForGoogle();
+
+    }
+);
+
+
+// ======================================================
+// ENSURE PROFILE
+// ======================================================
+
+async function ensureProfile(
+    user
+) {
+
+    if (!user) {
+        return;
+    }
+
+
+    try {
+
+        const {
+            data: existingProfile,
+            error: selectError
+        } =
+            await supabase
+                .from("profiles")
+                .select("id")
+                .eq(
+                    "id",
+                    user.id
+                )
+                .maybeSingle();
+
+
+        if (selectError) {
+
+            console.error(
+                "Profile check:",
+                selectError
+            );
+
+            return;
+
+        }
+
+
+        if (existingProfile) {
+            return;
+        }
+
+
+        const metadata =
+            user.user_metadata ||
+            {};
+
+
+        const fullName =
+            metadata.full_name ||
+            metadata.name ||
+            user.email
+                ?.split("@")[0] ||
+            "User";
+
+
+        const username =
+            metadata.username ||
+            createUsername(
+                fullName
+            );
+
+
+        const avatarUrl =
+            metadata.avatar_url ||
+            metadata.picture ||
+            "";
+
+
+        const {
+            error
+        } =
+            await supabase
+                .from("profiles")
+                .insert({
+
+                    id:
+                        user.id,
+
+                    username:
+                        username,
+
+                    full_name:
+                        fullName,
+
+                    bio:
+                        "",
+
+                    avatar_url:
+                        avatarUrl
+
+                });
+
+
+        if (error) {
+
+            console.error(
+                "Profile create:",
+                error
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Ensure profile error:",
+            error
+        );
+
+    }
+
+}
+
+
+// ======================================================
+// CREATE USERNAME
+// ======================================================
+
+function createUsername(
+    name
+) {
+
+    const cleanName =
+        String(name || "user")
+            .toLowerCase()
+            .replace(
+                /[^a-z0-9]/g,
+                ""
+            )
+            .slice(
+                0,
+                15
+            );
+
+
+    return (
+        cleanName +
+        Math.floor(
+            100 +
+            Math.random() * 900
+        )
+    );
+
+}
+
+
+// ======================================================
+// GUEST LOGIN
+// ======================================================
+
+if (guestButton) {
+
+    guestButton.addEventListener(
+        "click",
+        () => {
+
+            // Bersihkan Google
+            localStorage.removeItem(
+                "googleSession"
+            );
+
+            localStorage.removeItem(
+                "googleToken"
+            );
+
+
+            // Aktifkan Guest
+            sessionStorage.setItem(
+                "guestMode",
+                "true"
+            );
+
+
+            window.location.href =
+                "dashboard.html";
+
+        }
+    );
+
+}
+
+
+// ======================================================
+// REGISTER
+// ======================================================
+
+if (registerForm) {
+
+    registerForm.addEventListener(
+        "submit",
+        async (event) => {
+
+            event.preventDefault();
+
+
+            const fullName =
+                document
+                    .getElementById(
+                        "fullName"
+                    )
+                    .value
+                    .trim();
+
+
+            const username =
+                document
+                    .getElementById(
+                        "username"
+                    )
+                    .value
+                    .trim();
+
+
+            const email =
+                document
+                    .getElementById(
+                        "email"
+                    )
+                    .value
+                    .trim();
+
+
+            const password =
+                document
+                    .getElementById(
+                        "password"
+                    )
+                    .value;
+
+
+            const message =
+                document.getElementById(
+                    "registerMessage"
+                );
+
+
+            message.textContent =
+                "Membuat akun...";
+
+
+            try {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabase.auth
+                        .signUp({
+
+                            email:
+                                email,
+
+                            password:
+                                password
+
+                        });
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                if (!data.user) {
+
+                    throw new Error(
+                        "Akun belum berhasil dibuat."
+                    );
+
+                }
+
+
+                // ==================================================
+                // SESSION LANGSUNG
+                // ==================================================
+
+                if (data.session) {
+
+                    const {
+                        error:
+                            profileError
+                    } =
+                        await supabase
+                            .from(
+                                "profiles"
+                            )
+                            .insert({
+
+                                id:
+                                    data.user.id,
+
+                                username:
+                                    username,
+
+                                full_name:
+                                    fullName,
+
+                                bio:
+                                    "",
+
+                                avatar_url:
+                                    ""
+
+                            });
+
+
+                    if (
+                        profileError
+                    ) {
+
+                        console.error(
+                            "Profile register:",
+                            profileError
+                        );
+
+                    }
+
+
+                    localStorage.removeItem(
+                        "googleSession"
+                    );
+
+                    localStorage.removeItem(
+                        "googleToken"
+                    );
+
+
+                    sessionStorage.removeItem(
+                        "guestMode"
+                    );
+
+
+                    message.textContent =
+                        "Akun berhasil dibuat!";
+
+
+                    setTimeout(
+                        () => {
+
+                            window.location.href =
+                                "dashboard.html";
+
+                        },
+                        700
+                    );
+
+
+                    return;
+
+                }
+
+
+                // ==================================================
+                // EMAIL CONFIRMATION
+                // ==================================================
+
+                message.textContent =
+                    "Akun dibuat. Silakan cek email untuk verifikasi.";
+
+
+            } catch (error) {
+
+                console.error(
+                    "Register:",
+                    error
+                );
+
+
+                message.textContent =
+                    "Gagal: " +
+                    (
+                        error.message ||
+                        "Terjadi kesalahan."
+                    );
+
+            }
+
+        }
+    );
+
+}
+
+
+// ======================================================
+// PASSWORD SHOW / HIDE
+// ======================================================
+
+if (
+    passwordToggle &&
+    passwordInput
+) {
+
+    passwordToggle.addEventListener(
+        "click",
+        () => {
+
+            const isPassword =
+                passwordInput.type ===
+                "password";
+
+
+            passwordInput.type =
+                isPassword
+                    ? "text"
+                    : "password";
+
+
+            passwordToggle.innerHTML =
+                isPassword
+
+                    ? '<i class="fa-solid fa-eye-slash"></i>'
+
+                    : '<i class="fa-solid fa-eye"></i>';
+
+        }
+    );
+
+}
+
+
+// ======================================================
+// CUSTOM CURSOR
+// ======================================================
+
+const dot =
+    document.querySelector(
+        ".cursor-dot"
+    );
+
+
+const ring =
+    document.querySelector(
+        ".cursor-ring"
+    );
+
+
+if (
+    dot &&
+    ring &&
+    window.matchMedia(
+        "(pointer: fine)"
+    ).matches
+) {
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    let ringX = 0;
+    let ringY = 0;
+
+
+    document.addEventListener(
+        "mousemove",
+        (event) => {
+
+            mouseX =
+                event.clientX;
+
+            mouseY =
+                event.clientY;
+
+
+            dot.style.left =
+                mouseX + "px";
+
+            dot.style.top =
+                mouseY + "px";
+
+        }
+    );
+
+
+    function animateCursor() {
+
+        ringX +=
+            (
+                mouseX -
+                ringX
+            ) * 0.12;
+
+
+        ringY +=
+            (
+                mouseY -
+                ringY
+            ) * 0.12;
+
+
+        ring.style.left =
+            ringX + "px";
+
+
+        ring.style.top =
+            ringY + "px";
+
+
+        requestAnimationFrame(
+            animateCursor
+        );
+
+    }
+
+
+    animateCursor();
+
+
+    const interactive =
+        document.querySelectorAll(
+            "button, a, input"
+        );
+
+
+    interactive.forEach(
+        (element) => {
+
+            element.addEventListener(
+                "mouseenter",
+                () => {
+
+                    ring.style.width =
+                        "44px";
+
+                    ring.style.height =
+                        "44px";
+
+                }
+            );
+
+
+            element.addEventListener(
+                "mouseleave",
+                () => {
+
+                    ring.style.width =
+                        "30px";
+
+                    ring.style.height =
+                        "30px";
+
+                }
+            );
+
+        }
+    );
+
+}

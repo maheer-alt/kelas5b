@@ -1,0 +1,8 @@
+[build]
+  publish = "public"
+
+[[redirects]]
+  from = "/api/google-login.js"
+  to = "https://kelas-5-b.vercel.app/api/google-login.js"
+  status = 200
+  force = true
