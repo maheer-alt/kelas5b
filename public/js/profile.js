@@ -1,3 +1,4 @@
+```js
 import { supabase } from "./supabase.js";
 
 
@@ -96,7 +97,7 @@ function showAvatarMessage(
 
 
 /* =========================================
-   SHOW AVATAR LETTER
+   SHOW LETTER
 ========================================= */
 
 function showAvatarLetter(name) {
@@ -116,7 +117,7 @@ function showAvatarLetter(name) {
 
 
 /* =========================================
-   SHOW AVATAR IMAGE
+   SHOW IMAGE
 ========================================= */
 
 function showAvatarImage(url) {
@@ -143,9 +144,168 @@ function showAvatarImage(url) {
     image.loading =
         "lazy";
 
+    image.onerror = () => {
+
+        console.error(
+            "Avatar gagal dimuat:",
+            url
+        );
+
+        avatar.classList.remove(
+            "has-image"
+        );
+
+        avatar.innerHTML = "";
+
+        avatar.textContent =
+            currentUser
+                ? "?"
+                : "G";
+
+    };
+
     avatar.appendChild(
         image
     );
+
+}
+
+
+/* =========================================
+   GET AVATAR PUBLIC URL
+========================================= */
+
+function getAvatarUrl(userId) {
+
+    const filePath =
+        `${userId}/avatar.webp`;
+
+    const {
+        data
+    } =
+        supabase
+            .storage
+            .from("avatars")
+            .getPublicUrl(
+                filePath
+            );
+
+    if (!data || !data.publicUrl) {
+
+        return null;
+    }
+
+    /*
+       Timestamp membuat browser tidak
+       menggunakan URL gambar lama dari cache.
+    */
+
+    return (
+        data.publicUrl +
+        "?t=" +
+        Date.now()
+    );
+
+}
+
+
+/* =========================================
+   CHECK AVATAR EXISTS
+========================================= */
+
+async function loadAvatar(userId, name) {
+
+    const filePath =
+        `${userId}/avatar.webp`;
+
+    try {
+
+        /*
+           Cek file di folder user.
+        */
+
+        const {
+            data,
+            error
+        } =
+            await supabase
+                .storage
+                .from("avatars")
+                .list(
+                    userId,
+                    {
+                        limit: 10
+                    }
+                );
+
+
+        if (
+            error ||
+            !data
+        ) {
+
+            console.log(
+                "Avatar belum tersedia."
+            );
+
+            showAvatarLetter(
+                name
+            );
+
+            return;
+        }
+
+
+        const avatarFile =
+            data.find(
+                file =>
+                    file.name ===
+                    "avatar.webp"
+            );
+
+
+        if (!avatarFile) {
+
+            showAvatarLetter(
+                name
+            );
+
+            return;
+        }
+
+
+        const avatarUrl =
+            getAvatarUrl(
+                userId
+            );
+
+
+        if (avatarUrl) {
+
+            showAvatarImage(
+                avatarUrl
+            );
+
+        } else {
+
+            showAvatarLetter(
+                name
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Load avatar error:",
+            error
+        );
+
+        showAvatarLetter(
+            name
+        );
+
+    }
 
 }
 
@@ -163,7 +323,7 @@ async function loadProfile() {
 
 
     /* =====================================
-       GUEST MODE
+       GUEST
     ===================================== */
 
     if (guest === "true") {
@@ -184,14 +344,14 @@ async function loadProfile() {
             "guest";
 
         document.getElementById(
-            "bio"
-        ).textContent =
-            "Mode Guest — profil demo.";
-
-        document.getElementById(
             "email"
         ).textContent =
             "-";
+
+        document.getElementById(
+            "bio"
+        ).textContent =
+            "Mode Guest — profil demo.";
 
         showAvatarLetter("G");
 
@@ -272,7 +432,7 @@ async function loadProfile() {
 
 
     /* =====================================
-       DISPLAY DATA
+       DISPLAY PROFILE
     ===================================== */
 
     document.getElementById(
@@ -307,22 +467,13 @@ async function loadProfile() {
 
 
     /* =====================================
-       DISPLAY AVATAR
+       LOAD AVATAR
     ===================================== */
 
-    if (profile?.avatar_url) {
-
-        showAvatarImage(
-            profile.avatar_url
-        );
-
-    } else {
-
-        showAvatarLetter(
-            name
-        );
-
-    }
+    await loadAvatar(
+        user.id,
+        name
+    );
 
 }
 
@@ -344,16 +495,19 @@ async function uploadAvatar(file) {
     }
 
 
-    /* =====================================
-       CHECK FILE
-    ===================================== */
-
     if (!file) {
         return;
     }
 
 
-    if (file.type !== "image/webp") {
+    /* =====================================
+       WEBP ONLY
+    ===================================== */
+
+    if (
+        file.type !==
+        "image/webp"
+    ) {
 
         showAvatarMessage(
             "Foto harus berformat WebP (.webp).",
@@ -374,7 +528,10 @@ async function uploadAvatar(file) {
         1 * 1024 * 1024;
 
 
-    if (file.size > maxSize) {
+    if (
+        file.size >
+        maxSize
+    ) {
 
         showAvatarMessage(
             "Ukuran foto maksimal 1 MB.",
@@ -402,7 +559,7 @@ async function uploadAvatar(file) {
 
 
         /* =================================
-           FILE PATH
+           PATH
         ================================= */
 
         const filePath =
@@ -410,7 +567,7 @@ async function uploadAvatar(file) {
 
 
         /* =================================
-           UPLOAD / REPLACE
+           UPLOAD
         ================================= */
 
         const {
@@ -423,9 +580,14 @@ async function uploadAvatar(file) {
                     filePath,
                     file,
                     {
-                        cacheControl: "3600",
-                        upsert: true,
-                        contentType: "image/webp"
+                        cacheControl:
+                            "3600",
+
+                        upsert:
+                            true,
+
+                        contentType:
+                            "image/webp"
                     }
                 );
 
@@ -437,26 +599,26 @@ async function uploadAvatar(file) {
 
 
         /* =================================
-           GET PUBLIC URL
+           PUBLIC URL
         ================================= */
 
-        const {
-            data: publicUrlData
-        } =
-            supabase
-                .storage
-                .from("avatars")
-                .getPublicUrl(
-                    filePath
-                );
+        const avatarUrl =
+            getAvatarUrl(
+                currentUser.id
+            );
 
 
-        const publicUrl =
-            publicUrlData.publicUrl;
+        if (!avatarUrl) {
+
+            throw new Error(
+                "Public URL avatar tidak tersedia."
+            );
+
+        }
 
 
         /* =================================
-           UPDATE PROFILES
+           SAVE TO PROFILES
         ================================= */
 
         const {
@@ -466,7 +628,7 @@ async function uploadAvatar(file) {
                 .from("profiles")
                 .update({
                     avatar_url:
-                        publicUrl
+                        avatarUrl
                 })
                 .eq(
                     "id",
@@ -481,13 +643,11 @@ async function uploadAvatar(file) {
 
 
         /* =================================
-           SHOW NEW PHOTO
+           DISPLAY
         ================================= */
 
         showAvatarImage(
-            publicUrl +
-            "?t=" +
-            Date.now()
+            avatarUrl
         );
 
 
@@ -538,7 +698,9 @@ avatarInput.addEventListener(
         const file =
             avatarInput.files[0];
 
-        uploadAvatar(file);
+        uploadAvatar(
+            file
+        );
 
     }
 );
@@ -551,3 +713,4 @@ avatarInput.addEventListener(
 loadSidebar();
 
 loadProfile();
+```
