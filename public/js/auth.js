@@ -10,13 +10,6 @@ const GOOGLE_CLIENT_ID =
 
 
 // ======================================================
-// VERCEL BACKEND
-// ======================================================
-
-const GOOGLE_BACKEND_URL =
-    "/api/google-login.js";
-
-// ======================================================
 // ELEMENT
 // ======================================================
 
@@ -103,7 +96,6 @@ if (loginForm) {
                     );
                 }
 
-                // Bersihkan session Google
                 localStorage.removeItem(
                     "googleSession"
                 );
@@ -167,7 +159,7 @@ let googleReady = false;
 
 
 // ======================================================
-// INITIALIZE GOOGLE SEKALI SAJA
+// INITIALIZE GOOGLE
 // ======================================================
 
 function initializeGoogle() {
@@ -226,6 +218,7 @@ function initializeGoogle() {
 
         return false;
     }
+
 }
 
 
@@ -254,117 +247,76 @@ async function handleGoogleCredential(
         return;
     }
 
+
     try {
 
         if (loginMessage) {
             loginMessage.textContent =
-                "Mengirim ke server...";
+                "Menghubungkan ke Supabase...";
         }
 
 
         // ==================================================
-        // KIRIM ID TOKEN KE BACKEND
+        // GOOGLE → SUPABASE AUTH SESSION
         // ==================================================
 
-        const serverResponse =
-            await fetch(
-                GOOGLE_BACKEND_URL,
-                {
-                    method: "POST",
+        const {
+            data,
+            error
+        } =
+            await supabase.auth
+                .signInWithIdToken({
 
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
+                    provider:
+                        "google",
 
-                    body: JSON.stringify({
+                    token:
+                        response.credential
 
-                        // Backend kita menggunakan
-                        // nama id_token
-                        id_token:
-                            response.credential
+                });
 
-                    })
-                }
+
+        if (error) {
+
+            console.error(
+                "Supabase Google Login:",
+                error
             );
 
+            throw error;
+        }
 
-        // ==================================================
-        // BACA RESPONSE
-        // ==================================================
 
-        let result = null;
-
-        try {
-
-            result =
-                await serverResponse.json();
-
-        } catch (error) {
+        if (!data || !data.user) {
 
             throw new Error(
-                "Server memberikan response yang tidak valid."
+                "Supabase tidak mengembalikan user."
             );
 
         }
 
 
         // ==================================================
-        // CEK RESPONSE
+        // PASTIKAN PROFILE ADA
         // ==================================================
 
-        if (!serverResponse.ok) {
-
-            throw new Error(
-                result?.message ||
-                "Google Login gagal di server."
-            );
-
-        }
-
-
-        if (!result) {
-
-            throw new Error(
-                "Response server kosong."
-            );
-
-        }
-
-
-        if (!result.user) {
-
-            throw new Error(
-                "Data user Google tidak ditemukan."
-            );
-
-        }
-
-
-        // ==================================================
-        // SIMPAN USER GOOGLE
-        // ==================================================
-
-        localStorage.setItem(
-            "googleSession",
-            JSON.stringify(
-                result.user
-            )
+        await ensureProfile(
+            data.user
         );
 
 
-        // Simpan JWT dari backend
-        if (result.token) {
+        // ==================================================
+        // BERSIHKAN MODE LAMA
+        // ==================================================
 
-            localStorage.setItem(
-                "googleToken",
-                result.token
-            );
+        localStorage.removeItem(
+            "googleSession"
+        );
 
-        }
+        localStorage.removeItem(
+            "googleToken"
+        );
 
-
-        // Guest tidak boleh aktif
         sessionStorage.removeItem(
             "guestMode"
         );
@@ -376,7 +328,7 @@ async function handleGoogleCredential(
 
         console.log(
             "Google Login berhasil:",
-            result.user
+            data.user
         );
 
 
@@ -440,22 +392,17 @@ function renderGoogleButton() {
     }
 
 
-    // Cari tombol Google lama
     const oldButton =
         document.getElementById(
             "googleButton"
         );
 
 
-    // Cari container kalau sudah ada
     let container =
         document.getElementById(
             "googleButtonContainer"
         );
 
-
-    // Kalau container belum ada,
-    // buat otomatis.
 
     if (!container) {
 
@@ -470,9 +417,6 @@ function renderGoogleButton() {
         container.className =
             "google-button-container";
 
-
-        // Kalau tombol lama ada,
-        // letakkan container di tempatnya.
 
         if (oldButton) {
 
@@ -510,17 +454,15 @@ function renderGoogleButton() {
     }
 
 
-    // Bersihkan container
     container.innerHTML = "";
 
-
-    // Render tombol resmi Google
 
     window.google.accounts.id.renderButton(
 
         container,
 
         {
+
             type:
                 "standard",
 
@@ -541,6 +483,7 @@ function renderGoogleButton() {
 
             width:
                 320
+
         }
 
     );
@@ -576,8 +519,11 @@ function restoreGoogleButton() {
 function startGoogle() {
 
     if (googleReady) {
+
         renderGoogleButton();
+
         return;
+
     }
 
     renderGoogleButton();
@@ -785,7 +731,6 @@ if (guestButton) {
         "click",
         () => {
 
-            // Bersihkan Google
             localStorage.removeItem(
                 "googleSession"
             );
@@ -794,13 +739,10 @@ if (guestButton) {
                 "googleToken"
             );
 
-
-            // Aktifkan Guest
             sessionStorage.setItem(
                 "guestMode",
                 "true"
             );
-
 
             window.location.href =
                 "dashboard.html";
@@ -901,10 +843,6 @@ if (registerForm) {
                 }
 
 
-                // ==================================================
-                // SESSION LANGSUNG
-                // ==================================================
-
                 if (data.session) {
 
                     const {
@@ -955,7 +893,6 @@ if (registerForm) {
                         "googleToken"
                     );
 
-
                     sessionStorage.removeItem(
                         "guestMode"
                     );
@@ -980,10 +917,6 @@ if (registerForm) {
 
                 }
 
-
-                // ==================================================
-                // EMAIL CONFIRMATION
-                // ==================================================
 
                 message.textContent =
                     "Akun dibuat. Silakan cek email untuk verifikasi.";
