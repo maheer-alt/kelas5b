@@ -767,3 +767,369 @@ header h1 {
     }
 
 }
+
+/* =========================
+   EDIT PROFILE
+========================= */
+
+.edit-profile {
+    margin-top: 25px;
+    width: 100%;
+    padding: 30px;
+
+    background: rgba(8, 8, 8, 0.82);
+
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--yellow);
+
+    position: relative;
+
+    box-shadow:
+        8px 8px 0 rgba(244, 243, 237, 0.9);
+}
+
+.edit-profile[hidden] {
+    display: none;
+}
+
+.edit-header small {
+    color: var(--yellow);
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+}
+
+.edit-header h2 {
+    margin-top: 7px;
+
+    color: var(--white);
+
+    font-size: 24px;
+    font-weight: 900;
+}
+
+
+/* FORM */
+
+.profile-form {
+    width: 100%;
+}
+
+.form-group {
+    margin-top: 22px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--yellow);
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+}
+
+
+/* INPUT */
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+
+    padding: 14px;
+
+    background: #0d0d0d;
+
+    color: var(--white);
+
+    border: 1px solid
+        rgba(244, 243, 237, 0.25);
+
+    border-radius: 0;
+
+    outline: none;
+
+    font-family:
+        "Google Sans",
+        system-ui,
+        sans-serif;
+
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--yellow);
+
+    transform:
+        translate(-2px, -2px);
+}
+
+
+/* USERNAME */
+
+.username-input {
+    display: flex;
+    align-items: center;
+
+    background: #0d0d0d;
+
+    border: 1px solid
+        rgba(244, 243, 237, 0.25);
+}
+
+.username-input span {
+    padding-left: 14px;
+
+    color: var(--yellow);
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-weight: 900;
+}
+
+.username-input input {
+    border: none;
+}
+
+.username-input:focus-within {
+    border-color: var(--yellow);
+}
+
+
+/* BIO */
+
+.form-group textarea {
+    min-height: 130px;
+
+    resize: vertical;
+
+    line-height: 1.5;
+}
+
+.input-hint {
+    display: block;
+
+    margin-top: 7px;
+
+    color: var(--muted);
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 9px;
+}
+
+
+/* COUNTER */
+
+.bio-counter {
+    margin-top: 7px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: var(--muted);
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 9px;
+}
+
+.bio-counter strong {
+    color: var(--yellow);
+
+    font-size: 10px;
+}
+
+
+/* BUTTON EDIT */
+
+.edit-profile-button {
+    margin-top: 20px;
+
+    padding: 11px 16px;
+
+    background: var(--yellow);
+
+    color: var(--black);
+
+    border: 2px solid var(--yellow);
+
+    border-radius: 0;
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    box-shadow:
+        4px 4px 0 var(--white);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.edit-profile-button:hover {
+    transform:
+        translate(-2px, -2px);
+
+    box-shadow:
+        6px 6px 0 var(--white);
+}
+
+.edit-profile-button:active {
+    transform:
+        translate(2px, 2px);
+
+    box-shadow:
+        2px 2px 0 var(--white);
+}
+
+
+/* ACTIONS */
+
+.edit-actions {
+    margin-top: 25px;
+
+    display: flex;
+    gap: 12px;
+}
+
+.save-button,
+.cancel-button {
+    padding: 12px 18px;
+
+    border-radius: 0;
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.save-button {
+    background: var(--yellow);
+
+    color: var(--black);
+
+    border: 2px solid var(--yellow);
+
+    box-shadow:
+        4px 4px 0 var(--white);
+}
+
+.cancel-button {
+    background: transparent;
+
+    color: var(--white);
+
+    border: 1px solid
+        rgba(244, 243, 237, 0.3);
+}
+
+.save-button:hover,
+.cancel-button:hover {
+    transform:
+        translate(-2px, -2px);
+}
+
+.save-button:active,
+.cancel-button:active {
+    transform:
+        translate(2px, 2px);
+}
+
+
+/* MESSAGE */
+
+.edit-message {
+    min-height: 18px;
+
+    margin-top: 15px;
+
+    color: var(--yellow);
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 10px;
+}
+
+.edit-message.error {
+    color: #ff5c5c;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 602px) {
+
+    .edit-profile {
+        padding: 25px;
+
+        box-shadow:
+            5px 5px 0 var(--white);
+    }
+
+    .edit-actions {
+        flex-direction: column;
+    }
+
+    .save-button,
+    .cancel-button {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 340px) {
+
+    .edit-profile {
+        padding: 20px;
+    }
+
+    .edit-header h2 {
+        font-size: 21px;
+    }
+
+}
+
