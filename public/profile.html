@@ -5,87 +5,106 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Profile — Kelas 5B</title>
 
-    <link
-        rel="stylesheet"
-        href="css/sidebar.css"
-    >
+    <link rel="stylesheet" href="css/sidebar.css">
 
-    <link
-        rel="stylesheet"
-        href="css/profile.css"
-    >
+    <link rel="stylesheet" href="css/profile.css">
 
 </head>
 
 <body>
 
-<div id="sidebar"></div>
+    <div id="sidebar"></div>
 
 
-<main class="profile-page">
+    <main class="profile-page">
 
-    <header>
+        <header>
 
-        <p>ACCOUNT</p>
+            <p>ACCOUNT</p>
 
-        <h1>Profile</h1>
+            <h1>Profile</h1>
 
-    </header>
-
-
-    <section class="profile-card">
-
-        <div class="avatar" id="avatar">
-            ?
-        </div>
-
-        <div class="profile-info">
-
-            <h2 id="fullName">
-                Loading...
-            </h2>
-
-            <span id="username">
-                @loading
-            </span>
-
-            <p id="bio">
-                Belum ada bio.
-            </p>
-
-        </div>
-
-    </section>
+        </header>
 
 
-    <section class="profile-details">
+        <section class="profile-card">
 
-        <div>
-            <small>EMAIL</small>
-            <p id="email">-</p>
-        </div>
+            <div class="avatar-wrapper">
 
-        <div>
-            <small>USERNAME</small>
-            <p id="username2">-</p>
-        </div>
+                <div class="avatar" id="avatar">
+                    ?
+                </div>
 
-    </section>
+                <label for="avatarInput" class="avatar-upload" id="avatarUploadButton">
+                    Ganti Foto
+                </label>
 
-</main>
+                <input type="file" id="avatarInput" accept="image/webp" hidden>
+
+                <small class="avatar-hint" id="avatarHint">
+                    WebP • Maks. 1 MB
+                </small>
+
+            </div>
 
 
-<script
-    type="module"
-    src="js/profile.js"
-></script>
+            <div class="profile-info">
+
+                <h2 id="fullName">
+                    Loading...
+                </h2>
+
+                <span id="username">
+                    @loading
+                </span>
+
+                <p id="bio">
+                    Belum ada bio.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="profile-details">
+
+            <div>
+
+                <small>EMAIL</small>
+
+                <p id="email">
+                    -
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <small>USERNAME</small>
+
+                <p id="username2">
+                    -
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <p id="avatarMessage" class="avatar-message"></p>
+
+
+    </main>
+
+
+    <script type="module" src="js/profile.js"></script>
 
 </body>
+
 </html>
