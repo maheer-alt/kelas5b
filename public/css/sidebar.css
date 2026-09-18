@@ -8,7 +8,6 @@
     --black: #080808;
     --white: #f4f3ed;
     --yellow: #d8ff00;
-
     --muted: #8b8b84;
     --line: rgba(244, 243, 237, 0.16);
 }
@@ -60,21 +59,22 @@
     height: 42px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     flex-shrink: 0;
 
-    /* BULAT */
     border-radius: 50%;
 
-    /* GARIS STABILO TIPIS */
-    border: 2px solid var(--yellow);
+    border:
+        2px solid var(--yellow);
 
-    background: transparent;
+    background:
+        transparent;
 
-    /* TANPA SHADOW */
-    box-shadow: none;
+    box-shadow:
+        none;
 
     overflow: hidden;
 }
@@ -93,7 +93,8 @@
 .brand strong {
     display: block;
 
-    color: var(--white);
+    color:
+        var(--white);
 
     font-size: 13px;
 
@@ -105,7 +106,8 @@
 
     margin-top: 2px;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     font-family:
         "JetBrains Mono",
@@ -144,13 +146,16 @@ nav a,
     border:
         1px solid transparent;
 
-    background: transparent;
+    background:
+        transparent;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     text-decoration: none;
 
-    font-family: inherit;
+    font-family:
+        inherit;
 
     font-size: 12px;
 
@@ -179,7 +184,8 @@ nav a span,
     align-items: center;
     justify-content: center;
 
-    color: inherit;
+    color:
+        inherit;
 
     font-size: 17px;
 }
@@ -196,9 +202,11 @@ nav a:hover {
     border-color:
         rgba(244, 243, 237, 0.12);
 
-    color: var(--white);
+    color:
+        var(--white);
 
-    transform: translateX(3px);
+    transform:
+        translateX(3px);
 }
 
 
@@ -213,9 +221,11 @@ nav a.active {
     border-color:
         var(--yellow);
 
-    color: var(--black);
+    color:
+        var(--black);
 
-    font-weight: 900;
+    font-weight:
+        900;
 
     box-shadow:
         4px 4px 0 var(--white);
@@ -228,7 +238,8 @@ nav a.active:hover {
     background:
         var(--yellow);
 
-    color: var(--black);
+    color:
+        var(--black);
 
     transform:
         translateX(-2px)
@@ -252,6 +263,15 @@ nav a.active:hover {
     bottom: 25px;
 }
 
+
+/* =========================================
+   LOGOUT BUTTON
+========================================= */
+
+.sidebar-bottom button {
+    text-align: left;
+}
+
 .sidebar-bottom button:hover {
     background:
         rgba(244, 243, 237, 0.05);
@@ -259,18 +279,11 @@ nav a.active:hover {
     border-color:
         rgba(244, 243, 237, 0.12);
 
-    color: var(--white);
+    color:
+        var(--white);
 
-    transform: translateX(3px);
-}
-
-
-/* =========================================
-   SIDEBAR BOTTOM BUTTON
-========================================= */
-
-.sidebar-bottom button {
-    text-align: left;
+    transform:
+        translateX(3px);
 }
 
 
@@ -281,13 +294,19 @@ nav a.active:hover {
 @media (max-width: 850px) {
 
     .sidebar {
+
         top: auto;
+
+        bottom: 0;
+
+        left: 0;
 
         width: 100%;
 
         height: 70px;
 
-        padding: 8px 12px;
+        padding:
+            7px 8px;
 
         display: flex;
 
@@ -300,14 +319,32 @@ nav a.active:hover {
 
         border-top:
             1px solid var(--line);
+
     }
+
+
+    /* ======================================
+       HIDE BRAND
+    ====================================== */
 
     .brand {
         display: none;
     }
 
+
+    /* ======================================
+       NAV
+    ====================================== */
+
     nav {
-        width: 100%;
+
+        flex: 1;
+
+        width: auto;
+
+        height: 100%;
+
+        display: flex;
 
         flex-direction: row;
 
@@ -315,47 +352,136 @@ nav a.active:hover {
 
         align-items: center;
 
-        gap: 0;
+        gap: 2px;
+
     }
 
+
     nav a {
+
+        flex: 1;
+
         width: auto;
 
-        min-width: 58px;
+        min-width: 0;
+
+        height: 54px;
+
+        display: flex;
 
         flex-direction: column;
 
         justify-content: center;
 
+        align-items: center;
+
         gap: 3px;
 
-        padding: 7px 12px;
+        padding:
+            5px 3px;
 
         border: 0;
 
         font-size: 9px;
 
         font-weight: 700;
+
+        text-align: center;
+
     }
+
 
     nav a span {
+
+        width: auto;
+
         font-size: 16px;
+
     }
+
 
     nav a:hover {
-        transform: translateY(-2px);
+
+        transform:
+            translateY(-2px);
+
     }
 
+
     nav a.active {
+
         box-shadow:
             3px 3px 0 var(--white);
 
-        transform: translateY(-2px);
+        transform:
+            translateY(-2px);
+
     }
 
+
+    /* ======================================
+       LOGOUT MOBILE
+    ====================================== */
+
     .sidebar-bottom {
-        display: none;
+
+        position: static;
+
+        width: 52px;
+
+        height: 54px;
+
+        margin-left: 4px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        flex-shrink: 0;
+
     }
+
+
+    .sidebar-bottom button {
+
+        width: 52px;
+
+        height: 54px;
+
+        padding:
+            5px 2px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 3px;
+
+        border:
+            1px solid
+            rgba(244, 243, 237, 0.16);
+
+        text-align: center;
+
+        font-size: 9px;
+
+    }
+
+
+    .sidebar-bottom span {
+
+        width: auto;
+
+        font-size: 17px;
+
+    }
+
 }
 
 
@@ -366,51 +492,212 @@ nav a.active:hover {
 @media (max-width: 602px) {
 
     .sidebar {
+
         height: 68px;
 
         padding:
-            7px 8px;
+            6px 6px;
+
     }
+
+
+    nav {
+
+        gap: 1px;
+
+    }
+
 
     nav a {
-        min-width: 52px;
+
+        height: 52px;
 
         padding:
-            6px 8px;
+            5px 2px;
 
         font-size: 8px;
+
     }
 
+
     nav a span {
+
         font-size: 15px;
+
     }
+
+
+    .sidebar-bottom {
+
+        width: 48px;
+
+        height: 52px;
+
+        margin-left: 3px;
+
+    }
+
+
+    .sidebar-bottom button {
+
+        width: 48px;
+
+        height: 52px;
+
+        font-size: 8px;
+
+    }
+
+
+    .sidebar-bottom span {
+
+        font-size: 16px;
+
+    }
+
 }
 
 
 /* =========================================
-   340px
+   480px
 ========================================= */
 
-@media (max-width: 340px) {
+@media (max-width: 480px) {
 
     .sidebar {
-        height: 64px;
+
+        height: 66px;
 
         padding:
-            6px 5px;
+            5px 4px;
+
     }
+
 
     nav a {
-        min-width: 45px;
+
+        height: 50px;
 
         padding:
-            5px 5px;
+            4px 1px;
 
         font-size: 7px;
+
     }
 
+
     nav a span {
+
         font-size: 14px;
+
+    }
+
+
+    .sidebar-bottom {
+
+        width: 44px;
+
+        height: 50px;
+
+        margin-left: 2px;
+
+    }
+
+
+    .sidebar-bottom button {
+
+        width: 44px;
+
+        height: 50px;
+
+        padding:
+            3px 1px;
+
+        font-size: 7px;
+
+    }
+
+
+    .sidebar-bottom span {
+
+        font-size: 15px;
+
+    }
+
+}
+
+
+/* =========================================
+   360px
+========================================= */
+
+@media (max-width: 360px) {
+
+    .sidebar {
+
+        height: 62px;
+
+        padding:
+            4px 3px;
+
+    }
+
+
+    nav {
+
+        gap: 0;
+
+    }
+
+
+    nav a {
+
+        height: 48px;
+
+        padding:
+            3px 0;
+
+        font-size: 6px;
+
+    }
+
+
+    nav a span {
+
+        font-size: 13px;
+
+    }
+
+
+    .sidebar-bottom {
+
+        width: 40px;
+
+        height: 48px;
+
+        margin-left: 2px;
+
+    }
+
+
+    .sidebar-bottom button {
+
+        width: 40px;
+
+        height: 48px;
+
+        padding:
+            2px 0;
+
+        font-size: 6px;
+
+    }
+
+
+    .sidebar-bottom span {
+
+        font-size: 14px;
+
     }
 
 }
@@ -423,20 +710,58 @@ nav a.active:hover {
 @media (max-width: 330px) {
 
     .sidebar {
-        height: 62px;
-    }
 
-    nav a {
-        min-width: 42px;
+        height: 60px;
 
         padding:
-            4px 3px;
+            3px 2px;
 
-        font-size: 6px;
     }
 
+
+    nav a {
+
+        height: 46px;
+
+        padding:
+            2px 0;
+
+        font-size: 5px;
+
+    }
+
+
     nav a span {
+
+        font-size: 12px;
+
+    }
+
+
+    .sidebar-bottom {
+
+        width: 38px;
+
+        height: 46px;
+
+    }
+
+
+    .sidebar-bottom button {
+
+        width: 38px;
+
+        height: 46px;
+
+        font-size: 5px;
+
+    }
+
+
+    .sidebar-bottom span {
+
         font-size: 13px;
+
     }
 
 }
