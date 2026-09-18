@@ -10,43 +10,6 @@ const sidebar =
 
 
 // ======================================================
-// GOOGLE SESSION
-// ======================================================
-
-function getGoogleSession() {
-
-    const session =
-        localStorage.getItem("googleSession");
-
-    if (!session) {
-        return null;
-    }
-
-    try {
-
-        return JSON.parse(session);
-
-    } catch (error) {
-
-        console.error(
-            "Google session rusak:",
-            error
-        );
-
-        localStorage.removeItem(
-            "googleSession"
-        );
-
-        localStorage.removeItem(
-            "googleToken"
-        );
-
-        return null;
-    }
-}
-
-
-// ======================================================
 // SIDEBAR
 // ======================================================
 
@@ -62,9 +25,11 @@ async function loadSidebar() {
             await fetch("sidebar.html");
 
         if (!response.ok) {
+
             throw new Error(
                 "sidebar.html tidak ditemukan."
             );
+
         }
 
         sidebar.innerHTML =
@@ -80,6 +45,7 @@ async function loadSidebar() {
         );
 
     }
+
 }
 
 
@@ -97,6 +63,7 @@ function setupLogout() {
     if (!button) {
         return;
     }
+
 
     button.addEventListener(
         "click",
@@ -121,7 +88,7 @@ function setupLogout() {
 
 
                 // ==========================================
-                // HAPUS GOOGLE SESSION
+                // HAPUS SESSION GOOGLE LAMA
                 // ==========================================
 
                 localStorage.removeItem(
@@ -134,11 +101,12 @@ function setupLogout() {
 
 
                 // ==========================================
-                // KE LOGIN
+                // KEMBALI KE LOGIN
                 // ==========================================
 
                 window.location.href =
                     "login.html";
+
 
             } catch (error) {
 
@@ -147,8 +115,10 @@ function setupLogout() {
                     error
                 );
 
-                // Tetap bersihkan session
-                // walaupun Supabase signOut gagal.
+
+                // ==========================================
+                // TETAP BERSIHKAN SESSION
+                // ==========================================
 
                 sessionStorage.removeItem(
                     "guestMode"
@@ -162,8 +132,10 @@ function setupLogout() {
                     "googleToken"
                 );
 
+
                 window.location.href =
                     "login.html";
+
             }
 
         }
@@ -173,144 +145,166 @@ function setupLogout() {
 
 
 // ======================================================
-// LOAD USER
+// SHOW AVATAR LETTER
 // ======================================================
 
-async function loadUser() {
+function showAvatarLetter(name) {
 
-    // ==================================================
-    // 1. CEK GUEST
-    // ==================================================
-
-    const guest =
-        sessionStorage.getItem(
-            "guestMode"
+    const miniAvatar =
+        document.getElementById(
+            "miniAvatar"
         );
 
-    if (guest === "true") {
-
-        setUserUI(
-            "Guest",
-            "G"
-        );
-
+    if (!miniAvatar) {
         return;
     }
 
 
-    // ==================================================
-    // 2. CEK GOOGLE SESSION
-    // ==================================================
+    // Hapus mode foto
 
-    const googleSession =
-        getGoogleSession();
-
-    if (googleSession) {
-
-        const firstName =
-            googleSession.first_name ||
-            "";
-
-        const lastName =
-            googleSession.last_name ||
-            "";
-
-        const fullName =
-            `${firstName} ${lastName}`
-                .trim();
-
-        const name =
-            fullName ||
-            googleSession.name ||
-            googleSession.email
-                ?.split("@")[0] ||
-            "Google User";
-
-        const avatar =
-            name
-                .charAt(0)
-                .toUpperCase();
-
-        setUserUI(
-            name,
-            avatar
-        );
-
-        return;
-    }
+    miniAvatar.classList.remove(
+        "has-image"
+    );
 
 
-    // ==================================================
-    // 3. CEK SUPABASE SESSION
-    // ==================================================
+    // Bersihkan isi sebelumnya
 
-    const {
-        data: {
-            user
-        } = {},
-        error
-    } =
-        await supabase.auth.getUser();
-
-    if (error) {
-
-        console.error(
-            "Supabase user error:",
-            error
-        );
-
-    }
+    miniAvatar.innerHTML = "";
 
 
-    if (!user) {
+    // Ambil huruf pertama
 
-        window.location.href =
-            "login.html";
-
-        return;
-    }
-
-
-    // ==================================================
-    // 4. AMBIL PROFILE SUPABASE
-    // ==================================================
-
-    const {
-        data: profile,
-        error: profileError
-    } =
-        await supabase
-            .from("profiles")
-            .select("*")
-            .eq("id", user.id)
-            .maybeSingle();
-
-    if (profileError) {
-
-        console.error(
-            "Profile error:",
-            profileError
-        );
-
-    }
-
-
-    const name =
-        profile?.full_name ||
-        user.user_metadata?.full_name ||
-        user.email
-            ?.split("@")[0] ||
-        "User";
-
-    const avatar =
+    miniAvatar.textContent =
         name
             .charAt(0)
             .toUpperCase();
 
-    setUserUI(
-        name,
-        avatar
+}
+
+
+// ======================================================
+// SHOW AVATAR IMAGE
+// ======================================================
+
+function showAvatarImage(
+    url,
+    name
+) {
+
+    const miniAvatar =
+        document.getElementById(
+            "miniAvatar"
+        );
+
+    if (
+        !miniAvatar ||
+        !url
+    ) {
+        return;
+    }
+
+
+    // Aktifkan mode gambar
+
+    miniAvatar.classList.add(
+        "has-image"
     );
+
+
+    // Bersihkan isi sebelumnya
+
+    miniAvatar.innerHTML = "";
+
+
+    const image =
+        document.createElement(
+            "img"
+        );
+
+
+    // Cache busting
+    // supaya foto terbaru langsung terlihat
+
+    image.src =
+        url +
+        "?t=" +
+        Date.now();
+
+
+    image.alt =
+        "Foto profil";
+
+
+    image.loading =
+        "lazy";
+
+
+    // Kalau foto gagal dimuat,
+    // kembali ke huruf nama
+
+    image.onerror = () => {
+
+        console.error(
+            "Avatar dashboard gagal dimuat:",
+            url
+        );
+
+
+        showAvatarLetter(
+            name
+        );
+
+    };
+
+
+    miniAvatar.appendChild(
+        image
+    );
+
+}
+
+
+// ======================================================
+// GET AVATAR URL
+// ======================================================
+
+function getAvatarUrl(userId) {
+
+    /*
+        Struktur Storage:
+
+        avatars/
+        └── USER_ID/
+            └── avatar.webp
+    */
+
+    const filePath =
+        `${userId}/avatar.webp`;
+
+
+    const {
+        data
+    } =
+        supabase
+            .storage
+            .from("avatars")
+            .getPublicUrl(
+                filePath
+            );
+
+
+    if (
+        !data ||
+        !data.publicUrl
+    ) {
+
+        return null;
+
+    }
+
+
+    return data.publicUrl;
+
 }
 
 
@@ -320,7 +314,7 @@ async function loadUser() {
 
 function setUserUI(
     name,
-    avatar
+    avatarUrl = null
 ) {
 
     const heroName =
@@ -328,14 +322,10 @@ function setUserUI(
             "heroName"
         );
 
+
     const miniName =
         document.getElementById(
             "miniName"
-        );
-
-    const miniAvatar =
-        document.getElementById(
-            "miniAvatar"
         );
 
 
@@ -355,12 +345,168 @@ function setUserUI(
     }
 
 
-    if (miniAvatar) {
+    // ==============================================
+    // AVATAR
+    // ==============================================
 
-        miniAvatar.textContent =
-            avatar;
+    if (avatarUrl) {
+
+        showAvatarImage(
+            avatarUrl,
+            name
+        );
+
+    } else {
+
+        showAvatarLetter(
+            name
+        );
 
     }
+
+}
+
+
+// ======================================================
+// LOAD USER
+// ======================================================
+
+async function loadUser() {
+
+
+    // ==================================================
+    // 1. CEK GUEST
+    // ==================================================
+
+    const guest =
+        sessionStorage.getItem(
+            "guestMode"
+        );
+
+
+    if (guest === "true") {
+
+        setUserUI(
+            "Guest"
+        );
+
+        return;
+
+    }
+
+
+    // ==================================================
+    // 2. CEK SUPABASE AUTH
+    // ==================================================
+
+    const {
+        data: {
+            user
+        } = {},
+        error
+    } =
+        await supabase.auth.getUser();
+
+
+    if (error) {
+
+        console.error(
+            "Supabase user error:",
+            error
+        );
+
+    }
+
+
+    // ==================================================
+    // TIDAK ADA USER
+    // ==================================================
+
+    if (!user) {
+
+        window.location.href =
+            "login.html";
+
+        return;
+
+    }
+
+
+    // ==================================================
+    // 3. AMBIL PROFILE
+    // ==================================================
+
+    const {
+        data: profile,
+        error: profileError
+    } =
+        await supabase
+            .from("profiles")
+            .select(
+                "full_name, username, avatar_url"
+            )
+            .eq(
+                "id",
+                user.id
+            )
+            .maybeSingle();
+
+
+    if (profileError) {
+
+        console.error(
+            "Profile error:",
+            profileError
+        );
+
+    }
+
+
+    // ==================================================
+    // 4. NAMA USER
+    // ==================================================
+
+    const name =
+        profile?.full_name ||
+        user.user_metadata?.full_name ||
+        user.email
+            ?.split("@")[0] ||
+        "User";
+
+
+    // ==================================================
+    // 5. AMBIL AVATAR
+    // ==================================================
+
+    let avatarUrl =
+        profile?.avatar_url;
+
+
+    /*
+        Kalau profiles.avatar_url kosong,
+        kita tetap mencoba mencari:
+
+        avatars/USER_ID/avatar.webp
+    */
+
+    if (!avatarUrl) {
+
+        avatarUrl =
+            getAvatarUrl(
+                user.id
+            );
+
+    }
+
+
+    // ==================================================
+    // 6. TAMPILKAN KE DASHBOARD
+    // ==================================================
+
+    setUserUI(
+        name,
+        avatarUrl
+    );
 
 }
 
