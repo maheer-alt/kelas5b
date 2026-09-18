@@ -896,7 +896,10 @@ async function ensureProfile(
                         "",
 
                     avatar_url:
-                        avatarUrl
+                        avatarUrl,
+
+                    created_at:
+                        new Date().toISOString()
 
                 })
                 .select()
