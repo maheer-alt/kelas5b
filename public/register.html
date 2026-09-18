@@ -4,225 +4,339 @@
 
 <head>
 
-    <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
 
-    <title>Register — Kelas 5B</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Register — Kelas 5B</title>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<!-- =====================================================
+     GOOGLE FONTS
+====================================================== -->
 
-    <!-- Register CSS -->
-    <link rel="stylesheet" href="css/register.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+>
+
+
+<!-- =====================================================
+     FONT AWESOME
+====================================================== -->
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+
+
+<!-- =====================================================
+     REGISTER CSS
+====================================================== -->
+
+<link
+    rel="stylesheet"
+    href="css/register.css"
+>
 
 </head>
 
 <body>
 
-    <!-- =====================================================
+
+<!-- =====================================================
      BACKGROUND
 ====================================================== -->
 
-    <div class="background"></div>
+<div class="background"></div>
 
-    <div class="background-overlay"></div>
+<div class="background-overlay"></div>
 
 
-    <!-- =====================================================
-     CURSOR
+<!-- =====================================================
+     CUSTOM CURSOR
 ====================================================== -->
 
-    <div class="cursor-dot"></div>
-    <div class="cursor-ring"></div>
+<div class="cursor-dot"></div>
+
+<div class="cursor-ring"></div>
 
 
-    <!-- =====================================================
+<!-- =====================================================
      REGISTER PAGE
 ====================================================== -->
 
-    <main class="register-page">
-
-        <section class="register-card">
+<main class="register-page">
 
 
+    <section class="register-card">
 
-            <!-- =================================================
+
+        <!-- =================================================
              LOGO
         ================================================== -->
 
-            <div class="logo">
-                <img src="assets/logo.jpeg" alt="Logo Kelas 5B">
-            </div>
+        <div class="logo">
+
+            <img
+                src="assets/logo.jpeg"
+                alt="Logo Kelas 5B"
+            >
+
+        </div>
 
 
-            <!-- =================================================
+        <!-- =================================================
              TITLE
         ================================================== -->
 
-            <div class="title-area">
+        <div class="title-area">
 
-                <p class="eyebrow">
-                    CREATE ACCOUNT
-                </p>
+            <p class="eyebrow">
+                CREATE ACCOUNT
+            </p>
 
-                <h1>
-                    Buat akun
-                    <span>Kelas 5B.</span>
-                </h1>
 
-                <p class="subtitle">
-                    Buat profilmu dan bergabung dengan
-                    teman-teman sekelas.
-                </p>
+            <h1>
+
+                Buat akun
+
+                <span>
+                    Kelas 5B.
+                </span>
+
+            </h1>
+
+
+            <p class="subtitle">
+
+                Buat profilmu dan bergabung dengan
+                teman-teman sekelas.
+
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             REGISTER FORM
+        ================================================== -->
+
+        <form
+            id="registerForm"
+            autocomplete="on"
+        >
+
+
+            <!-- =================================================
+                 NAMA + USERNAME
+            ================================================== -->
+
+            <div class="row">
+
+
+                <!-- NAMA LENGKAP -->
+
+                <div class="input-group">
+
+                    <label for="fullName">
+                        Nama Lengkap
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        placeholder="Nama kamu"
+                        autocomplete="name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- USERNAME -->
+
+                <div class="input-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="@username"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
 
             </div>
 
 
             <!-- =================================================
-             REGISTER FORM
-        ================================================== -->
+                 EMAIL
+            ================================================== -->
 
-            <form id="registerForm" autocomplete="on">
+            <div class="input-group">
 
-                <div class="row">
+                <label for="email">
+                    Email
+                </label>
 
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="nama@email.com"
+                    autocomplete="email"
+                    required
+                >
 
-                    <!-- NAMA LENGKAP -->
-
-                    <div class="input-group">
-
-                        <label for="fullName">
-                            Nama Lengkap
-                        </label>
-
-                        <input type="text" id="fullName" name="fullName" placeholder="Nama kamu" autocomplete="name"
-                            required>
-
-                    </div>
-
-
-                    <!-- USERNAME -->
-
-                    <div class="input-group">
-
-                        <label for="username">
-                            Username
-                        </label>
-
-                        <input type="text" id="username" name="username" placeholder="@username" autocomplete="username"
-                            required>
-
-                    </div>
-
-                </div>
+            </div>
 
 
-                <!-- EMAIL -->
+            <!-- =================================================
+                 PASSWORD
+            ================================================== -->
 
-                <div class="input-group">
+            <div class="input-group">
 
-                    <label for="email">
-                        Email
-                    </label>
-
-                    <input type="email" id="email" name="email" placeholder="nama@email.com" autocomplete="email"
-                        required>
-
-                </div>
+                <label for="password">
+                    Password
+                </label>
 
 
-                <!-- PASSWORD -->
-
-                <div class="input-group">
-
-                    <label for="password">
-                        Password
-                    </label>
-
-                    <input type="password" id="password" name="password" placeholder="Minimal 6 karakter" minlength="6"
-                        autocomplete="new-password" required>
-
-                </div>
+                <div class="input-wrapper">
 
 
-                <!-- REGISTER BUTTON -->
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Minimal 6 karakter"
+                        minlength="6"
+                        autocomplete="new-password"
+                        required
+                    >
 
-                <div class="highlight-button">
 
-                    <button class="register-button" id="registerButton" type="submit">
+                    <!-- PASSWORD TOGGLE -->
 
-                        <span>
-                            Buat Akun
-                        </span>
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        id="passwordToggle"
+                        aria-label="Tampilkan password"
+                        title="Tampilkan password"
+                    >
 
-                        <span>
-                            →
-                        </span>
+                        <i class="fa-solid fa-eye"></i>
 
                     </button>
 
                 </div>
 
-            </form>
+            </div>
 
 
             <!-- =================================================
-             MESSAGE
-        ================================================== -->
+                 REGISTER BUTTON
+            ================================================== -->
 
-            <div id="registerMessage" class="message" aria-live="polite"></div>
-
-
-            <!-- =================================================
-             LOGIN LINK
-        ================================================== -->
-
-            <p class="login-text">
-
-                <span>
-                    Sudah punya akun?
-                </span>
-
-                <a href="login.html">
-                    Masuk
-                </a>
-
-            </p>
+            <div class="highlight-button">
 
 
-            <!-- =================================================
-             SECURITY
-        ================================================== -->
+                <button
+                    type="submit"
+                    class="register-button"
+                    id="registerButton"
+                >
 
-            <div class="security-note">
+                    <span>
+                        Buat Akun
+                    </span>
 
-                <i class="fa-solid fa-shield-halved"></i>
 
-                <span>
-                    Protected by Supabase Auth
-                </span>
+                    <span>
+                        →
+                    </span>
+
+                </button>
 
             </div>
 
-        </section>
 
-    </main>
+        </form>
 
 
-    <!-- =====================================================
+        <!-- =================================================
+             REGISTER MESSAGE
+        ================================================== -->
+
+        <div
+            id="registerMessage"
+            class="message"
+            aria-live="polite"
+        ></div>
+
+
+        <!-- =================================================
+             LOGIN LINK
+        ================================================== -->
+
+        <p class="login-text">
+
+            <span>
+                Sudah punya akun?
+            </span>
+
+
+            <a href="login.html">
+                Masuk
+            </a>
+
+        </p>
+
+
+        <!-- =================================================
+             SECURITY
+        ================================================== -->
+
+        <div class="security-note">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+
+            <span>
+                Protected by Supabase Auth
+            </span>
+
+        </div>
+
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
      AUTH JS
 ====================================================== -->
 
-    <script type="module" src="js/auth.js"></script>
-
+<script
+    type="module"
+    src="js/auth.js"
+></script>
 
 </body>
 

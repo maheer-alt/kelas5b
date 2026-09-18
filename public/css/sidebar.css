@@ -8,7 +8,6 @@
     --black: #080808;
     --white: #f4f3ed;
     --yellow: #d8ff00;
-
     --muted: #8b8b84;
     --line: rgba(244, 243, 237, 0.16);
 }
@@ -20,20 +19,15 @@
 
 .sidebar {
     position: fixed;
-
     left: 0;
     top: 0;
     bottom: 0;
-
     width: 260px;
-
     padding: 25px 18px;
 
-    background:
-        rgba(8, 8, 8, 0.94);
+    background: rgba(8, 8, 8, 0.94);
 
-    border-right:
-        1px solid var(--line);
+    border-right: 1px solid var(--line);
 
     z-index: 100;
 }
@@ -45,13 +39,10 @@
 
 .brand {
     display: flex;
-
     align-items: center;
-
     gap: 12px;
 
     padding: 8px;
-
     margin-bottom: 35px;
 }
 
@@ -65,15 +56,11 @@
 
     flex-shrink: 0;
 
-    /* BULAT */
     border-radius: 50%;
-
-    /* GARIS STABILO TIPIS */
     border: 2px solid var(--yellow);
 
     background: transparent;
 
-    /* TANPA SHADOW */
     box-shadow: none;
 
     overflow: hidden;
@@ -96,7 +83,6 @@
     color: var(--white);
 
     font-size: 13px;
-
     font-weight: 900;
 }
 
@@ -121,28 +107,21 @@
 
 nav {
     display: flex;
-
     flex-direction: column;
-
     gap: 6px;
 }
 
 nav a,
 .sidebar-bottom button {
     display: flex;
-
     align-items: center;
-
     gap: 13px;
 
     width: 100%;
-
     padding: 13px;
 
     border-radius: 0;
-
-    border:
-        1px solid transparent;
+    border: 1px solid transparent;
 
     background: transparent;
 
@@ -151,9 +130,7 @@ nav a,
     text-decoration: none;
 
     font-family: inherit;
-
     font-size: 12px;
-
     font-weight: 600;
 
     cursor: pointer;
@@ -175,7 +152,6 @@ nav a span,
     width: 20px;
 
     display: inline-flex;
-
     align-items: center;
     justify-content: center;
 
@@ -190,8 +166,7 @@ nav a span,
 ========================================= */
 
 nav a:hover {
-    background:
-        rgba(244, 243, 237, 0.05);
+    background: rgba(244, 243, 237, 0.05);
 
     border-color:
         rgba(244, 243, 237, 0.12);
@@ -207,11 +182,9 @@ nav a:hover {
 ========================================= */
 
 nav a.active {
-    background:
-        var(--yellow);
+    background: var(--yellow);
 
-    border-color:
-        var(--yellow);
+    border-color: var(--yellow);
 
     color: var(--black);
 
@@ -220,13 +193,11 @@ nav a.active {
     box-shadow:
         4px 4px 0 var(--white);
 
-    transform:
-        translateX(0);
+    transform: translateX(0);
 }
 
 nav a.active:hover {
-    background:
-        var(--yellow);
+    background: var(--yellow);
 
     color: var(--black);
 
@@ -252,6 +223,15 @@ nav a.active:hover {
     bottom: 25px;
 }
 
+
+/* =========================================
+   LOGOUT BUTTON
+========================================= */
+
+.sidebar-bottom button {
+    text-align: left;
+}
+
 .sidebar-bottom button:hover {
     background:
         rgba(244, 243, 237, 0.05);
@@ -266,15 +246,6 @@ nav a.active:hover {
 
 
 /* =========================================
-   SIDEBAR BOTTOM BUTTON
-========================================= */
-
-.sidebar-bottom button {
-    text-align: left;
-}
-
-
-/* =========================================
    MOBILE NAVIGATION
 ========================================= */
 
@@ -282,15 +253,15 @@ nav a.active:hover {
 
     .sidebar {
         top: auto;
+        bottom: 0;
+        left: 0;
 
         width: 100%;
-
         height: 70px;
 
-        padding: 8px 12px;
+        padding: 7px 8px;
 
         display: flex;
-
         align-items: center;
 
         background:
@@ -300,61 +271,175 @@ nav a.active:hover {
 
         border-top:
             1px solid var(--line);
+
+        /* PENTING:
+           Hanya sidebar yang boleh scroll horizontal */
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        /* Cegah scroll horizontal merambat ke halaman */
+        overscroll-behavior-x: contain;
+
+        /* Scrollbar Firefox */
+        scrollbar-width: thin;
     }
+
+
+    /* Chrome / Edge / Safari */
+
+    .sidebar::-webkit-scrollbar {
+        height: 3px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+        background: var(--yellow);
+    }
+
+
+    /* ======================================
+       HIDE BRAND
+    ====================================== */
 
     .brand {
         display: none;
     }
 
+
+    /* ======================================
+       NAV
+    ====================================== */
+
     nav {
-        width: 100%;
+        flex: none;
+
+        width: max-content;
+        min-width: max-content;
+
+        height: 100%;
+
+        display: flex;
 
         flex-direction: row;
 
-        justify-content: space-around;
-
+        justify-content: flex-start;
         align-items: center;
 
-        gap: 0;
+        gap: 2px;
+
+        /* Jangan biarkan nav mengecil */
+        flex-shrink: 0;
     }
 
-    nav a {
-        width: auto;
 
-        min-width: 58px;
+    nav a {
+        flex: 0 0 76px;
+
+        width: 76px;
+        min-width: 76px;
+
+        height: 54px;
+
+        display: flex;
 
         flex-direction: column;
 
         justify-content: center;
+        align-items: center;
 
         gap: 3px;
 
-        padding: 7px 12px;
+        padding: 5px 3px;
 
         border: 0;
 
         font-size: 9px;
 
         font-weight: 700;
+
+        text-align: center;
     }
 
+
     nav a span {
+        width: auto;
+
         font-size: 16px;
     }
 
+
     nav a:hover {
-        transform: translateY(-2px);
+        transform:
+            translateY(-2px);
     }
+
 
     nav a.active {
         box-shadow:
             3px 3px 0 var(--white);
 
-        transform: translateY(-2px);
+        transform:
+            translateY(-2px);
     }
 
+
+    /* ======================================
+       LOGOUT MOBILE
+    ====================================== */
+
     .sidebar-bottom {
-        display: none;
+        position: static;
+
+        width: 76px;
+        min-width: 76px;
+
+        height: 54px;
+
+        margin-left: 4px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+    }
+
+
+    .sidebar-bottom button {
+        width: 76px;
+        min-width: 76px;
+
+        height: 54px;
+
+        padding: 5px 2px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 3px;
+
+        border:
+            1px solid
+            rgba(244, 243, 237, 0.16);
+
+        text-align: center;
+
+        font-size: 9px;
+    }
+
+
+    .sidebar-bottom span {
+        width: auto;
+
+        font-size: 17px;
     }
 }
 
@@ -369,14 +454,23 @@ nav a.active:hover {
         height: 68px;
 
         padding:
-            7px 8px;
+            6px 6px;
+    }
+
+    nav {
+        gap: 1px;
     }
 
     nav a {
-        min-width: 52px;
+        flex-basis: 72px;
+
+        width: 72px;
+        min-width: 72px;
+
+        height: 52px;
 
         padding:
-            6px 8px;
+            5px 2px;
 
         font-size: 8px;
     }
@@ -384,35 +478,190 @@ nav a.active:hover {
     nav a span {
         font-size: 15px;
     }
+
+    .sidebar-bottom {
+        width: 72px;
+        min-width: 72px;
+
+        height: 52px;
+
+        margin-left: 3px;
+    }
+
+    .sidebar-bottom button {
+        width: 72px;
+        min-width: 72px;
+
+        height: 52px;
+
+        font-size: 8px;
+    }
+
+    .sidebar-bottom span {
+        font-size: 16px;
+    }
 }
 
 
 /* =========================================
-   340px
+   480px
 ========================================= */
 
-@media (max-width: 340px) {
+@media (max-width: 480px) {
 
     .sidebar {
-        height: 64px;
+        height: 66px;
 
         padding:
-            6px 5px;
+            5px 4px;
+
+        /*
+         * KUNCI:
+         * sidebar punya scroll horizontal sendiri
+         */
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        overscroll-behavior-x: contain;
     }
 
+
+    nav {
+        width: max-content;
+        min-width: max-content;
+
+        flex-shrink: 0;
+    }
+
+
     nav a {
-        min-width: 45px;
+        flex: 0 0 70px;
+
+        width: 70px;
+        min-width: 70px;
+
+        height: 50px;
 
         padding:
-            5px 5px;
+            4px 1px;
 
         font-size: 7px;
     }
+
 
     nav a span {
         font-size: 14px;
     }
 
+
+    .sidebar-bottom {
+        width: 70px;
+        min-width: 70px;
+
+        height: 50px;
+
+        margin-left: 2px;
+
+        flex-shrink: 0;
+    }
+
+
+    .sidebar-bottom button {
+        width: 70px;
+        min-width: 70px;
+
+        height: 50px;
+
+        padding:
+            3px 1px;
+
+        font-size: 7px;
+    }
+
+
+    .sidebar-bottom span {
+        font-size: 15px;
+    }
+}
+
+
+/* =========================================
+   360px
+========================================= */
+
+@media (max-width: 360px) {
+
+    .sidebar {
+        height: 62px;
+
+        padding:
+            4px 3px;
+
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        overscroll-behavior-x: contain;
+    }
+
+
+    nav {
+        gap: 0;
+
+        width: max-content;
+        min-width: max-content;
+
+        flex-shrink: 0;
+    }
+
+
+    nav a {
+        flex: 0 0 68px;
+
+        width: 68px;
+        min-width: 68px;
+
+        height: 48px;
+
+        padding:
+            3px 0;
+
+        font-size: 6px;
+    }
+
+
+    nav a span {
+        font-size: 13px;
+    }
+
+
+    .sidebar-bottom {
+        width: 68px;
+        min-width: 68px;
+
+        height: 48px;
+
+        margin-left: 2px;
+
+        flex-shrink: 0;
+    }
+
+
+    .sidebar-bottom button {
+        width: 68px;
+        min-width: 68px;
+
+        height: 48px;
+
+        padding:
+            2px 0;
+
+        font-size: 6px;
+    }
+
+
+    .sidebar-bottom span {
+        font-size: 14px;
+    }
 }
 
 
@@ -423,20 +672,79 @@ nav a.active:hover {
 @media (max-width: 330px) {
 
     .sidebar {
-        height: 62px;
-    }
-
-    nav a {
-        min-width: 42px;
+        height: 60px;
 
         padding:
-            4px 3px;
+            3px 2px;
 
-        font-size: 6px;
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        overscroll-behavior-x: contain;
     }
+
+
+    nav {
+        width: max-content;
+        min-width: max-content;
+    }
+
+
+    nav a {
+        flex: 0 0 64px;
+
+        width: 64px;
+        min-width: 64px;
+
+        height: 46px;
+
+        padding:
+            2px 0;
+
+        font-size: 5px;
+    }
+
 
     nav a span {
-        font-size: 13px;
+        font-size: 12px;
     }
 
+
+    .sidebar-bottom {
+        width: 64px;
+        min-width: 64px;
+
+        height: 46px;
+
+        flex-shrink: 0;
+    }
+
+
+    .sidebar-bottom button {
+        width: 64px;
+        min-width: 64px;
+
+        height: 46px;
+
+        font-size: 5px;
+    }
+
+
+    .sidebar-bottom span {
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================
+   MOBILE BODY SAFETY
+========================================= */
+
+@media (max-width: 850px) {
+
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
 }

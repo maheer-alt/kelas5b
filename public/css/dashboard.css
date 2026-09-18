@@ -4,11 +4,11 @@
     padding: 0;
 }
 
+
 :root {
     --black: #080808;
     --white: #f4f3ed;
     --yellow: #d8ff00;
-
     --muted: #8b8b84;
     --line: rgba(244, 243, 237, 0.16);
 }
@@ -102,12 +102,14 @@ body::before {
     margin-bottom: 35px;
 }
 
+
 .mini-label {
     font-family:
         "JetBrains Mono",
         monospace;
 
-    color: var(--yellow);
+    color:
+        var(--yellow);
 
     font-size: 10px;
 
@@ -118,8 +120,10 @@ body::before {
     text-transform: uppercase;
 }
 
+
 .topbar h1 {
-    color: var(--white);
+    color:
+        var(--white);
 
     font-size: 30px;
 
@@ -142,44 +146,101 @@ body::before {
 
     align-items: center;
 
-    gap: 10px;
+    gap: 9px;
 
-    color: var(--white);
+    color:
+        var(--white);
 
-    font-size: 13px;
+    font-size: 12px;
 
     font-weight: 700;
 }
 
-.profile-mini div {
-    width: 38px;
-    height: 38px;
+
+/* =========================================
+   MINI AVATAR
+========================================= */
+
+#miniAvatar {
+    width: 30px;
+    height: 30px;
+
+    min-width: 30px;
+    min-height: 30px;
+
+    flex-shrink: 0;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    flex-shrink: 0;
-
-    border-radius: 0;
+    border-radius: 50%;
 
     background:
         var(--yellow);
 
-    color: var(--black);
+    color:
+        var(--black);
 
     border:
-        2px solid var(--white);
+        1.5px solid var(--white);
 
     box-shadow:
-        4px 4px 0 var(--white);
+        3px 3px 0 var(--white);
+
+    overflow: hidden;
 
     font-family:
         "JetBrains Mono",
         monospace;
 
+    font-size: 11px;
+
     font-weight: 900;
+}
+
+
+/* =========================================
+   MINI AVATAR IMAGE
+========================================= */
+
+#miniAvatar.has-image {
+    background:
+        transparent;
+
+    border:
+        1.5px solid var(--yellow);
+}
+
+
+#miniAvatar img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+}
+
+
+/* =========================================
+   MINI NAME
+========================================= */
+
+#miniName {
+    max-width: 150px;
+
+    color:
+        var(--white);
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
 }
 
 
@@ -223,6 +284,7 @@ body::before {
         box-shadow 0.2s ease;
 }
 
+
 .hero:hover {
     transform:
         translate(-3px, -3px);
@@ -234,7 +296,6 @@ body::before {
 
 /* =========================================
    HERO DECORATION
-   menggantikan orb
 ========================================= */
 
 .hero::after {
@@ -243,6 +304,7 @@ body::before {
     position: absolute;
 
     right: 35px;
+
     bottom: 20px;
 
     color:
@@ -274,12 +336,14 @@ body::before {
     max-width: 720px;
 }
 
+
 .hero-label {
     font-family:
         "JetBrains Mono",
         monospace;
 
-    color: var(--yellow);
+    color:
+        var(--yellow);
 
     font-size: 10px;
 
@@ -292,8 +356,10 @@ body::before {
     text-transform: uppercase;
 }
 
+
 .hero h2 {
-    color: var(--white);
+    color:
+        var(--white);
 
     font-size:
         clamp(35px, 5vw, 65px);
@@ -305,12 +371,16 @@ body::before {
     font-weight: 900;
 }
 
+
 .hero h2 span {
-    color: var(--yellow);
+    color:
+        var(--yellow);
 }
 
+
 .hero p {
-    color: var(--muted);
+    color:
+        var(--muted);
 
     margin-top: 20px;
 
@@ -324,7 +394,6 @@ body::before {
 
 /* =========================================
    HERO ORB
-   hidden supaya HTML lama tetap aman
 ========================================= */
 
 .hero-orb {
@@ -338,19 +407,23 @@ body::before {
     align-items: center;
     justify-content: center;
 
-    background: transparent;
+    background:
+        transparent;
 
-    border: 4px solid #d8ff00;
+    border:
+        4px solid var(--yellow);
 
     border-radius: 50%;
 
     overflow: hidden;
 
-    box-shadow: none;
+    box-shadow:
+        none;
 
     animation:
         brutalFloat 4s ease-in-out infinite;
 }
+
 
 .hero-orb img {
     width: 100%;
@@ -362,6 +435,7 @@ body::before {
 
     border-radius: 50%;
 }
+
 
 @keyframes brutalFloat {
 
@@ -427,6 +501,7 @@ body::before {
         border-color 0.18s ease;
 }
 
+
 .stat-card::before {
     content: "";
 
@@ -441,6 +516,7 @@ body::before {
     background:
         var(--yellow);
 }
+
 
 .stat-card:hover {
     transform:
@@ -462,7 +538,8 @@ body::before {
 ========================================= */
 
 .stat-card span {
-    color: var(--yellow);
+    color:
+        var(--yellow);
 
     font-family:
         "JetBrains Mono",
@@ -485,7 +562,8 @@ body::before {
 .stat-card strong {
     display: block;
 
-    color: var(--white);
+    color:
+        var(--white);
 
     font-size: 20px;
 
@@ -502,7 +580,8 @@ body::before {
 ========================================= */
 
 .stat-card p {
-    color: var(--muted);
+    color:
+        var(--muted);
 
     font-size: 12px;
 
@@ -533,10 +612,12 @@ body::before {
     width: 8px;
 }
 
+
 ::-webkit-scrollbar-track {
     background:
         var(--black);
 }
+
 
 ::-webkit-scrollbar-thumb {
     background:
@@ -563,6 +644,7 @@ body::before {
         padding-bottom: 100px;
     }
 
+
     .hero {
         padding: 30px;
 
@@ -572,20 +654,18 @@ body::before {
             6px 6px 0 var(--yellow);
     }
 
+
     .hero:hover {
         box-shadow:
             8px 8px 0 var(--yellow);
     }
 
+
     .hero-orb {
         width: 110px;
         height: 110px;
-
-        font-size: 25px;
-
-        box-shadow:
-            5px 5px 0 var(--white);
     }
+
 
     .stats {
         grid-template-columns: 1fr;
@@ -606,24 +686,44 @@ body::before {
         padding-bottom: 100px;
     }
 
+
     .topbar {
         align-items: flex-start;
 
         gap: 15px;
     }
 
+
     .topbar h1 {
         font-size: 28px;
     }
 
+
     .profile-mini {
         font-size: 0;
+
+        gap: 6px;
     }
 
-    .profile-mini div {
-        width: 36px;
-        height: 36px;
+
+    #miniAvatar {
+        width: 28px;
+        height: 28px;
+
+        min-width: 28px;
+        min-height: 28px;
+
+        box-shadow:
+            2px 2px 0 var(--white);
+
+        font-size: 10px;
     }
+
+
+    #miniName {
+        display: none;
+    }
+
 
     .hero {
         flex-direction: column;
@@ -635,28 +735,28 @@ body::before {
         padding: 27px;
     }
 
+
     .hero h2 {
         font-size: 42px;
 
         letter-spacing: -2px;
     }
 
+
     .hero-orb {
         width: 85px;
         height: 85px;
-
-        font-size: 21px;
-
-        box-shadow:
-            4px 4px 0 var(--white);
     }
+
 
     .hero::after {
         font-size: 65px;
 
         right: 20px;
+
         bottom: 15px;
     }
+
 
     .stat-card {
         min-height: 130px;
@@ -668,20 +768,27 @@ body::before {
 
 
 /* =========================================
-   340px
+   480px
 ========================================= */
 
-@media (max-width: 340px) {
+@media (max-width: 480px) {
 
     .dashboard {
         padding: 20px;
 
-        padding-bottom: 90px;
+        padding-bottom: 95px;
     }
 
-    .topbar h1 {
-        font-size: 25px;
+
+    .topbar {
+        margin-bottom: 28px;
     }
+
+
+    .topbar h1 {
+        font-size: 26px;
+    }
+
 
     .mini-label {
         font-size: 8px;
@@ -689,10 +796,25 @@ body::before {
         letter-spacing: 2px;
     }
 
-    .hero {
-        padding: 21px;
 
-        min-height: 275px;
+    #miniAvatar {
+        width: 26px;
+        height: 26px;
+
+        min-width: 26px;
+        min-height: 26px;
+
+        box-shadow:
+            2px 2px 0 var(--white);
+
+        font-size: 9px;
+    }
+
+
+    .hero {
+        padding: 23px;
+
+        min-height: 290px;
 
         border-left-width: 4px;
 
@@ -700,25 +822,120 @@ body::before {
             5px 5px 0 var(--yellow);
     }
 
-    .hero h2 {
-        font-size: 34px;
 
-        letter-spacing: -1.5px;
+    .hero h2 {
+        font-size: 38px;
+
+        letter-spacing: -1.8px;
     }
+
 
     .hero p {
         font-size: 12px;
     }
 
-    .hero-orb {
-        width: 70px;
-        height: 70px;
 
-        font-size: 18px;
+    .hero-orb {
+        width: 78px;
+        height: 78px;
     }
+
+
+    .stat-card {
+        padding: 20px;
+    }
+
+}
+
+
+/* =========================================
+   360px
+========================================= */
+
+@media (max-width: 360px) {
+
+    .dashboard {
+        padding: 16px;
+
+        padding-bottom: 90px;
+    }
+
+
+    .topbar {
+        margin-bottom: 25px;
+
+        gap: 8px;
+    }
+
+
+    .topbar h1 {
+        font-size: 23px;
+    }
+
+
+    .mini-label {
+        font-size: 7px;
+
+        letter-spacing: 1.5px;
+    }
+
+
+    #miniAvatar {
+        width: 24px;
+        height: 24px;
+
+        min-width: 24px;
+        min-height: 24px;
+
+        box-shadow:
+            1px 1px 0 var(--white);
+
+        font-size: 8px;
+    }
+
+
+    .hero {
+        padding: 19px;
+
+        min-height: 260px;
+
+        box-shadow:
+            4px 4px 0 var(--yellow);
+    }
+
+
+    .hero h2 {
+        font-size: 31px;
+
+        letter-spacing: -1.2px;
+    }
+
+
+    .hero-label {
+        font-size: 8px;
+
+        letter-spacing: 2px;
+    }
+
+
+    .hero p {
+        font-size: 11px;
+    }
+
+
+    .hero-orb {
+        width: 65px;
+        height: 65px;
+    }
+
 
     .stat-card {
         padding: 18px;
+    }
+
+
+    .stat-card strong {
+        font-size: 18px;
     }
 
 }
@@ -731,66 +948,85 @@ body::before {
 @media (max-width: 330px) {
 
     .dashboard {
-        padding: 16px;
+        padding: 14px;
 
         padding-bottom: 85px;
     }
 
+
     .topbar {
-        margin-bottom: 25px;
+        margin-bottom: 23px;
     }
+
 
     .topbar h1 {
-        font-size: 23px;
+        font-size: 21px;
     }
 
-    .profile-mini div {
-        width: 32px;
-        height: 32px;
+
+    .mini-label {
+        font-size: 6px;
+
+        letter-spacing: 1.2px;
+    }
+
+
+    #miniAvatar {
+        width: 22px;
+        height: 22px;
+
+        min-width: 22px;
+        min-height: 22px;
 
         box-shadow:
-            3px 3px 0 var(--white);
+            1px 1px 0 var(--white);
+
+        font-size: 7px;
     }
+
 
     .hero {
-        padding: 18px;
+        padding: 17px;
 
-        min-height: 250px;
+        min-height: 245px;
 
         box-shadow:
-            4px 4px 0 var(--yellow);
+            3px 3px 0 var(--yellow);
     }
+
 
     .hero h2 {
-        font-size: 30px;
+        font-size: 28px;
+
+        letter-spacing: -1px;
     }
+
 
     .hero-label {
-        font-size: 8px;
+        font-size: 7px;
 
-        letter-spacing: 2px;
+        letter-spacing: 1.5px;
     }
+
 
     .hero p {
-        font-size: 11px;
+        font-size: 10px;
     }
+
 
     .hero-orb {
-        width: 60px;
-        height: 60px;
-
-        font-size: 16px;
-
-        box-shadow:
-            3px 3px 0 var(--white);
+        width: 58px;
+        height: 58px;
     }
+
 
     .stat-card {
-        padding: 16px;
+        padding: 15px;
     }
 
+
     .stat-card strong {
-        font-size: 18px;
+        font-size: 17px;
     }
 
 }

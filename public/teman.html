@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Teman — Kelas 5B</title>
+
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/teman.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div id="sidebar"></div>
+
+
+    <!-- MAIN -->
+    <main class="friends-page">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div>
+                <p class="mini-label">
+                    KELAS 5B
+                </p>
+
+                <h1>
+                    Teman
+                </h1>
+            </div>
+
+            <div class="friends-count">
+                <span id="friendsCount">0</span>
+                <small>USER</small>
+            </div>
+
+        </header>
+
+
+        <!-- INTRO -->
+        <section class="friends-intro">
+
+            <div>
+                <p class="section-label">
+                    CLASS COMMUNITY
+                </p>
+
+                <h2>
+                    Teman<br>
+                    <span>sekelas.</span>
+                </h2>
+
+                <p class="intro-text">
+                    Lihat teman-teman yang sudah bergabung
+                    di ruang digital Kelas 5B.
+                </p>
+            </div>
+
+            <div class="intro-number">
+                02
+            </div>
+
+        </section>
+
+
+        <!-- SEARCH -->
+        <section class="friends-tools">
+
+            <div class="search-box">
+
+                <span class="search-icon">
+                    ⌕
+                </span>
+
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Cari teman..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+        </section>
+
+
+        <!-- MESSAGE -->
+        <p
+            id="friendsMessage"
+            class="friends-message"
+        ></p>
+
+
+        <!-- FRIENDS GRID -->
+        <section
+            id="friendsGrid"
+            class="friends-grid"
+        ></section>
+
+    </main>
+
+
+    <script
+        type="module"
+        src="js/teman.js"
+    ></script>
+
+</body>
+</html>

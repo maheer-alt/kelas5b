@@ -1,282 +1,214 @@
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  }
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 :root {
---black: #080808;
---white: #f4f3ed;
---yellow: #d8ff00;
---muted: #aaa9a1;
---line: rgba(255, 255, 255, 0.22);
-
---element-width: 320px;
-
+    --black: #080808;
+    --white: #f4f3ed;
+    --yellow: #d8ff00;
+    --muted: #aaa9a1;
+    --line: rgba(255, 255, 255, 0.22);
+    --element-width: 320px;
 }
 
 html {
-width: 100%;
-min-height: 100%;
-overflow-x: hidden;
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
 }
 
 body {
-width: 100%;
-min-width: 0;
-min-height: 100vh;
-overflow-x: hidden;
-
-background: var(--black);
-color: var(--white);
-
-font-family:
-    "Google Sans",
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-
+    width: 100%;
+    min-width: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: var(--black);
+    color: var(--white);
+    font-family:
+        "Google Sans",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
 }
 
 button,
 input {
-font-family: inherit;
+    font-family: inherit;
 }
 
 button,
 a {
-touch-action: manipulation;
+    touch-action: manipulation;
 }
 
 img {
-display: block;
-max-width: 100%;
+    display: block;
+    max-width: 100%;
 }
 
 main,
 section,
 form,
 div {
-max-width: 100%;
+    max-width: 100%;
 }
 
-/* =========================================================
-BACKGROUND
-========================================================= */
+/* Background */
 
 .background {
-position: fixed;
-inset: 0;
-
-width: 100%;
-height: 100%;
-
-background:
-    url("../assets/background.jpeg")
-    center / cover
-    no-repeat;
-
-filter:
-    brightness(0.48)
-    contrast(1.12)
-    saturate(0.75);
-
-transform: scale(1.02);
-
-z-index: -10;
-pointer-events: none;
-
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        url("../assets/background.jpeg")
+        center / cover
+        no-repeat;
+    filter:
+        brightness(0.48)
+        contrast(1.12)
+        saturate(0.75);
+    transform: scale(1.02);
+    z-index: -10;
+    pointer-events: none;
 }
 
 .background-overlay {
-position: fixed;
-inset: 0;
-
-width: 100%;
-height: 100%;
-
-background:
-    linear-gradient(
-        90deg,
-        rgba(0, 0, 0, 0.88) 0%,
-        rgba(0, 0, 0, 0.58) 45%,
-        rgba(0, 0, 0, 0.25) 100%
-    );
-
-z-index: -9;
-pointer-events: none;
-
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.88) 0%,
+            rgba(0, 0, 0, 0.58) 45%,
+            rgba(0, 0, 0, 0.25) 100%
+        );
+    z-index: -9;
+    pointer-events: none;
 }
 
 body::before {
-content: "";
-
-position: fixed;
-inset: 0;
-
-width: 100%;
-height: 100%;
-
-background-image:
-    linear-gradient(
-        rgba(255, 255, 255, 0.035) 1px,
-        transparent 1px
-    ),
-    linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0.035) 1px,
-        transparent 1px
-    );
-
-background-size: 45px 45px;
-
-pointer-events: none;
-z-index: -5;
-
+    content: "";
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.035) 1px,
+            transparent 1px
+        );
+    background-size: 45px 45px;
+    pointer-events: none;
+    z-index: -5;
 }
 
-body::after {
-display: none;
-}
-
+body::after,
 .orb {
-display: none;
+    display: none;
 }
 
-/* =========================================================
-REGISTER PAGE
-========================================================= */
+/* Page */
 
 .register-page {
-position: relative;
-
-
-width: 100%;
-max-width: 100vw;
-
-min-height: 100vh;
-min-height: 100svh;
-
-display: flex;
-align-items: center;
-justify-content: center;
-
-padding: 60px 24px;
-
+    position: relative;
+    width: 100%;
+    max-width: 100vw;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
 }
 
 .register-card {
-position: relative;
-
-width: 100%;
-max-width: 1100px;
-
-margin: 0 auto;
-padding: 0;
-
-background: transparent;
-
-text-align: center;
-
-animation:
-    pageEnter
-    0.55s
-    cubic-bezier(0.2, 0.8, 0.2, 1);
-
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0;
+    background: transparent;
+    text-align: center;
+    animation:
+        pageEnter
+        0.55s
+        cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .register-card::before,
 .register-card::after {
-display: none;
+    display: none;
 }
 
 @keyframes pageEnter {
-from {
-opacity: 0;
-transform: translateY(20px);
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-
-to {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-
-}
-
-/* =========================================================
-BACK BUTTON
-========================================================= */
+/* Back */
 
 .back {
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 7px;
-
-width: var(--element-width);
-max-width: var(--element-width);
-
-margin: 0 auto 27px;
-
-color:
-    rgba(255, 255, 255, 0.5);
-
-text-decoration: none;
-
-font-family:
-    "JetBrains Mono",
-    monospace;
-
-font-size: 9px;
-font-weight: 700;
-
-letter-spacing: 1px;
-text-transform: uppercase;
-
-transition:
-    color 0.15s ease,
-    transform 0.15s ease;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: var(--element-width);
+    max-width: var(--element-width);
+    margin: 0 auto 27px;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition:
+        color 0.15s ease,
+        transform 0.15s ease;
 }
 
 .back:hover {
-color: var(--yellow);
-transform: translateX(-3px);
+    color: var(--yellow);
+    transform: translateX(-3px);
 }
 
 .back i {
-color: var(--yellow);
+    color: var(--yellow);
 }
 
-/* =========================================================
-LOGO
-========================================================= */
+/* Logo */
 
 .logo {
     width: 100px;
     height: 100px;
-
     margin: 0 auto 27px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
-
-    /* GARIS STABILO TIPIS */
     border: 2px solid var(--yellow);
-
     background: transparent;
-
     overflow: hidden;
-
     box-shadow: none;
-
     animation:
         logoEnter
         0.5s
@@ -286,107 +218,68 @@ LOGO
 .logo img {
     width: 100%;
     height: 100%;
-
     display: block;
-
     object-fit: cover;
-
     border-radius: 50%;
 }
 
 @keyframes logoEnter {
-from {
-opacity: 0;
-transform: scale(0.8) rotate(-8deg);
+    from {
+        opacity: 0;
+        transform: scale(0.8) rotate(-8deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
 }
 
-to {
-    opacity: 1;
-    transform: scale(1) rotate(0);
-}
-
-}
-
-/* =========================================================
-TITLE
-========================================================= */
+/* Title */
 
 .title-area {
-width: 100%;
-max-width: 1100px;
-
-margin: 0 auto;
-
-text-align: center;
-
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .eyebrow {
-position: relative;
-
-display: block;
-
-width: fit-content;
-max-width: 100%;
-
-margin: 0 auto 13px;
-
-padding-left: 18px;
-
-color: var(--yellow);
-
-font-family:
-    "JetBrains Mono",
-    monospace;
-
-font-size: 9px;
-font-weight: 700;
-
-letter-spacing: 3px;
-
-white-space: nowrap;
-
+    position: relative;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 13px;
+    padding-left: 18px;
+    color: var(--yellow);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    white-space: nowrap;
 }
 
 .eyebrow::before {
-content: "";
-
-position: absolute;
-
-left: 0;
-top: 50%;
-
-width: 10px;
-height: 2px;
-
-background: var(--yellow);
-
-transform: translateY(-50%);
-
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 10px;
+    height: 2px;
+    background: var(--yellow);
+    transform: translateY(-50%);
 }
 
 h1 {
     width: 100%;
     max-width: 100%;
-
     margin: 0 auto;
-
     color: var(--white);
-
     font-size: clamp(34px, 5vw, 76px);
-
     line-height: 0.94;
-
-    letter-spacing: clamp(
-        -3.5px,
-        -0.32vw,
-        -1.5px
-    );
-
+    letter-spacing: clamp(-3.5px, -0.32vw, -1.5px);
     font-weight: 850;
-
     text-align: center;
-
     white-space: nowrap;
 }
 
@@ -400,769 +293,560 @@ h1 span {
 }
 
 .subtitle {
-width: 100%;
-max-width: 340px;
-
-margin:
-    19px auto 31px;
-
-color: var(--muted);
-
-font-size: 13px;
-
-line-height: 1.6;
-
-text-align: center;
-
+    width: 100%;
+    max-width: 340px;
+    margin: 19px auto 31px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: center;
 }
 
-/* =========================================================
-REGISTER FORM
-========================================================= */
+/* Form */
 
 #registerForm {
-width: var(--element-width);
-max-width: var(--element-width);
-
-margin: 0 auto;
-
-text-align: left;
-
+    width: var(--element-width);
+    max-width: var(--element-width);
+    margin: 0 auto;
+    text-align: left;
 }
-
-/* =========================================================
-ROW
-========================================================= */
 
 .row {
-width: var(--element-width);
-max-width: var(--element-width);
-
-display: flex;
-flex-direction: column;
-
-gap: 0;
-
-margin: 0 auto;
-
+    width: var(--element-width);
+    max-width: var(--element-width);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0 auto;
 }
 
-/* =========================================================
-INPUT GROUP
-========================================================= */
-
 .input-group {
-width: var(--element-width);
-max-width: var(--element-width);
-
-
-margin:
-    0 auto 17px;
-
-
+    width: var(--element-width);
+    max-width: var(--element-width);
+    margin: 0 auto 17px;
 }
 
 .input-group label {
-display: block;
-
-width: 100%;
-
-margin-bottom: 7px;
-
-color: var(--white);
-
-font-family:
-    "JetBrains Mono",
-    monospace;
-
-font-size: 9px;
-font-weight: 700;
-
-letter-spacing: 1.5px;
-
-text-transform: uppercase;
-
+    display: block;
+    width: 100%;
+    margin-bottom: 7px;
+    color: var(--white);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
 }
 
-/* =========================================================
-INPUT
-========================================================= */
-
 .input-group input {
-display: block;
-
-width: var(--element-width);
-max-width: var(--element-width);
-
-height: 48px;
-
-padding:
-    0 15px;
-
-border: none;
-
-border-bottom:
-    2px solid var(--line);
-
-outline: none;
-
-border-radius: 0;
-
-background:
-    rgba(0, 0, 0, 0.12);
-
-color: #fff;
-
-font-family: inherit;
-
-font-size: 13px;
-
-transition:
-    border-color 0.18s ease,
-    background 0.18s ease;
-
+    display: block;
+    width: var(--element-width);
+    max-width: var(--element-width);
+    height: 48px;
+    padding: 0 15px;
+    border: none;
+    border-bottom: 2px solid var(--line);
+    outline: none;
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.12);
+    color: #fff;
+    font-family: inherit;
+    font-size: 13px;
+    transition:
+        border-color 0.18s ease,
+        background 0.18s ease;
 }
 
 .input-group input::placeholder {
-color:
-rgba(
-255,
-255,
-255,
-0.35
-);
+    color: rgba(255, 255, 255, 0.35);
 }
 
 .input-group input:hover {
-border-bottom-color:
-rgba(
-255,
-255,
-255,
-0.55
-);
+    border-bottom-color: rgba(255, 255, 255, 0.55);
 }
 
 .input-group input:focus {
-border-bottom:
-3px solid var(--yellow);
-
-background:
-    rgba(0, 0, 0, 0.22);
-
-box-shadow: none;
-
+    border-bottom: 3px solid var(--yellow);
+    background: rgba(0, 0, 0, 0.22);
+    box-shadow: none;
 }
 
-/* =========================================================
-HIGHLIGHT BUTTON
-========================================================= */
+/* Password */
+
+.input-wrapper {
+    position: relative;
+    width: var(--element-width);
+    max-width: var(--element-width);
+}
+
+.input-wrapper input {
+    width: var(--element-width);
+    max-width: var(--element-width);
+    padding-left: 15px;
+    padding-right: 52px;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 20;
+    appearance: none;
+    -webkit-appearance: none;
+    transition:
+        color 0.15s ease,
+        transform 0.1s ease;
+}
+
+.password-toggle i {
+    display: block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    pointer-events: none;
+}
+
+.password-toggle:hover {
+    color: var(--yellow);
+}
+
+.password-toggle:active {
+    transform: scale(0.9);
+}
+
+.password-toggle:focus {
+    outline: none;
+}
+
+.password-toggle:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 2px;
+}
+
+/* Button */
 
 .highlight-button {
-position: relative;
-
-width: var(--element-width);
-max-width: var(--element-width);
-
-height: 54px;
-
-margin:
-    12px auto 0;
-
-display: flex;
-align-items: center;
-justify-content: center;
-
-background: var(--yellow);
-
-box-shadow:
-    6px 6px 0 var(--yellow);
+    position: relative;
+    width: var(--element-width);
+    max-width: var(--element-width);
+    height: 54px;
+    margin: 12px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--yellow);
+    box-shadow: 6px 6px 0 var(--yellow);
 }
 
-/* =========================================================
-REGISTER BUTTON
-========================================================= */
-
 .register-button {
-display: flex;
-align-items: center;
-justify-content: space-between;
-
-width: var(--element-width);
-max-width: var(--element-width);
-
-height: 54px;
-
-margin: 0;
-
-padding:
-    0 18px;
-
-border:
-    2px solid var(--white);
-
-border-radius: 0;
-
-background: var(--yellow);
-
-color: var(--black);
-
-font-family: inherit;
-
-font-size: 12px;
-font-weight: 900;
-
-letter-spacing: 0.3px;
-
-cursor: pointer;
-
-box-shadow:
-    5px 5px 0
-    rgba(0, 0, 0, 0.7);
-
-transition:
-    transform 0.1s ease,
-    box-shadow 0.1s ease;
-
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: var(--element-width);
+    max-width: var(--element-width);
+    height: 54px;
+    margin: 0;
+    padding: 0 18px;
+    border: 2px solid var(--white);
+    border-radius: 0;
+    background: var(--yellow);
+    color: var(--black);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.7);
+    transition:
+        transform 0.1s ease,
+        box-shadow 0.1s ease;
 }
 
 .register-button:hover {
-transform:
-translate(3px, 3px);
-
-
-box-shadow:
-    2px 2px 0
-    rgba(0, 0, 0, 0.7);
-
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.7);
 }
 
 .register-button:active {
-transform:
-translate(5px, 5px);
-
-box-shadow: none;
-
-
+    transform: translate(5px, 5px);
+    box-shadow: none;
 }
 
 .register-button:disabled {
-opacity: 0.55;
-cursor: wait;
+    opacity: 0.55;
+    cursor: wait;
 }
 
-/* =========================================================
-MESSAGE
-========================================================= */
+/* Message */
 
 .message {
-width: var(--element-width);
-max-width: var(--element-width);
-
-min-height: 18px;
-
-margin:
-    10px auto 0;
-
-color: var(--yellow);
-
-font-family:
-    "JetBrains Mono",
-    monospace;
-
-font-size: 9px;
-
-text-align: left;
-
-overflow-wrap: anywhere;
-
+    width: var(--element-width);
+    max-width: var(--element-width);
+    min-height: 18px;
+    margin: 10px auto 0;
+    color: var(--yellow);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    text-align: left;
+    overflow-wrap: anywhere;
 }
 
-/* =========================================================
-LOGIN LINK
-========================================================= */
+/* Login */
 
 .login-text {
-width: var(--element-width);
-max-width: var(--element-width);
-
-margin:
-    23px auto 0;
-
-color:
-    rgba(
-        255,
-        255,
-        255,
-        0.45
-    );
-
-font-size: 10px;
-
-text-align: center;
-
+    width: var(--element-width);
+    max-width: var(--element-width);
+    margin: 23px auto 0;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 10px;
+    text-align: center;
 }
 
 .login-text a {
-color: var(--white);
-
-text-decoration: none;
-
-font-weight: 800;
-
-margin-left: 3px;
-
-border-bottom:
-    1px solid var(--yellow);
-
-padding-bottom: 2px;
-
-transition:
-    color 0.12s ease;
-
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 800;
+    margin-left: 3px;
+    border-bottom: 1px solid var(--yellow);
+    padding-bottom: 2px;
+    transition: color 0.12s ease;
 }
 
 .login-text a:hover {
-color: var(--yellow);
+    color: var(--yellow);
 }
 
-/* =========================================================
-SECURITY / EXTRA CONTENT
-========================================================= */
+/* Security */
 
 .security-note {
-display: flex;
-align-items: center;
-justify-content: center;
-
-width: var(--element-width);
-max-width: var(--element-width);
-
-margin:
-    18px auto 0;
-
-padding-top: 13px;
-
-border-top:
-    1px solid
-    rgba(
-        255,
-        255,
-        255,
-        0.1
-    );
-
-color:
-    rgba(
-        255,
-        255,
-        255,
-        0.3
-    );
-
-font-family:
-    "JetBrains Mono",
-    monospace;
-
-font-size: 7px;
-
-gap: 7px;
-
-text-align: center;
-
-overflow-wrap: anywhere;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--element-width);
+    max-width: var(--element-width);
+    margin: 18px auto 0;
+    padding-top: 13px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.3);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 7px;
+    gap: 7px;
+    text-align: center;
+    overflow-wrap: anywhere;
 }
 
 .security-note i {
-flex-shrink: 0;
-
-color: var(--yellow);
-
+    flex-shrink: 0;
+    color: var(--yellow);
 }
 
-/* =========================================================
-CURSOR
-========================================================= */
+/* Cursor */
 
 .cursor-dot,
 .cursor-ring {
-position: fixed;
-
-pointer-events: none;
-
-z-index: 9999;
-
-transform:
-    translate(-50%, -50%);
-
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
 }
 
 .cursor-dot {
-width: 5px;
-height: 5px;
-
-background: var(--yellow);
-
+    width: 5px;
+    height: 5px;
+    background: var(--yellow);
 }
 
 .cursor-ring {
-width: 25px;
-height: 25px;
-
-border:
-    1px solid var(--yellow);
-
-border-radius: 0;
-
-transform:
-    translate(-50%, -50%)
-    rotate(45deg);
-
+    width: 25px;
+    height: 25px;
+    border: 1px solid var(--yellow);
+    border-radius: 0;
+    transform:
+        translate(-50%, -50%)
+        rotate(45deg);
 }
 
-/* =========================================================
-TABLET
-========================================================= */
+/* Responsive */
 
 @media (max-width: 900px) {
+    .register-page {
+        padding: 50px 24px;
+    }
 
-.register-page {
-    padding:
-        50px 24px;
+    h1 {
+        font-size: clamp(34px, 7vw, 62px);
+    }
 }
-
-h1 {
-    font-size:
-        clamp(
-            34px,
-            7vw,
-            62px
-        );
-}
-
-}
-
-/* =========================================================
-MOBILE 602PX
-========================================================= */
 
 @media (max-width: 602px) {
+    .register-page {
+        width: 100%;
+        max-width: 100vw;
+        min-height: 100svh;
+        padding: 35px 20px;
+    }
 
-.register-page {
-    width: 100%;
-    max-width: 100vw;
+    .register-card {
+        width: 100%;
+        max-width: 420px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 
-    min-height: 100svh;
+    .back {
+        width: 320px;
+        max-width: 320px;
+    }
 
-    padding:
-        35px 20px;
+    .logo {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 22px;
+    }
+
+    .eyebrow {
+        font-size: 8px;
+        letter-spacing: 2.5px;
+    }
+
+    h1 {
+        width: 100%;
+        max-width: 100%;
+        font-size: clamp(30px, 10vw, 50px);
+        line-height: 0.94;
+        letter-spacing: -2px;
+        white-space: normal;
+        overflow: visible;
+        overflow-wrap: normal;
+        word-break: normal;
+    }
+
+    h1 span {
+        display: block;
+    }
+
+    .subtitle {
+        max-width: 320px;
+        margin-top: 16px;
+        margin-bottom: 27px;
+        font-size: 12px;
+    }
+
+    #registerForm,
+    .row,
+    .input-group,
+    .input-group input,
+    .input-wrapper,
+    .input-wrapper input,
+    .register-button,
+    .highlight-button,
+    .message,
+    .login-text,
+    .security-note {
+        width: 320px;
+        max-width: 320px;
+    }
+
+    .register-button {
+        width: 320px;
+        max-width: 320px;
+    }
+
+    .background-overlay {
+        background:
+            linear-gradient(
+                180deg,
+                rgba(0, 0, 0, 0.82),
+                rgba(0, 0, 0, 0.58)
+            );
+    }
+
+    .cursor-dot,
+    .cursor-ring {
+        display: none;
+    }
+
+    body::before {
+        background-size: 35px 35px;
+    }
 }
-
-.register-card {
-    width: 100%;
-    max-width: 420px;
-
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.back {
-    width: 320px;
-    max-width: 320px;
-}
-
-.logo {
-    width: 100px;
-    height: 100px;
-
-    margin-bottom: 22px;
-}
-
-.eyebrow {
-    font-size: 8px;
-    letter-spacing: 2.5px;
-}
-
-h1 {
-    width: 100%;
-    max-width: 100%;
-
-    font-size:
-        clamp(
-            30px,
-            10vw,
-            50px
-        );
-
-    line-height: 0.94;
-
-    letter-spacing: -2px;
-
-    white-space: normal;
-
-    overflow: visible;
-
-    overflow-wrap: normal;
-    word-break: normal;
-}
-
-h1 span {
-    display: block;
-}
-
-.subtitle {
-    max-width: 320px;
-
-    margin-top: 16px;
-    margin-bottom: 27px;
-
-    font-size: 12px;
-}
-
-#registerForm,
-.row,
-.input-group,
-.input-group input,
-.register-button,
-.highlight-button,
-.message,
-.login-text,
-.security-note {
-
-    width: 320px;
-    max-width: 320px;
-}
-
-.register-button {
-    width: 320px;
-    max-width: 320px;
-}
-
-.background-overlay {
-    background:
-        linear-gradient(
-            180deg,
-            rgba(0, 0, 0, 0.82),
-            rgba(0, 0, 0, 0.58)
-        );
-}
-
-.cursor-dot,
-.cursor-ring {
-    display: none;
-}
-
-body::before {
-    background-size: 35px 35px;
-}
-
-}
-
-/* =========================================================
-HP KECIL
-========================================================= */
 
 @media (max-width: 340px) {
+    .register-page {
+        padding: 28px 10px;
+    }
 
-.register-page {
-    padding:
-        28px 10px;
+    #registerForm,
+    .row,
+    .input-group,
+    .input-group input,
+    .input-wrapper,
+    .input-wrapper input,
+    .register-button,
+    .highlight-button,
+    .message,
+    .login-text,
+    .security-note,
+    .back {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .logo {
+        width: 86px;
+        height: 86px;
+        font-size: 18px;
+    }
+
+    h1 {
+        font-size: clamp(28px, 10vw, 39px);
+        letter-spacing: -1.8px;
+    }
+
+    .subtitle {
+        max-width: 290px;
+        font-size: 11px;
+    }
+
+    .input-group input {
+        height: 46px;
+        font-size: 12px;
+    }
+
+    .input-wrapper input {
+        padding-right: 50px;
+    }
+
+    .password-toggle {
+        width: 46px;
+        height: 46px;
+    }
+
+    .register-button {
+        height: 51px;
+    }
+
+    .login-text {
+        font-size: 9px;
+    }
+
+    .security-note {
+        font-size: 6.5px;
+    }
 }
-
-#registerForm,
-.row,
-.input-group,
-.input-group input,
-.register-button,
-.highlight-button,
-.message,
-.login-text,
-.security-note,
-.back {
-
-    width: 100%;
-    max-width: 320px;
-}
-
-.logo {
-    width: 86px;
-    height: 86px;
-
-    font-size: 18px;
-}
-
-h1 {
-    font-size:
-        clamp(
-            28px,
-            10vw,
-            39px
-        );
-
-    letter-spacing: -1.8px;
-}
-
-.subtitle {
-    max-width: 290px;
-
-    font-size: 11px;
-}
-
-.input-group input {
-    height: 46px;
-
-    font-size: 12px;
-}
-
-.register-button {
-    height: 51px;
-}
-
-.login-text {
-    font-size: 9px;
-}
-
-.security-note {
-    font-size: 6.5px;
-}
-
-}
-
-/* =========================================================
-HP SANGAT KECIL
-========================================================= */
 
 @media (max-width: 330px) {
+    .register-page {
+        padding: 24px 13px;
+    }
 
-.register-page {
-    padding:
-        24px 13px;
+    .logo {
+        width: 82px;
+        height: 82px;
+    }
+
+    .back {
+        font-size: 8px;
+    }
+
+    .eyebrow {
+        font-size: 7px;
+        letter-spacing: 2px;
+    }
+
+    h1 {
+        font-size: 28px;
+        letter-spacing: -1.3px;
+    }
+
+    .subtitle {
+        font-size: 10px;
+    }
+
+    .input-group label {
+        font-size: 8px;
+    }
+
+    .input-group input {
+        padding: 0 13px;
+    }
+
+    .input-wrapper input {
+        padding-right: 48px;
+    }
+
+    .password-toggle {
+        width: 44px;
+        height: 46px;
+    }
+
+    .register-button {
+        padding: 0 14px;
+    }
 }
-
-.logo {
-    width: 82px;
-    height: 82px;
-}
-
-.back {
-    font-size: 8px;
-}
-
-.eyebrow {
-    font-size: 7px;
-    letter-spacing: 2px;
-}
-
-h1 {
-    font-size: 28px;
-    letter-spacing: -1.3px;
-}
-
-.subtitle {
-    font-size: 10px;
-}
-
-.input-group label {
-    font-size: 8px;
-}
-
-.input-group input {
-    padding:
-        0 13px;
-}
-
-.register-button {
-    padding:
-        0 14px;
-}
-
-}
-
-/* =========================================================
-LANDSCAPE MOBILE
-========================================================= */
 
 @media (max-height: 600px) and (orientation: landscape) {
+    .register-page {
+        align-items: flex-start;
+        min-height: 100svh;
+        padding: 25px 20px 35px;
+    }
 
-.register-page {
-    align-items: flex-start;
+    .logo {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
 
-    min-height: 100svh;
+    h1 {
+        font-size: clamp(28px, 7vw, 42px);
+    }
 
-    padding:
-        25px 20px 35px;
+    .subtitle {
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
 }
-
-.logo {
-    width: 60px;
-    height: 60px;
-
-    margin-bottom: 12px;
-
-    font-size: 14px;
-}
-
-h1 {
-    font-size:
-        clamp(
-            28px,
-            7vw,
-            42px
-        );
-}
-
-.subtitle {
-    margin-top: 10px;
-    margin-bottom: 15px;
-}
-
-}
-
-/* =========================================================
-FOCUS
-========================================================= */
 
 input:focus-visible,
 button:focus-visible,
 a:focus-visible {
-outline:
-2px solid var(--yellow);
-
-outline-offset: 3px;
-
+    outline: 2px solid var(--yellow);
+    outline-offset: 3px;
 }
-
-/* =========================================================
-SELECTION
-========================================================= */
 
 ::selection {
-background: var(--yellow);
-color: var(--black);
+    background: var(--yellow);
+    color: var(--black);
 }
-
-/* =========================================================
-REDUCED MOTION
-========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-
-*,
-*::before,
-*::after {
-
-    animation: none !important;
-    transition: none !important;
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
 }
-
-}
-
-/* =========================================================
-FINAL OVERFLOW PROTECTION
-========================================================= */
 
 html,
 body {
-overflow-x: hidden !important;
+    overflow-x: hidden !important;
 }
+

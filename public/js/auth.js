@@ -10,13 +10,6 @@ const GOOGLE_CLIENT_ID =
 
 
 // ======================================================
-// VERCEL BACKEND
-// ======================================================
-
-const GOOGLE_BACKEND_URL =
-    "/api/google-login.js";
-
-// ======================================================
 // ELEMENT
 // ======================================================
 
@@ -68,18 +61,22 @@ if (loginForm) {
                     ? passwordInput.value
                     : "";
 
+
             if (!email || !password) {
                 return;
             }
+
 
             if (loginButton) {
                 loginButton.disabled = true;
             }
 
+
             if (loginMessage) {
                 loginMessage.textContent =
                     "Memeriksa akun...";
             }
+
 
             try {
 
@@ -93,17 +90,34 @@ if (loginForm) {
                             password
                         });
 
+
                 if (error) {
                     throw error;
                 }
 
-                if (!data.user) {
+
+                if (!data || !data.user) {
+
                     throw new Error(
                         "Akun tidak ditemukan."
                     );
+
                 }
 
-                // Bersihkan session Google
+
+                // ==================================================
+                // PASTIKAN PROFILE ADA
+                // ==================================================
+
+                await ensureProfile(
+                    data.user
+                );
+
+
+                // ==================================================
+                // BERSIHKAN MODE LAMA
+                // ==================================================
+
                 localStorage.removeItem(
                     "googleSession"
                 );
@@ -116,17 +130,23 @@ if (loginForm) {
                     "guestMode"
                 );
 
+
                 if (loginMessage) {
                     loginMessage.textContent =
                         "Login berhasil!";
                 }
 
-                setTimeout(() => {
 
-                    window.location.href =
-                        "dashboard.html";
+                setTimeout(
+                    () => {
 
-                }, 500);
+                        window.location.href =
+                            "dashboard.html";
+
+                    },
+                    500
+                );
+
 
             } catch (error) {
 
@@ -135,14 +155,18 @@ if (loginForm) {
                     error
                 );
 
+
                 if (loginMessage) {
+
                     loginMessage.textContent =
                         "Login gagal: " +
                         (
                             error.message ||
                             "Terjadi kesalahan."
                         );
+
                 }
+
 
                 if (loginButton) {
                     loginButton.disabled =
@@ -167,7 +191,7 @@ let googleReady = false;
 
 
 // ======================================================
-// INITIALIZE GOOGLE SEKALI SAJA
+// INITIALIZE GOOGLE
 // ======================================================
 
 function initializeGoogle() {
@@ -176,13 +200,17 @@ function initializeGoogle() {
         return true;
     }
 
+
     if (
         !window.google ||
         !window.google.accounts ||
         !window.google.accounts.id
     ) {
+
         return false;
+
     }
+
 
     try {
 
@@ -205,17 +233,21 @@ function initializeGoogle() {
 
         });
 
+
         googleInitialized =
             true;
 
         googleReady =
             true;
 
+
         console.log(
             "Google Identity Services siap."
         );
 
+
         return true;
+
 
     } catch (error) {
 
@@ -224,8 +256,11 @@ function initializeGoogle() {
             error
         );
 
+
         return false;
+
     }
+
 }
 
 
@@ -246,125 +281,92 @@ async function handleGoogleCredential(
             "Google tidak memberikan credential."
         );
 
+
         if (loginMessage) {
+
             loginMessage.textContent =
                 "Google tidak memberikan ID Token.";
+
         }
 
+
         return;
+
     }
+
 
     try {
 
         if (loginMessage) {
+
             loginMessage.textContent =
-                "Mengirim ke server...";
+                "Menghubungkan ke Supabase...";
+
         }
 
 
         // ==================================================
-        // KIRIM ID TOKEN KE BACKEND
+        // GOOGLE → SUPABASE AUTH SESSION
         // ==================================================
 
-        const serverResponse =
-            await fetch(
-                GOOGLE_BACKEND_URL,
-                {
-                    method: "POST",
+        const {
+            data,
+            error
+        } =
+            await supabase.auth
+                .signInWithIdToken({
 
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
+                    provider:
+                        "google",
 
-                    body: JSON.stringify({
+                    token:
+                        response.credential
 
-                        // Backend kita menggunakan
-                        // nama id_token
-                        id_token:
-                            response.credential
+                });
 
-                    })
-                }
+
+        if (error) {
+
+            console.error(
+                "Supabase Google Login:",
+                error
             );
 
+            throw error;
 
-        // ==================================================
-        // BACA RESPONSE
-        // ==================================================
+        }
 
-        let result = null;
 
-        try {
-
-            result =
-                await serverResponse.json();
-
-        } catch (error) {
+        if (!data || !data.user) {
 
             throw new Error(
-                "Server memberikan response yang tidak valid."
+                "Supabase tidak mengembalikan user."
             );
 
         }
 
 
         // ==================================================
-        // CEK RESPONSE
+        // PASTIKAN PROFILE ADA
         // ==================================================
 
-        if (!serverResponse.ok) {
-
-            throw new Error(
-                result?.message ||
-                "Google Login gagal di server."
-            );
-
-        }
-
-
-        if (!result) {
-
-            throw new Error(
-                "Response server kosong."
-            );
-
-        }
-
-
-        if (!result.user) {
-
-            throw new Error(
-                "Data user Google tidak ditemukan."
-            );
-
-        }
-
-
-        // ==================================================
-        // SIMPAN USER GOOGLE
-        // ==================================================
-
-        localStorage.setItem(
-            "googleSession",
-            JSON.stringify(
-                result.user
-            )
+        await ensureProfile(
+            data.user
         );
 
 
-        // Simpan JWT dari backend
-        if (result.token) {
+        // ==================================================
+        // BERSIHKAN MODE LAMA
+        // ==================================================
 
-            localStorage.setItem(
-                "googleToken",
-                result.token
-            );
+        localStorage.removeItem(
+            "googleSession"
+        );
 
-        }
+        localStorage.removeItem(
+            "googleToken"
+        );
 
-
-        // Guest tidak boleh aktif
         sessionStorage.removeItem(
             "guestMode"
         );
@@ -376,13 +378,15 @@ async function handleGoogleCredential(
 
         console.log(
             "Google Login berhasil:",
-            result.user
+            data.user
         );
 
 
         if (loginMessage) {
+
             loginMessage.textContent =
                 "✓ Google Login berhasil!";
+
         }
 
 
@@ -390,12 +394,15 @@ async function handleGoogleCredential(
         // DASHBOARD
         // ==================================================
 
-        setTimeout(() => {
+        setTimeout(
+            () => {
 
-            window.location.href =
-                "dashboard.html";
+                window.location.href =
+                    "dashboard.html";
 
-        }, 600);
+            },
+            600
+        );
 
 
     } catch (error) {
@@ -404,6 +411,7 @@ async function handleGoogleCredential(
             "Google Login:",
             error
         );
+
 
         if (loginMessage) {
 
@@ -415,6 +423,7 @@ async function handleGoogleCredential(
                 );
 
         }
+
 
         restoreGoogleButton();
 
@@ -437,25 +446,21 @@ function renderGoogleButton() {
         );
 
         return;
+
     }
 
 
-    // Cari tombol Google lama
     const oldButton =
         document.getElementById(
             "googleButton"
         );
 
 
-    // Cari container kalau sudah ada
     let container =
         document.getElementById(
             "googleButtonContainer"
         );
 
-
-    // Kalau container belum ada,
-    // buat otomatis.
 
     if (!container) {
 
@@ -464,15 +469,14 @@ function renderGoogleButton() {
                 "div"
             );
 
+
         container.id =
             "googleButtonContainer";
+
 
         container.className =
             "google-button-container";
 
-
-        // Kalau tombol lama ada,
-        // letakkan container di tempatnya.
 
         if (oldButton) {
 
@@ -480,6 +484,7 @@ function renderGoogleButton() {
                 container,
                 oldButton
             );
+
 
             oldButton.style.display =
                 "none";
@@ -490,6 +495,7 @@ function renderGoogleButton() {
                 document.querySelector(
                     ".login-card"
                 );
+
 
             if (loginCard) {
 
@@ -510,17 +516,16 @@ function renderGoogleButton() {
     }
 
 
-    // Bersihkan container
-    container.innerHTML = "";
+    container.innerHTML =
+        "";
 
-
-    // Render tombol resmi Google
 
     window.google.accounts.id.renderButton(
 
         container,
 
         {
+
             type:
                 "standard",
 
@@ -541,6 +546,7 @@ function renderGoogleButton() {
 
             width:
                 320
+
         }
 
     );
@@ -576,9 +582,13 @@ function restoreGoogleButton() {
 function startGoogle() {
 
     if (googleReady) {
+
         renderGoogleButton();
+
         return;
+
     }
+
 
     renderGoogleButton();
 
@@ -600,6 +610,7 @@ function waitForGoogle() {
         startGoogle();
 
         return;
+
     }
 
 
@@ -629,9 +640,7 @@ window.addEventListener(
 // ENSURE PROFILE
 // ======================================================
 
-async function ensureProfile(
-    user
-) {
+async function ensureProfile(user) {
 
     if (!user) {
         return;
@@ -640,6 +649,10 @@ async function ensureProfile(
 
     try {
 
+        // ==================================================
+        // CEK PROFILE
+        // ==================================================
+
         const {
             data: existingProfile,
             error: selectError
@@ -647,18 +660,31 @@ async function ensureProfile(
             await supabase
                 .from("profiles")
                 .select("id")
-                .eq(
-                    "id",
-                    user.id
-                )
+                .eq("id", user.id)
                 .maybeSingle();
 
 
         if (selectError) {
 
             console.error(
-                "Profile check:",
+                "Profile check error:",
                 selectError
+            );
+
+            throw selectError;
+
+        }
+
+
+        // ==================================================
+        // PROFILE SUDAH ADA
+        // ==================================================
+
+        if (existingProfile) {
+
+            console.log(
+                "Profile sudah ada:",
+                user.id
             );
 
             return;
@@ -666,29 +692,24 @@ async function ensureProfile(
         }
 
 
-        if (existingProfile) {
-            return;
-        }
-
+        // ==================================================
+        // AMBIL METADATA USER
+        // ==================================================
 
         const metadata =
-            user.user_metadata ||
-            {};
+            user.user_metadata || {};
 
 
         const fullName =
             metadata.full_name ||
             metadata.name ||
-            user.email
-                ?.split("@")[0] ||
+            user.email?.split("@")[0] ||
             "User";
 
 
         const username =
             metadata.username ||
-            createUsername(
-                fullName
-            );
+            createUsername(fullName);
 
 
         const avatarUrl =
@@ -697,8 +718,13 @@ async function ensureProfile(
             "";
 
 
+        // ==================================================
+        // BUAT PROFILE
+        // ==================================================
+
         const {
-            error
+            data: newProfile,
+            error: insertError
         } =
             await supabase
                 .from("profiles")
@@ -719,17 +745,28 @@ async function ensureProfile(
                     avatar_url:
                         avatarUrl
 
-                });
+                })
+                .select()
+                .single();
 
 
-        if (error) {
+        if (insertError) {
 
             console.error(
-                "Profile create:",
-                error
+                "Profile create error:",
+                insertError
             );
 
+            throw insertError;
+
         }
+
+
+        console.log(
+            "Profile berhasil dibuat:",
+            newProfile
+        );
+
 
     } catch (error) {
 
@@ -737,6 +774,8 @@ async function ensureProfile(
             "Ensure profile error:",
             error
         );
+
+        throw error;
 
     }
 
@@ -785,7 +824,6 @@ if (guestButton) {
         "click",
         () => {
 
-            // Bersihkan Google
             localStorage.removeItem(
                 "googleSession"
             );
@@ -794,8 +832,6 @@ if (guestButton) {
                 "googleToken"
             );
 
-
-            // Aktifkan Guest
             sessionStorage.setItem(
                 "guestMode",
                 "true"
@@ -871,6 +907,10 @@ if (registerForm) {
 
             try {
 
+                // ==================================================
+                // BUAT AKUN
+                // ==================================================
+
                 const {
                     data,
                     error
@@ -882,7 +922,33 @@ if (registerForm) {
                                 email,
 
                             password:
-                                password
+                                password,
+
+                            options: {
+
+                                // Data ini akan masuk ke
+                                // user_metadata.
+                                // Berguna saat profile dibuat
+                                // setelah email dikonfirmasi.
+
+                                data: {
+
+                                    full_name:
+                                        fullName,
+
+                                    username:
+                                        username
+
+                                },
+
+
+                                // Setelah klik link verifikasi
+                                // email → dashboard.
+
+                                emailRedirectTo:
+                                    `${window.location.origin}/dashboard.html`
+
+                            }
 
                         });
 
@@ -892,7 +958,7 @@ if (registerForm) {
                 }
 
 
-                if (!data.user) {
+                if (!data || !data.user) {
 
                     throw new Error(
                         "Akun belum berhasil dibuat."
@@ -902,49 +968,14 @@ if (registerForm) {
 
 
                 // ==================================================
-                // SESSION LANGSUNG
+                // JIKA LANGSUNG MENDAPAT SESSION
                 // ==================================================
 
                 if (data.session) {
 
-                    const {
-                        error:
-                            profileError
-                    } =
-                        await supabase
-                            .from(
-                                "profiles"
-                            )
-                            .insert({
-
-                                id:
-                                    data.user.id,
-
-                                username:
-                                    username,
-
-                                full_name:
-                                    fullName,
-
-                                bio:
-                                    "",
-
-                                avatar_url:
-                                    ""
-
-                            });
-
-
-                    if (
-                        profileError
-                    ) {
-
-                        console.error(
-                            "Profile register:",
-                            profileError
-                        );
-
-                    }
+                    await ensureProfile(
+                        data.user
+                    );
 
 
                     localStorage.removeItem(
@@ -954,7 +985,6 @@ if (registerForm) {
                     localStorage.removeItem(
                         "googleToken"
                     );
-
 
                     sessionStorage.removeItem(
                         "guestMode"
@@ -982,11 +1012,11 @@ if (registerForm) {
 
 
                 // ==================================================
-                // EMAIL CONFIRMATION
+                // JIKA EMAIL CONFIRMATION AKTIF
                 // ==================================================
 
                 message.textContent =
-                    "Akun dibuat. Silakan cek email untuk verifikasi.";
+                    "Akun dibuat! Silakan cek email untuk verifikasi.";
 
 
             } catch (error) {
