@@ -61,18 +61,22 @@ if (loginForm) {
                     ? passwordInput.value
                     : "";
 
+
             if (!email || !password) {
                 return;
             }
+
 
             if (loginButton) {
                 loginButton.disabled = true;
             }
 
+
             if (loginMessage) {
                 loginMessage.textContent =
                     "Memeriksa akun...";
             }
+
 
             try {
 
@@ -86,15 +90,33 @@ if (loginForm) {
                             password
                         });
 
+
                 if (error) {
                     throw error;
                 }
 
-                if (!data.user) {
+
+                if (!data || !data.user) {
+
                     throw new Error(
                         "Akun tidak ditemukan."
                     );
+
                 }
+
+
+                // ==================================================
+                // PASTIKAN PROFILE ADA
+                // ==================================================
+
+                await ensureProfile(
+                    data.user
+                );
+
+
+                // ==================================================
+                // BERSIHKAN MODE LAMA
+                // ==================================================
 
                 localStorage.removeItem(
                     "googleSession"
@@ -108,17 +130,23 @@ if (loginForm) {
                     "guestMode"
                 );
 
+
                 if (loginMessage) {
                     loginMessage.textContent =
                         "Login berhasil!";
                 }
 
-                setTimeout(() => {
 
-                    window.location.href =
-                        "dashboard.html";
+                setTimeout(
+                    () => {
 
-                }, 500);
+                        window.location.href =
+                            "dashboard.html";
+
+                    },
+                    500
+                );
+
 
             } catch (error) {
 
@@ -127,14 +155,18 @@ if (loginForm) {
                     error
                 );
 
+
                 if (loginMessage) {
+
                     loginMessage.textContent =
                         "Login gagal: " +
                         (
                             error.message ||
                             "Terjadi kesalahan."
                         );
+
                 }
+
 
                 if (loginButton) {
                     loginButton.disabled =
@@ -168,13 +200,17 @@ function initializeGoogle() {
         return true;
     }
 
+
     if (
         !window.google ||
         !window.google.accounts ||
         !window.google.accounts.id
     ) {
+
         return false;
+
     }
+
 
     try {
 
@@ -197,17 +233,21 @@ function initializeGoogle() {
 
         });
 
+
         googleInitialized =
             true;
 
         googleReady =
             true;
 
+
         console.log(
             "Google Identity Services siap."
         );
 
+
         return true;
+
 
     } catch (error) {
 
@@ -216,7 +256,9 @@ function initializeGoogle() {
             error
         );
 
+
         return false;
+
     }
 
 }
@@ -239,20 +281,27 @@ async function handleGoogleCredential(
             "Google tidak memberikan credential."
         );
 
+
         if (loginMessage) {
+
             loginMessage.textContent =
                 "Google tidak memberikan ID Token.";
+
         }
 
+
         return;
+
     }
 
 
     try {
 
         if (loginMessage) {
+
             loginMessage.textContent =
                 "Menghubungkan ke Supabase...";
+
         }
 
 
@@ -284,6 +333,7 @@ async function handleGoogleCredential(
             );
 
             throw error;
+
         }
 
 
@@ -333,8 +383,10 @@ async function handleGoogleCredential(
 
 
         if (loginMessage) {
+
             loginMessage.textContent =
                 "✓ Google Login berhasil!";
+
         }
 
 
@@ -342,12 +394,15 @@ async function handleGoogleCredential(
         // DASHBOARD
         // ==================================================
 
-        setTimeout(() => {
+        setTimeout(
+            () => {
 
-            window.location.href =
-                "dashboard.html";
+                window.location.href =
+                    "dashboard.html";
 
-        }, 600);
+            },
+            600
+        );
 
 
     } catch (error) {
@@ -356,6 +411,7 @@ async function handleGoogleCredential(
             "Google Login:",
             error
         );
+
 
         if (loginMessage) {
 
@@ -367,6 +423,7 @@ async function handleGoogleCredential(
                 );
 
         }
+
 
         restoreGoogleButton();
 
@@ -389,6 +446,7 @@ function renderGoogleButton() {
         );
 
         return;
+
     }
 
 
@@ -411,8 +469,10 @@ function renderGoogleButton() {
                 "div"
             );
 
+
         container.id =
             "googleButtonContainer";
+
 
         container.className =
             "google-button-container";
@@ -425,6 +485,7 @@ function renderGoogleButton() {
                 oldButton
             );
 
+
             oldButton.style.display =
                 "none";
 
@@ -434,6 +495,7 @@ function renderGoogleButton() {
                 document.querySelector(
                     ".login-card"
                 );
+
 
             if (loginCard) {
 
@@ -454,7 +516,8 @@ function renderGoogleButton() {
     }
 
 
-    container.innerHTML = "";
+    container.innerHTML =
+        "";
 
 
     window.google.accounts.id.renderButton(
@@ -526,6 +589,7 @@ function startGoogle() {
 
     }
 
+
     renderGoogleButton();
 
 }
@@ -546,6 +610,7 @@ function waitForGoogle() {
         startGoogle();
 
         return;
+
     }
 
 
@@ -581,16 +646,22 @@ async function ensureProfile(user) {
         return;
     }
 
+
     try {
+
+        // ==================================================
+        // CEK PROFILE
+        // ==================================================
 
         const {
             data: existingProfile,
             error: selectError
-        } = await supabase
-            .from("profiles")
-            .select("id")
-            .eq("id", user.id)
-            .maybeSingle();
+        } =
+            await supabase
+                .from("profiles")
+                .select("id")
+                .eq("id", user.id)
+                .maybeSingle();
 
 
         if (selectError) {
@@ -605,6 +676,10 @@ async function ensureProfile(user) {
         }
 
 
+        // ==================================================
+        // PROFILE SUDAH ADA
+        // ==================================================
+
         if (existingProfile) {
 
             console.log(
@@ -616,6 +691,10 @@ async function ensureProfile(user) {
 
         }
 
+
+        // ==================================================
+        // AMBIL METADATA USER
+        // ==================================================
 
         const metadata =
             user.user_metadata || {};
@@ -639,26 +718,36 @@ async function ensureProfile(user) {
             "";
 
 
+        // ==================================================
+        // BUAT PROFILE
+        // ==================================================
+
         const {
             data: newProfile,
             error: insertError
-        } = await supabase
-            .from("profiles")
-            .insert({
+        } =
+            await supabase
+                .from("profiles")
+                .insert({
 
-                id: user.id,
+                    id:
+                        user.id,
 
-                username: username,
+                    username:
+                        username,
 
-                full_name: fullName,
+                    full_name:
+                        fullName,
 
-                bio: "",
+                    bio:
+                        "",
 
-                avatar_url: avatarUrl
+                    avatar_url:
+                        avatarUrl
 
-            })
-            .select()
-            .single();
+                })
+                .select()
+                .single();
 
 
         if (insertError) {
@@ -678,6 +767,7 @@ async function ensureProfile(user) {
             newProfile
         );
 
+
     } catch (error) {
 
         console.error(
@@ -690,6 +780,7 @@ async function ensureProfile(user) {
     }
 
 }
+
 
 // ======================================================
 // CREATE USERNAME
@@ -745,6 +836,7 @@ if (guestButton) {
                 "guestMode",
                 "true"
             );
+
 
             window.location.href =
                 "dashboard.html";
@@ -815,6 +907,10 @@ if (registerForm) {
 
             try {
 
+                // ==================================================
+                // BUAT AKUN
+                // ==================================================
+
                 const {
                     data,
                     error
@@ -826,7 +922,33 @@ if (registerForm) {
                                 email,
 
                             password:
-                                password
+                                password,
+
+                            options: {
+
+                                // Data ini akan masuk ke
+                                // user_metadata.
+                                // Berguna saat profile dibuat
+                                // setelah email dikonfirmasi.
+
+                                data: {
+
+                                    full_name:
+                                        fullName,
+
+                                    username:
+                                        username
+
+                                },
+
+
+                                // Setelah klik link verifikasi
+                                // email → dashboard.
+
+                                emailRedirectTo:
+                                    `${window.location.origin}/dashboard.html`
+
+                            }
 
                         });
 
@@ -836,7 +958,7 @@ if (registerForm) {
                 }
 
 
-                if (!data.user) {
+                if (!data || !data.user) {
 
                     throw new Error(
                         "Akun belum berhasil dibuat."
@@ -845,46 +967,15 @@ if (registerForm) {
                 }
 
 
+                // ==================================================
+                // JIKA LANGSUNG MENDAPAT SESSION
+                // ==================================================
+
                 if (data.session) {
 
-                    const {
-                        error:
-                            profileError
-                    } =
-                        await supabase
-                            .from(
-                                "profiles"
-                            )
-                            .insert({
-
-                                id:
-                                    data.user.id,
-
-                                username:
-                                    username,
-
-                                full_name:
-                                    fullName,
-
-                                bio:
-                                    "",
-
-                                avatar_url:
-                                    ""
-
-                            });
-
-
-                    if (
-                        profileError
-                    ) {
-
-                        console.error(
-                            "Profile register:",
-                            profileError
-                        );
-
-                    }
+                    await ensureProfile(
+                        data.user
+                    );
 
 
                     localStorage.removeItem(
@@ -920,8 +1011,12 @@ if (registerForm) {
                 }
 
 
+                // ==================================================
+                // JIKA EMAIL CONFIRMATION AKTIF
+                // ==================================================
+
                 message.textContent =
-                    "Akun dibuat. Silakan cek email untuk verifikasi.";
+                    "Akun dibuat! Silakan cek email untuk verifikasi.";
 
 
             } catch (error) {
