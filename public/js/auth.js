@@ -22,8 +22,14 @@ const registerForm =
 const loginMessage =
     document.getElementById("loginMessage");
 
+const registerMessage =
+    document.getElementById("registerMessage");
+
 const loginButton =
     document.getElementById("loginButton");
+
+const registerButton =
+    document.getElementById("registerButton");
 
 const googleButton =
     document.getElementById("googleButton");
@@ -39,6 +45,111 @@ const passwordInput =
 
 
 // ======================================================
+// PASSWORD ICON
+// ======================================================
+
+const eyeOpen = `
+<svg
+    viewBox="0 0 24 24"
+    width="18"
+    height="18"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="square"
+    stroke-linejoin="miter"
+    aria-hidden="true"
+>
+    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path>
+    <circle cx="12" cy="12" r="3"></circle>
+</svg>
+`;
+
+const eyeClosed = `
+<svg
+    viewBox="0 0 24 24"
+    width="18"
+    height="18"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="square"
+    stroke-linejoin="miter"
+    aria-hidden="true"
+>
+    <path d="M3 3l18 18"></path>
+    <path d="M10.6 5.1A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a18.7 18.7 0 0 1-3.2 4.1"></path>
+    <path d="M6.6 6.6C3.6 8.7 2 12 2 12s3.5 7 10 7c1.8 0 3.4-.5 4.8-1.2"></path>
+</svg>
+`;
+
+
+// ======================================================
+// PASSWORD SHOW / HIDE
+// ======================================================
+
+if (
+    passwordToggle &&
+    passwordInput
+) {
+
+    passwordToggle.innerHTML =
+        eyeOpen;
+
+    passwordToggle.setAttribute(
+        "aria-label",
+        "Tampilkan password"
+    );
+
+    passwordToggle.setAttribute(
+        "title",
+        "Tampilkan password"
+    );
+
+
+    passwordToggle.addEventListener(
+        "click",
+        () => {
+
+            const isPassword =
+                passwordInput.type ===
+                "password";
+
+
+            passwordInput.type =
+                isPassword
+                    ? "text"
+                    : "password";
+
+
+            passwordToggle.innerHTML =
+                isPassword
+                    ? eyeClosed
+                    : eyeOpen;
+
+
+            passwordToggle.setAttribute(
+                "aria-label",
+                isPassword
+                    ? "Sembunyikan password"
+                    : "Tampilkan password"
+            );
+
+
+            passwordToggle.setAttribute(
+                "title",
+                isPassword
+                    ? "Sembunyikan password"
+                    : "Tampilkan password"
+            );
+
+        }
+    );
+
+}
+
+
+// ======================================================
 // EMAIL LOGIN
 // ======================================================
 
@@ -50,31 +161,52 @@ if (loginForm) {
 
             event.preventDefault();
 
-            const email =
-                document
-                    .getElementById("email")
-                    .value
-                    .trim();
 
-            const password =
-                passwordInput
-                    ? passwordInput.value
+            const emailInput =
+                document.getElementById(
+                    "email"
+                );
+
+
+            const passwordField =
+                document.getElementById(
+                    "password"
+                );
+
+
+            const email =
+                emailInput
+                    ? emailInput.value.trim()
                     : "";
 
 
-            if (!email || !password) {
+            const password =
+                passwordField
+                    ? passwordField.value
+                    : "";
+
+
+            if (
+                !email ||
+                !password
+            ) {
                 return;
             }
 
 
             if (loginButton) {
-                loginButton.disabled = true;
+
+                loginButton.disabled =
+                    true;
+
             }
 
 
             if (loginMessage) {
+
                 loginMessage.textContent =
                     "Memeriksa akun...";
+
             }
 
 
@@ -86,8 +218,13 @@ if (loginForm) {
                 } =
                     await supabase.auth
                         .signInWithPassword({
-                            email,
-                            password
+
+                            email:
+                                email,
+
+                            password:
+                                password
+
                         });
 
 
@@ -96,7 +233,10 @@ if (loginForm) {
                 }
 
 
-                if (!data || !data.user) {
+                if (
+                    !data ||
+                    !data.user
+                ) {
 
                     throw new Error(
                         "Akun tidak ditemukan."
@@ -132,8 +272,10 @@ if (loginForm) {
 
 
                 if (loginMessage) {
+
                     loginMessage.textContent =
                         "Login berhasil!";
+
                 }
 
 
@@ -169,8 +311,10 @@ if (loginForm) {
 
 
                 if (loginButton) {
+
                     loginButton.disabled =
                         false;
+
                 }
 
             }
@@ -185,9 +329,11 @@ if (loginForm) {
 // GOOGLE IDENTITY SERVICES
 // ======================================================
 
-let googleInitialized = false;
+let googleInitialized =
+    false;
 
-let googleReady = false;
+let googleReady =
+    false;
 
 
 // ======================================================
@@ -337,7 +483,10 @@ async function handleGoogleCredential(
         }
 
 
-        if (!data || !data.user) {
+        if (
+            !data ||
+            !data.user
+        ) {
 
             throw new Error(
                 "Supabase tidak mengembalikan user."
@@ -371,10 +520,6 @@ async function handleGoogleCredential(
             "guestMode"
         );
 
-
-        // ==================================================
-        // BERHASIL
-        // ==================================================
 
         console.log(
             "Google Login berhasil:",
@@ -640,7 +785,9 @@ window.addEventListener(
 // ENSURE PROFILE
 // ======================================================
 
-async function ensureProfile(user) {
+async function ensureProfile(
+    user
+) {
 
     if (!user) {
         return;
@@ -660,7 +807,10 @@ async function ensureProfile(user) {
             await supabase
                 .from("profiles")
                 .select("id")
-                .eq("id", user.id)
+                .eq(
+                    "id",
+                    user.id
+                )
                 .maybeSingle();
 
 
@@ -697,7 +847,8 @@ async function ensureProfile(user) {
         // ==================================================
 
         const metadata =
-            user.user_metadata || {};
+            user.user_metadata ||
+            {};
 
 
         const fullName =
@@ -709,7 +860,9 @@ async function ensureProfile(user) {
 
         const username =
             metadata.username ||
-            createUsername(fullName);
+            createUsername(
+                fullName
+            );
 
 
         const avatarUrl =
@@ -743,7 +896,10 @@ async function ensureProfile(user) {
                         "",
 
                     avatar_url:
-                        avatarUrl
+                        avatarUrl,
+
+                    created_at:
+                        new Date().toISOString()
 
                 })
                 .select()
@@ -791,7 +947,10 @@ function createUsername(
 ) {
 
     const cleanName =
-        String(name || "user")
+        String(
+            name ||
+            "user"
+        )
             .toLowerCase()
             .replace(
                 /[^a-z0-9]/g,
@@ -807,7 +966,8 @@ function createUsername(
         cleanName +
         Math.floor(
             100 +
-            Math.random() * 900
+            Math.random() *
+            900
         )
     );
 
@@ -860,39 +1020,52 @@ if (registerForm) {
             event.preventDefault();
 
 
+            const fullNameInput =
+                document.getElementById(
+                    "fullName"
+                );
+
+
+            const usernameInput =
+                document.getElementById(
+                    "username"
+                );
+
+
+            const emailInput =
+                document.getElementById(
+                    "email"
+                );
+
+
+            const passwordField =
+                document.getElementById(
+                    "password"
+                );
+
+
             const fullName =
-                document
-                    .getElementById(
-                        "fullName"
-                    )
-                    .value
-                    .trim();
+                fullNameInput
+                    ? fullNameInput.value.trim()
+                    : "";
 
 
             const username =
-                document
-                    .getElementById(
-                        "username"
-                    )
-                    .value
-                    .trim();
+                usernameInput
+                    ? usernameInput.value.trim()
+                    : "";
 
 
             const email =
-                document
-                    .getElementById(
-                        "email"
-                    )
-                    .value
-                    .trim();
+                emailInput
+                    ? emailInput.value.trim()
+                    : "";
 
 
             const password =
-                document
-                    .getElementById(
-                        "password"
-                    )
-                    .value;
+                passwordField
+                    ? passwordField.value
+                    : "";
 
 
             const message =
@@ -901,14 +1074,59 @@ if (registerForm) {
                 );
 
 
-            message.textContent =
-                "Membuat akun...";
+            if (
+                !fullName ||
+                !username ||
+                !email ||
+                !password
+            ) {
+
+                if (message) {
+
+                    message.textContent =
+                        "Lengkapi semua data.";
+
+                }
+
+                return;
+
+            }
+
+
+            if (password.length < 6) {
+
+                if (message) {
+
+                    message.textContent =
+                        "Password minimal 6 karakter.";
+
+                }
+
+                return;
+
+            }
+
+
+            if (registerButton) {
+
+                registerButton.disabled =
+                    true;
+
+            }
+
+
+            if (message) {
+
+                message.textContent =
+                    "Membuat akun...";
+
+            }
 
 
             try {
 
                 // ==================================================
-                // BUAT AKUN
+                // BUAT AKUN SUPABASE
                 // ==================================================
 
                 const {
@@ -926,11 +1144,6 @@ if (registerForm) {
 
                             options: {
 
-                                // Data ini akan masuk ke
-                                // user_metadata.
-                                // Berguna saat profile dibuat
-                                // setelah email dikonfirmasi.
-
                                 data: {
 
                                     full_name:
@@ -940,10 +1153,6 @@ if (registerForm) {
                                         username
 
                                 },
-
-
-                                // Setelah klik link verifikasi
-                                // email → dashboard.
 
                                 emailRedirectTo:
                                     `${window.location.origin}/dashboard.html`
@@ -958,7 +1167,10 @@ if (registerForm) {
                 }
 
 
-                if (!data || !data.user) {
+                if (
+                    !data ||
+                    !data.user
+                ) {
 
                     throw new Error(
                         "Akun belum berhasil dibuat."
@@ -991,8 +1203,12 @@ if (registerForm) {
                     );
 
 
-                    message.textContent =
-                        "Akun berhasil dibuat!";
+                    if (message) {
+
+                        message.textContent =
+                            "Akun berhasil dibuat!";
+
+                    }
 
 
                     setTimeout(
@@ -1012,12 +1228,23 @@ if (registerForm) {
 
 
                 // ==================================================
-                // JIKA EMAIL CONFIRMATION AKTIF
+                // EMAIL CONFIRMATION AKTIF
                 // ==================================================
 
-                message.textContent =
-                    "Akun dibuat! Silakan cek email untuk verifikasi.";
+                if (message) {
 
+                    message.textContent =
+                        "Akun dibuat! Silakan cek email untuk verifikasi.";
+
+                }
+
+
+                if (registerButton) {
+
+                    registerButton.disabled =
+                        false;
+
+                }
 
             } catch (error) {
 
@@ -1027,51 +1254,26 @@ if (registerForm) {
                 );
 
 
-                message.textContent =
-                    "Gagal: " +
-                    (
-                        error.message ||
-                        "Terjadi kesalahan."
-                    );
+                if (message) {
+
+                    message.textContent =
+                        "Gagal: " +
+                        (
+                            error.message ||
+                            "Terjadi kesalahan."
+                        );
+
+                }
+
+
+                if (registerButton) {
+
+                    registerButton.disabled =
+                        false;
+
+                }
 
             }
-
-        }
-    );
-
-}
-
-
-// ======================================================
-// PASSWORD SHOW / HIDE
-// ======================================================
-
-if (
-    passwordToggle &&
-    passwordInput
-) {
-
-    passwordToggle.addEventListener(
-        "click",
-        () => {
-
-            const isPassword =
-                passwordInput.type ===
-                "password";
-
-
-            passwordInput.type =
-                isPassword
-                    ? "text"
-                    : "password";
-
-
-            passwordToggle.innerHTML =
-                isPassword
-
-                    ? '<i class="fa-solid fa-eye-slash"></i>'
-
-                    : '<i class="fa-solid fa-eye"></i>';
 
         }
     );

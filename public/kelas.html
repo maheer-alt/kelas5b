@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Kelas 5B</title>
+
+<link rel="icon" href="assets/rocket.ico">
+
+<!-- Google Sans -->
+<link
+    href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+>
+
+
+<!-- Font Awesome -->
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+
+
+<!-- SIDEBAR CSS -->
+<link
+    rel="stylesheet"
+    href="css/sidebar.css"
+>
+
+
+<!-- KELAS CSS -->
+<link
+    rel="stylesheet"
+    href="css/kelas.css"
+>
+
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<div class="background-grid"></div>
+
+
+<!-- SIDEBAR -->
+<div id="sidebar"></div>
+
+
+<!-- MAIN -->
+<main class="kelas-page">
+
+
+    <!-- HEADER -->
+    <header class="kelas-header">
+
+        <div>
+
+            <span class="eyebrow">
+                DIGITAL SPACE
+            </span>
+
+            <h1>
+                Kelas 5B
+            </h1>
+
+            <p>
+                Tempat berbagi cerita, foto, dan momen Kelas 5B.
+            </p>
+
+        </div>
+
+
+        <button
+            id="addPostButton"
+            class="add-post-button"
+            type="button"
+            aria-label="Tambah postingan"
+        >
+
+            <i class="fa-solid fa-plus"></i>
+
+            <span>
+                Posting
+            </span>
+
+        </button>
+
+    </header>
+
+
+    <!-- NOTIFICATION -->
+    <div
+        id="notification"
+        class="notification"
+        role="alert"
+    ></div>
+
+
+    <!-- POST FORM -->
+    <section
+        id="postComposer"
+        class="post-composer hidden"
+    >
+
+        <div class="composer-header">
+
+            <div>
+
+                <span class="composer-label">
+                    POSTING BARU
+                </span>
+
+                <h2>
+                    Bagikan sesuatu
+                </h2>
+
+            </div>
+
+
+            <button
+                id="closeComposer"
+                class="icon-button"
+                type="button"
+                aria-label="Tutup"
+            >
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <textarea
+            id="postContent"
+            placeholder="Tulis sesuatu untuk Kelas 5B..."
+            maxlength="1000"
+        ></textarea>
+
+
+        <div class="upload-area">
+
+            <input
+                type="file"
+                id="imageInput"
+                accept="image/webp,.webp"
+                hidden
+            >
+
+
+            <label
+                for="imageInput"
+                class="upload-button"
+            >
+
+                <i class="fa-solid fa-image"></i>
+
+                <span>
+                    Pilih gambar WEBP
+                </span>
+
+            </label>
+
+
+            <span
+                id="fileName"
+                class="file-name"
+            >
+                Belum ada gambar
+            </span>
+
+        </div>
+
+
+        <div
+            id="imagePreview"
+            class="image-preview hidden"
+        >
+
+            <img
+                id="previewImage"
+                alt="Preview gambar"
+            >
+
+        </div>
+
+
+        <button
+            id="publishButton"
+            class="publish-button"
+            type="button"
+        >
+
+            <i class="fa-solid fa-paper-plane"></i>
+
+            Posting
+
+        </button>
+
+    </section>
+
+
+    <!-- FEED -->
+    <section class="feed-section">
+
+
+        <div class="feed-heading">
+
+            <div>
+
+                <span class="section-label">
+                    FEED
+                </span>
+
+                <h2>
+                    Postingan Kelas 5B
+                </h2>
+
+            </div>
+
+
+            <button
+                id="refreshButton"
+                class="refresh-button"
+                type="button"
+                aria-label="Refresh"
+            >
+
+                <i class="fa-solid fa-rotate"></i>
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="feed"
+            class="feed"
+        ></div>
+
+
+        <div
+            id="emptyState"
+            class="empty-state"
+        >
+
+            <i class="fa-regular fa-images"></i>
+
+            <h3>
+                Belum ada postingan
+            </h3>
+
+            <p>
+                Jadilah yang pertama berbagi momen Kelas 5B.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- CURSOR -->
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+
+<!-- KELAS JS -->
+<script
+    type="module"
+    src="js/kelas.js"
+></script>
+
+
+</body>
+
+</html>
