@@ -1,0 +1,692 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #080808;
+    --surface: #111111;
+    --surface-2: #161616;
+
+    --white: #f4f3ed;
+    --muted: #8b8b84;
+
+    --yellow: #d8ff00;
+
+    --border: rgba(244, 243, 237, 0.18);
+
+    --danger: #ff4d4d;
+
+    --sidebar: 260px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            rgba(8, 8, 8, 0.94),
+            rgba(8, 8, 8, 0.97)
+        ),
+        url("../assets/background.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    color: var(--white);
+
+    font-family:
+        "Google Sans",
+        system-ui,
+        sans-serif;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================
+   GRID
+========================================= */
+
+.background-grid {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0.12;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,0.12) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.12) 1px,
+            transparent 1px
+        );
+
+    background-size: 40px 40px;
+
+    z-index: -1;
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.kelas-page {
+    margin-left: var(--sidebar);
+
+    width: calc(100% - var(--sidebar));
+
+    min-height: 100vh;
+
+    padding:
+        55px
+        clamp(20px, 5vw, 80px);
+
+    max-width: 1250px;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.kelas-header {
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding-bottom: 35px;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.eyebrow,
+.section-label,
+.composer-label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: var(--yellow);
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.15em;
+}
+
+.kelas-header h1 {
+    font-size: clamp(38px, 5vw, 68px);
+
+    line-height: 0.95;
+
+    font-weight: 700;
+
+    letter-spacing: -0.05em;
+}
+
+.kelas-header p {
+    margin-top: 16px;
+
+    max-width: 550px;
+
+    color: var(--muted);
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+button {
+    font-family: inherit;
+}
+
+.add-post-button,
+.publish-button {
+    min-height: 48px;
+
+    border: 2px solid var(--yellow);
+
+    background: var(--yellow);
+
+    color: #080808;
+
+    padding: 0 20px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        5px 5px 0 #f4f3ed;
+
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease;
+}
+
+.add-post-button:hover,
+.publish-button:hover {
+    transform: translate(3px, 3px);
+
+    box-shadow:
+        2px 2px 0 #f4f3ed;
+}
+
+.add-post-button i {
+    margin-right: 8px;
+}
+
+
+/* =========================================
+   NOTIFICATION
+========================================= */
+
+.notification {
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    max-width: 340px;
+
+    padding: 15px 18px;
+
+    background: var(--yellow);
+
+    color: #080808;
+
+    border: 2px solid #080808;
+
+    font-weight: 700;
+
+    box-shadow:
+        5px 5px 0 #f4f3ed;
+
+    transform: translateY(150px);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+
+    z-index: 100;
+}
+
+.notification.show {
+    transform: translateY(0);
+
+    opacity: 1;
+}
+
+.notification.error {
+    background: var(--danger);
+
+    color: white;
+}
+
+
+/* =========================================
+   COMPOSER
+========================================= */
+
+.post-composer {
+    margin-top: 30px;
+
+    padding: 25px;
+
+    background: rgba(17,17,17,0.95);
+
+    border: 1px solid var(--border);
+
+    box-shadow:
+        7px 7px 0 rgba(216,255,0,0.8);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.composer-header {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+}
+
+.composer-header h2 {
+    font-size: 25px;
+}
+
+.icon-button,
+.refresh-button {
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid var(--border);
+
+    background: transparent;
+
+    color: var(--white);
+
+    cursor: pointer;
+}
+
+.icon-button:hover,
+.refresh-button:hover {
+    border-color: var(--yellow);
+
+    color: var(--yellow);
+}
+
+#postContent {
+    display: block;
+
+    width: 100%;
+    min-height: 130px;
+
+    resize: vertical;
+
+    padding: 15px;
+
+    border: 1px solid var(--border);
+
+    outline: none;
+
+    background: #090909;
+
+    color: var(--white);
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+}
+
+#postContent:focus {
+    border-color: var(--yellow);
+}
+
+
+/* =========================================
+   UPLOAD
+========================================= */
+
+.upload-area {
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 15px;
+}
+
+.upload-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    min-height: 44px;
+
+    padding: 0 15px;
+
+    border: 1px solid var(--border);
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.upload-button:hover {
+    border-color: var(--yellow);
+
+    color: var(--yellow);
+}
+
+.file-name {
+    color: var(--muted);
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 11px;
+}
+
+.image-preview {
+    margin-top: 18px;
+
+    max-width: 600px;
+
+    border: 1px solid var(--border);
+
+    overflow: hidden;
+}
+
+.image-preview img {
+    display: block;
+
+    width: 100%;
+    max-height: 400px;
+
+    object-fit: contain;
+
+    background: #050505;
+}
+
+.publish-button {
+    margin-top: 18px;
+
+    width: 100%;
+}
+
+
+/* =========================================
+   FEED
+========================================= */
+
+.feed-section {
+    margin-top: 55px;
+}
+
+.feed-heading {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+.feed-heading h2 {
+    font-size: 25px;
+}
+
+.feed {
+    display: grid;
+
+    gap: 25px;
+
+    max-width: 700px;
+}
+
+
+/* =========================================
+   POST CARD
+========================================= */
+
+.post-card {
+    background: #101010;
+
+    border: 1px solid var(--border);
+
+    overflow: hidden;
+}
+
+.post-top {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 15px;
+}
+
+.post-user {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.post-avatar {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    border: 1px solid var(--yellow);
+
+    object-fit: cover;
+
+    background: #1a1a1a;
+}
+
+.post-name {
+    font-weight: 700;
+
+    font-size: 14px;
+}
+
+.post-time {
+    margin-top: 3px;
+
+    color: var(--muted);
+
+    font-family:
+        "JetBrains Mono",
+        monospace;
+
+    font-size: 10px;
+}
+
+.delete-post {
+    border: 0;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    cursor: pointer;
+
+    padding: 8px;
+}
+
+.delete-post:hover {
+    color: var(--danger);
+}
+
+.post-image {
+    width: 100%;
+
+    background: #050505;
+}
+
+.post-image img {
+    display: block;
+
+    width: 100%;
+    max-height: 650px;
+
+    object-fit: contain;
+}
+
+.post-content {
+    padding: 18px;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+
+    white-space: pre-wrap;
+}
+
+
+/* =========================================
+   EMPTY
+========================================= */
+
+.empty-state {
+    max-width: 700px;
+
+    padding: 70px 20px;
+
+    text-align: center;
+
+    border: 1px dashed var(--border);
+
+    color: var(--muted);
+}
+
+.empty-state i {
+    margin-bottom: 18px;
+
+    color: var(--yellow);
+
+    font-size: 35px;
+}
+
+.empty-state h3 {
+    margin-bottom: 8px;
+
+    color: var(--white);
+
+    font-size: 20px;
+}
+
+.empty-state p {
+    font-size: 13px;
+}
+
+
+/* =========================================
+   CURSOR
+========================================= */
+
+.cursor-dot,
+.cursor-ring {
+    position: fixed;
+
+    pointer-events: none;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 9999;
+}
+
+.cursor-dot {
+    width: 5px;
+    height: 5px;
+
+    background: var(--yellow);
+
+    border-radius: 50%;
+}
+
+.cursor-ring {
+    width: 30px;
+    height: 30px;
+
+    border: 1px solid var(--yellow);
+
+    border-radius: 50%;
+
+    transition:
+        width 0.15s ease,
+        height 0.15s ease;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .kelas-page {
+        margin-left: 0;
+
+        width: 100%;
+
+        padding:
+            35px
+            25px;
+    }
+
+    .kelas-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .add-post-button {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 602px) {
+
+    .kelas-page {
+        padding: 25px 15px;
+    }
+
+    .kelas-header h1 {
+        font-size: 42px;
+    }
+
+    .post-composer {
+        padding: 18px;
+
+        box-shadow:
+            4px 4px 0 rgba(216,255,0,0.8);
+    }
+
+    .notification {
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+    }
+}
+
+
+@media (pointer: coarse) {
+
+    .cursor-dot,
+    .cursor-ring {
+        display: none;
+    }
+}
