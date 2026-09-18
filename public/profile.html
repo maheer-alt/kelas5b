@@ -2,34 +2,25 @@
 <html lang="id">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Profile — Kelas 5B</title>
 
     <link rel="stylesheet" href="css/sidebar.css">
-
     <link rel="stylesheet" href="css/profile.css">
-
 </head>
 
 <body>
 
     <div id="sidebar"></div>
 
-
     <main class="profile-page">
 
         <header>
-
             <p>ACCOUNT</p>
-
             <h1>Profile</h1>
-
         </header>
-
 
         <section class="profile-card">
 
@@ -39,13 +30,25 @@
                     ?
                 </div>
 
-                <label for="avatarInput" class="avatar-upload" id="avatarUploadButton">
+                <label
+                    for="avatarInput"
+                    class="avatar-upload"
+                    id="avatarUploadButton"
+                >
                     Ganti Foto
                 </label>
 
-                <input type="file" id="avatarInput" accept="image/webp" hidden>
+                <input
+                    type="file"
+                    id="avatarInput"
+                    accept="image/webp"
+                    hidden
+                >
 
-                <small class="avatar-hint" id="avatarHint">
+                <small
+                    class="avatar-hint"
+                    id="avatarHint"
+                >
                     WebP • Maks. 1 MB
                 </small>
 
@@ -65,7 +68,11 @@
                     Belum ada bio.
                 </p>
 
-                <button type="button" id="editProfileButton" class="edit-profile-button">
+                <button
+                    type="button"
+                    id="editProfileButton"
+                    class="edit-profile-button"
+                >
                     Edit Profile
                 </button>
 
@@ -73,17 +80,23 @@
 
         </section>
 
-
-        <section class="edit-profile" id="editProfile" hidden>
+        <section
+            class="edit-profile"
+            id="editProfile"
+            hidden
+        >
 
             <div class="edit-header">
-                <small>EDIT ACCOUNT</small>
+
+                <small>
+                    EDIT ACCOUNT
+                </small>
 
                 <h2>
                     Edit Profile
                 </h2>
-            </div>
 
+            </div>
 
             <form id="profileForm">
 
@@ -93,11 +106,16 @@
                         NAMA
                     </label>
 
-                    <input type="text" id="nameInput" maxlength="50" placeholder="Nama kamu" autocomplete="name"
-                        required>
+                    <input
+                        type="text"
+                        id="nameInput"
+                        maxlength="50"
+                        placeholder="Nama kamu"
+                        autocomplete="name"
+                        required
+                    >
 
                 </div>
-
 
                 <div class="form-group">
 
@@ -109,8 +127,14 @@
 
                         <span>@</span>
 
-                        <input type="text" id="usernameInput" maxlength="30" placeholder="username"
-                            autocomplete="username" required>
+                        <input
+                            type="text"
+                            id="usernameInput"
+                            maxlength="30"
+                            placeholder="username"
+                            autocomplete="username"
+                            required
+                        >
 
                     </div>
 
@@ -120,14 +144,17 @@
 
                 </div>
 
-
                 <div class="form-group">
 
                     <label for="bioInput">
                         BIO
                     </label>
 
-                    <textarea id="bioInput" maxlength="500" placeholder="Ceritakan sedikit tentang kamu..."></textarea>
+                    <textarea
+                        id="bioInput"
+                        maxlength="500"
+                        placeholder="Ceritakan sedikit tentang kamu..."
+                    ></textarea>
 
                     <div class="bio-counter">
 
@@ -143,17 +170,25 @@
 
                 </div>
 
-
-                <p id="editMessage" class="edit-message"></p>
-
+                <p
+                    id="editMessage"
+                    class="edit-message"
+                ></p>
 
                 <div class="edit-actions">
 
-                    <button type="button" id="cancelEditButton" class="cancel-button">
+                    <button
+                        type="button"
+                        id="cancelEditButton"
+                        class="cancel-button"
+                    >
                         Batal
                     </button>
 
-                    <button type="submit" class="save-button">
+                    <button
+                        type="submit"
+                        class="save-button"
+                    >
                         Simpan Perubahan
                     </button>
 
@@ -163,29 +198,45 @@
 
         </section>
 
-
         <section class="profile-details">
 
             <div>
-                <small>EMAIL</small>
-                <p id="email">-</p>
+
+                <small>
+                    EMAIL
+                </small>
+
+                <p id="email">
+                    -
+                </p>
+
             </div>
 
             <div>
-                <small>USERNAME</small>
-                <p id="username2">-</p>
+
+                <small>
+                    USERNAME
+                </small>
+
+                <p id="username2">
+                    -
+                </p>
+
             </div>
 
         </section>
 
-
-        <p id="avatarMessage" class="avatar-message"></p>
-
+        <p
+            id="avatarMessage"
+            class="avatar-message"
+        ></p>
 
     </main>
 
-
-    <script type="module" src="js/profile.js"></script>
+    <script
+        type="module"
+        src="js/profile.js"
+    ></script>
 
 </body>
 
