@@ -575,66 +575,62 @@ window.addEventListener(
 // ENSURE PROFILE
 // ======================================================
 
-async function ensureProfile(
-    user
-) {
+async function ensureProfile(user) {
 
     if (!user) {
         return;
     }
-
 
     try {
 
         const {
             data: existingProfile,
             error: selectError
-        } =
-            await supabase
-                .from("profiles")
-                .select("id")
-                .eq(
-                    "id",
-                    user.id
-                )
-                .maybeSingle();
+        } = await supabase
+            .from("profiles")
+            .select("id")
+            .eq("id", user.id)
+            .maybeSingle();
 
 
         if (selectError) {
 
             console.error(
-                "Profile check:",
+                "Profile check error:",
                 selectError
             );
 
-            return;
+            throw selectError;
 
         }
 
 
         if (existingProfile) {
+
+            console.log(
+                "Profile sudah ada:",
+                user.id
+            );
+
             return;
+
         }
 
 
         const metadata =
-            user.user_metadata ||
-            {};
+            user.user_metadata || {};
 
 
         const fullName =
             metadata.full_name ||
             metadata.name ||
-            user.email
-                ?.split("@")[0] ||
+            user.email?.split("@")[0] ||
             "User";
 
 
         const username =
             metadata.username ||
-            createUsername(
-                fullName
-            );
+            createUsername(fullName);
 
 
         const avatarUrl =
@@ -644,38 +640,43 @@ async function ensureProfile(
 
 
         const {
-            error
-        } =
-            await supabase
-                .from("profiles")
-                .insert({
+            data: newProfile,
+            error: insertError
+        } = await supabase
+            .from("profiles")
+            .insert({
 
-                    id:
-                        user.id,
+                id: user.id,
 
-                    username:
-                        username,
+                username: username,
 
-                    full_name:
-                        fullName,
+                full_name: fullName,
 
-                    bio:
-                        "",
+                bio: "",
 
-                    avatar_url:
-                        avatarUrl
+                avatar_url: avatarUrl
 
-                });
+            })
+            .select()
+            .single();
 
 
-        if (error) {
+        if (insertError) {
 
             console.error(
-                "Profile create:",
-                error
+                "Profile create error:",
+                insertError
             );
 
+            throw insertError;
+
         }
+
+
+        console.log(
+            "Profile berhasil dibuat:",
+            newProfile
+        );
 
     } catch (error) {
 
@@ -684,10 +685,11 @@ async function ensureProfile(
             error
         );
 
+        throw error;
+
     }
 
 }
-
 
 // ======================================================
 // CREATE USERNAME
