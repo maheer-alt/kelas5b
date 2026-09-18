@@ -19,20 +19,15 @@
 
 .sidebar {
     position: fixed;
-
     left: 0;
     top: 0;
     bottom: 0;
-
     width: 260px;
-
     padding: 25px 18px;
 
-    background:
-        rgba(8, 8, 8, 0.94);
+    background: rgba(8, 8, 8, 0.94);
 
-    border-right:
-        1px solid var(--line);
+    border-right: 1px solid var(--line);
 
     z-index: 100;
 }
@@ -44,13 +39,10 @@
 
 .brand {
     display: flex;
-
     align-items: center;
-
     gap: 12px;
 
     padding: 8px;
-
     margin-bottom: 35px;
 }
 
@@ -59,22 +51,17 @@
     height: 42px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     flex-shrink: 0;
 
     border-radius: 50%;
+    border: 2px solid var(--yellow);
 
-    border:
-        2px solid var(--yellow);
+    background: transparent;
 
-    background:
-        transparent;
-
-    box-shadow:
-        none;
+    box-shadow: none;
 
     overflow: hidden;
 }
@@ -93,11 +80,9 @@
 .brand strong {
     display: block;
 
-    color:
-        var(--white);
+    color: var(--white);
 
     font-size: 13px;
-
     font-weight: 900;
 }
 
@@ -106,8 +91,7 @@
 
     margin-top: 2px;
 
-    color:
-        var(--muted);
+    color: var(--muted);
 
     font-family:
         "JetBrains Mono",
@@ -123,42 +107,30 @@
 
 nav {
     display: flex;
-
     flex-direction: column;
-
     gap: 6px;
 }
 
 nav a,
 .sidebar-bottom button {
     display: flex;
-
     align-items: center;
-
     gap: 13px;
 
     width: 100%;
-
     padding: 13px;
 
     border-radius: 0;
+    border: 1px solid transparent;
 
-    border:
-        1px solid transparent;
+    background: transparent;
 
-    background:
-        transparent;
-
-    color:
-        var(--muted);
+    color: var(--muted);
 
     text-decoration: none;
 
-    font-family:
-        inherit;
-
+    font-family: inherit;
     font-size: 12px;
-
     font-weight: 600;
 
     cursor: pointer;
@@ -180,12 +152,10 @@ nav a span,
     width: 20px;
 
     display: inline-flex;
-
     align-items: center;
     justify-content: center;
 
-    color:
-        inherit;
+    color: inherit;
 
     font-size: 17px;
 }
@@ -196,17 +166,14 @@ nav a span,
 ========================================= */
 
 nav a:hover {
-    background:
-        rgba(244, 243, 237, 0.05);
+    background: rgba(244, 243, 237, 0.05);
 
     border-color:
         rgba(244, 243, 237, 0.12);
 
-    color:
-        var(--white);
+    color: var(--white);
 
-    transform:
-        translateX(3px);
+    transform: translateX(3px);
 }
 
 
@@ -215,31 +182,24 @@ nav a:hover {
 ========================================= */
 
 nav a.active {
-    background:
-        var(--yellow);
+    background: var(--yellow);
 
-    border-color:
-        var(--yellow);
+    border-color: var(--yellow);
 
-    color:
-        var(--black);
+    color: var(--black);
 
-    font-weight:
-        900;
+    font-weight: 900;
 
     box-shadow:
         4px 4px 0 var(--white);
 
-    transform:
-        translateX(0);
+    transform: translateX(0);
 }
 
 nav a.active:hover {
-    background:
-        var(--yellow);
+    background: var(--yellow);
 
-    color:
-        var(--black);
+    color: var(--black);
 
     transform:
         translateX(-2px)
@@ -279,11 +239,9 @@ nav a.active:hover {
     border-color:
         rgba(244, 243, 237, 0.12);
 
-    color:
-        var(--white);
+    color: var(--white);
 
-    transform:
-        translateX(3px);
+    transform: translateX(3px);
 }
 
 
@@ -294,22 +252,16 @@ nav a.active:hover {
 @media (max-width: 850px) {
 
     .sidebar {
-
         top: auto;
-
         bottom: 0;
-
         left: 0;
 
         width: 100%;
-
         height: 70px;
 
-        padding:
-            7px 8px;
+        padding: 7px 8px;
 
         display: flex;
-
         align-items: center;
 
         background:
@@ -320,6 +272,31 @@ nav a.active:hover {
         border-top:
             1px solid var(--line);
 
+        /* PENTING:
+           Hanya sidebar yang boleh scroll horizontal */
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        /* Cegah scroll horizontal merambat ke halaman */
+        overscroll-behavior-x: contain;
+
+        /* Scrollbar Firefox */
+        scrollbar-width: thin;
+    }
+
+
+    /* Chrome / Edge / Safari */
+
+    .sidebar::-webkit-scrollbar {
+        height: 3px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+        background: var(--yellow);
     }
 
 
@@ -337,10 +314,10 @@ nav a.active:hover {
     ====================================== */
 
     nav {
+        flex: none;
 
-        flex: 1;
-
-        width: auto;
+        width: max-content;
+        min-width: max-content;
 
         height: 100%;
 
@@ -348,22 +325,21 @@ nav a.active:hover {
 
         flex-direction: row;
 
-        justify-content: space-around;
-
+        justify-content: flex-start;
         align-items: center;
 
         gap: 2px;
 
+        /* Jangan biarkan nav mengecil */
+        flex-shrink: 0;
     }
 
 
     nav a {
+        flex: 0 0 76px;
 
-        flex: 1;
-
-        width: auto;
-
-        min-width: 0;
+        width: 76px;
+        min-width: 76px;
 
         height: 54px;
 
@@ -372,13 +348,11 @@ nav a.active:hover {
         flex-direction: column;
 
         justify-content: center;
-
         align-items: center;
 
         gap: 3px;
 
-        padding:
-            5px 3px;
+        padding: 5px 3px;
 
         border: 0;
 
@@ -387,35 +361,28 @@ nav a.active:hover {
         font-weight: 700;
 
         text-align: center;
-
     }
 
 
     nav a span {
-
         width: auto;
 
         font-size: 16px;
-
     }
 
 
     nav a:hover {
-
         transform:
             translateY(-2px);
-
     }
 
 
     nav a.active {
-
         box-shadow:
             3px 3px 0 var(--white);
 
         transform:
             translateY(-2px);
-
     }
 
 
@@ -424,10 +391,10 @@ nav a.active:hover {
     ====================================== */
 
     .sidebar-bottom {
-
         position: static;
 
-        width: 52px;
+        width: 76px;
+        min-width: 76px;
 
         height: 54px;
 
@@ -436,29 +403,25 @@ nav a.active:hover {
         display: flex;
 
         align-items: center;
-
         justify-content: center;
 
         flex-shrink: 0;
-
     }
 
 
     .sidebar-bottom button {
-
-        width: 52px;
+        width: 76px;
+        min-width: 76px;
 
         height: 54px;
 
-        padding:
-            5px 2px;
+        padding: 5px 2px;
 
         display: flex;
 
         flex-direction: column;
 
         align-items: center;
-
         justify-content: center;
 
         gap: 3px;
@@ -470,18 +433,14 @@ nav a.active:hover {
         text-align: center;
 
         font-size: 9px;
-
     }
 
 
     .sidebar-bottom span {
-
         width: auto;
 
         font-size: 17px;
-
     }
-
 }
 
 
@@ -492,23 +451,21 @@ nav a.active:hover {
 @media (max-width: 602px) {
 
     .sidebar {
-
         height: 68px;
 
         padding:
             6px 6px;
-
     }
-
 
     nav {
-
         gap: 1px;
-
     }
 
-
     nav a {
+        flex-basis: 72px;
+
+        width: 72px;
+        min-width: 72px;
 
         height: 52px;
 
@@ -516,45 +473,33 @@ nav a.active:hover {
             5px 2px;
 
         font-size: 8px;
-
     }
-
 
     nav a span {
-
         font-size: 15px;
-
     }
 
-
     .sidebar-bottom {
-
-        width: 48px;
+        width: 72px;
+        min-width: 72px;
 
         height: 52px;
 
         margin-left: 3px;
-
     }
 
-
     .sidebar-bottom button {
-
-        width: 48px;
+        width: 72px;
+        min-width: 72px;
 
         height: 52px;
 
         font-size: 8px;
-
     }
-
 
     .sidebar-bottom span {
-
         font-size: 16px;
-
     }
-
 }
 
 
@@ -565,16 +510,35 @@ nav a.active:hover {
 @media (max-width: 480px) {
 
     .sidebar {
-
         height: 66px;
 
         padding:
             5px 4px;
 
+        /*
+         * KUNCI:
+         * sidebar punya scroll horizontal sendiri
+         */
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        overscroll-behavior-x: contain;
+    }
+
+
+    nav {
+        width: max-content;
+        min-width: max-content;
+
+        flex-shrink: 0;
     }
 
 
     nav a {
+        flex: 0 0 70px;
+
+        width: 70px;
+        min-width: 70px;
 
         height: 50px;
 
@@ -582,31 +546,29 @@ nav a.active:hover {
             4px 1px;
 
         font-size: 7px;
-
     }
 
 
     nav a span {
-
         font-size: 14px;
-
     }
 
 
     .sidebar-bottom {
-
-        width: 44px;
+        width: 70px;
+        min-width: 70px;
 
         height: 50px;
 
         margin-left: 2px;
 
+        flex-shrink: 0;
     }
 
 
     .sidebar-bottom button {
-
-        width: 44px;
+        width: 70px;
+        min-width: 70px;
 
         height: 50px;
 
@@ -614,16 +576,12 @@ nav a.active:hover {
             3px 1px;
 
         font-size: 7px;
-
     }
 
 
     .sidebar-bottom span {
-
         font-size: 15px;
-
     }
-
 }
 
 
@@ -634,23 +592,33 @@ nav a.active:hover {
 @media (max-width: 360px) {
 
     .sidebar {
-
         height: 62px;
 
         padding:
             4px 3px;
 
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        overscroll-behavior-x: contain;
     }
 
 
     nav {
-
         gap: 0;
 
+        width: max-content;
+        min-width: max-content;
+
+        flex-shrink: 0;
     }
 
 
     nav a {
+        flex: 0 0 68px;
+
+        width: 68px;
+        min-width: 68px;
 
         height: 48px;
 
@@ -658,31 +626,29 @@ nav a.active:hover {
             3px 0;
 
         font-size: 6px;
-
     }
 
 
     nav a span {
-
         font-size: 13px;
-
     }
 
 
     .sidebar-bottom {
-
-        width: 40px;
+        width: 68px;
+        min-width: 68px;
 
         height: 48px;
 
         margin-left: 2px;
 
+        flex-shrink: 0;
     }
 
 
     .sidebar-bottom button {
-
-        width: 40px;
+        width: 68px;
+        min-width: 68px;
 
         height: 48px;
 
@@ -690,16 +656,12 @@ nav a.active:hover {
             2px 0;
 
         font-size: 6px;
-
     }
 
 
     .sidebar-bottom span {
-
         font-size: 14px;
-
     }
-
 }
 
 
@@ -710,16 +672,29 @@ nav a.active:hover {
 @media (max-width: 330px) {
 
     .sidebar {
-
         height: 60px;
 
         padding:
             3px 2px;
 
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        overscroll-behavior-x: contain;
+    }
+
+
+    nav {
+        width: max-content;
+        min-width: max-content;
     }
 
 
     nav a {
+        flex: 0 0 64px;
+
+        width: 64px;
+        min-width: 64px;
 
         height: 46px;
 
@@ -727,41 +702,49 @@ nav a.active:hover {
             2px 0;
 
         font-size: 5px;
-
     }
 
 
     nav a span {
-
         font-size: 12px;
-
     }
 
 
     .sidebar-bottom {
-
-        width: 38px;
+        width: 64px;
+        min-width: 64px;
 
         height: 46px;
 
+        flex-shrink: 0;
     }
 
 
     .sidebar-bottom button {
-
-        width: 38px;
+        width: 64px;
+        min-width: 64px;
 
         height: 46px;
 
         font-size: 5px;
-
     }
 
 
     .sidebar-bottom span {
-
         font-size: 13px;
-
     }
+}
 
+
+/* =========================================
+   MOBILE BODY SAFETY
+========================================= */
+
+@media (max-width: 850px) {
+
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
 }
