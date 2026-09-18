@@ -33,6 +33,10 @@ async function loadSidebar() {
         sidebar.innerHTML =
             await response.text();
 
+        sidebar
+            .querySelector('a[href="teman.html"]')
+            ?.classList.add("active");
+
         const logoutButton =
             document.getElementById(
                 "logoutButton"

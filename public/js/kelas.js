@@ -5,55 +5,53 @@ import { supabase } from "./supabase.js";
 // ======================================================
 
 const sidebar =
-document.getElementById("sidebar");
+    document.getElementById("sidebar");
 
 const addPostButton =
-document.getElementById("addPostButton");
+    document.getElementById("addPostButton");
 
 const closeComposer =
-document.getElementById("closeComposer");
+    document.getElementById("closeComposer");
 
 const postComposer =
-document.getElementById("postComposer");
+    document.getElementById("postComposer");
 
 const imageInput =
-document.getElementById("imageInput");
+    document.getElementById("imageInput");
 
 const postContent =
-document.getElementById("postContent");
+    document.getElementById("postContent");
 
 const fileName =
-document.getElementById("fileName");
+    document.getElementById("fileName");
 
 const imagePreview =
-document.getElementById("imagePreview");
+    document.getElementById("imagePreview");
 
 const previewImage =
-document.getElementById("previewImage");
+    document.getElementById("previewImage");
 
 const publishButton =
-document.getElementById("publishButton");
+    document.getElementById("publishButton");
 
 const feed =
-document.getElementById("feed");
+    document.getElementById("feed");
 
 const emptyState =
-document.getElementById("emptyState");
+    document.getElementById("emptyState");
 
 const refreshButton =
-document.getElementById("refreshButton");
+    document.getElementById("refreshButton");
 
 const notification =
-document.getElementById("notification");
+    document.getElementById("notification");
 
 // ======================================================
 // STATE
 // ======================================================
 
 let currentUser = null;
-
 let selectedFile = null;
-
 let notificationTimer = null;
 
 // ======================================================
@@ -61,39 +59,25 @@ let notificationTimer = null;
 // ======================================================
 
 function showNotification(
-message,
-isError = false
+    message,
+    isError = false
 ) {
+    if (!notification) return;
 
-if (!notification) {
-    return;
-}
+    notification.textContent = message;
 
-notification.textContent =
-    message;
+    notification.classList.toggle(
+        "error",
+        isError
+    );
 
-notification.classList.toggle(
-    "error",
-    isError
-);
+    notification.classList.add("show");
 
-notification.classList.add(
-    "show"
-);
+    clearTimeout(notificationTimer);
 
-clearTimeout(
-    notificationTimer
-);
-
-notificationTimer =
-    setTimeout(() => {
-
-        notification.classList.remove(
-            "show"
-        );
-
+    notificationTimer = setTimeout(() => {
+        notification.classList.remove("show");
     }, 3000);
-
 }
 
 // ======================================================
@@ -101,42 +85,40 @@ notificationTimer =
 // ======================================================
 
 async function loadSidebar() {
-
-if (!sidebar) {
-    console.warn(
-        "Element #sidebar tidak ditemukan."
-    );
-
-    return;
-}
-
-try {
-
-    const response =
-        await fetch("sidebar.html");
-
-    if (!response.ok) {
-
-        throw new Error(
-            "Sidebar gagal dimuat."
+    if (!sidebar) {
+        console.warn(
+            "Element #sidebar tidak ditemukan."
         );
-
+        return;
     }
 
-    sidebar.innerHTML =
-        await response.text();
+    try {
+        const response =
+            await fetch("sidebar.html");
 
-    setupSidebar();
+        if (!response.ok) {
+            throw new Error(
+                "Sidebar gagal dimuat."
+            );
+        }
 
-} catch (error) {
+        sidebar.innerHTML =
+            await response.text();
 
-    console.error(
-        "Sidebar:",
-        error
-    );
+        sidebar
+            .querySelector(
+                'a[href="kelas.html"]'
+            )
+            ?.classList.add("active");
 
-}
+        setupSidebar();
 
+    } catch (error) {
+        console.error(
+            "Sidebar:",
+            error
+        );
+    }
 }
 
 // ======================================================
@@ -144,37 +126,25 @@ try {
 // ======================================================
 
 function setupSidebar() {
+    const logoutButton =
+        document.getElementById(
+            "logoutButton"
+        );
 
-const logoutButton =
-    document.getElementById(
-        "logoutButton"
-    );
-
-
-// ==================================================
-// LOGOUT
-// ==================================================
-
-if (logoutButton) {
+    if (!logoutButton) return;
 
     logoutButton.addEventListener(
         "click",
         async () => {
-
-            logoutButton.disabled =
-                true;
+            logoutButton.disabled = true;
 
             try {
-
                 await supabase.auth.signOut();
-
             } catch (error) {
-
                 console.error(
                     "Logout:",
                     error
                 );
-
             }
 
             sessionStorage.removeItem(
@@ -183,50 +153,8 @@ if (logoutButton) {
 
             window.location.href =
                 "login.html";
-
         }
     );
-
-}
-
-
-// ==================================================
-// ACTIVE NAVIGATION
-// ==================================================
-
-const links =
-    document.querySelectorAll(
-        ".sidebar nav a"
-    );
-
-links.forEach(
-    (link) => {
-
-        const href =
-            link.getAttribute(
-                "href"
-            );
-
-        if (
-            href ===
-            "kelas.html"
-        ) {
-
-            link.classList.add(
-                "active"
-            );
-
-        } else {
-
-            link.classList.remove(
-                "active"
-            );
-
-        }
-
-    }
-);
-
 }
 
 // ======================================================
@@ -234,66 +162,38 @@ links.forEach(
 // ======================================================
 
 async function checkAuth() {
-
-const {
-    data,
-    error
-} =
-    await supabase.auth.getUser();
-
-
-if (error) {
-
-    console.error(
-        "Auth:",
+    const {
+        data,
         error
-    );
+    } =
+        await supabase.auth.getUser();
 
-}
+    if (error) {
+        console.error(
+            "Auth:",
+            error
+        );
+    }
 
+    if (data?.user) {
+        currentUser = data.user;
+        return true;
+    }
 
-if (data?.user) {
+    const guestMode =
+        sessionStorage.getItem(
+            "guestMode"
+        );
 
-    currentUser =
-        data.user;
+    if (guestMode === "true") {
+        currentUser = null;
+        return false;
+    }
 
-    return true;
-
-}
-
-
-// ==================================================
-// GUEST
-// ==================================================
-
-const guestMode =
-    sessionStorage.getItem(
-        "guestMode"
-    );
-
-
-if (
-    guestMode ===
-    "true"
-) {
-
-    currentUser =
-        null;
+    window.location.href =
+        "login.html";
 
     return false;
-
-}
-
-
-// ==================================================
-// TIDAK LOGIN
-// ==================================================
-
-window.location.href =
-    "login.html";
-
-return false;
-
 }
 
 // ======================================================
@@ -301,49 +201,33 @@ return false;
 // ======================================================
 
 if (addPostButton) {
+    addPostButton.addEventListener(
+        "click",
+        () => {
+            if (!currentUser) {
+                showNotification(
+                    "Login diperlukan untuk membuat postingan.",
+                    true
+                );
+                return;
+            }
 
-addPostButton.addEventListener(
-    "click",
-    () => {
+            if (!postComposer) return;
 
-        if (!currentUser) {
-
-            showNotification(
-                "Login diperlukan untuk membuat postingan.",
-                true
+            postComposer.classList.remove(
+                "hidden"
             );
 
-            return;
+            postContent?.focus();
 
+            window.scrollTo({
+                top:
+                    postComposer.offsetTop -
+                    30,
+                behavior: "smooth"
+            });
         }
-
-
-        if (!postComposer) {
-            return;
-        }
-
-
-        postComposer.classList.remove(
-            "hidden"
-        );
-
-
-        postContent?.focus();
-
-
-        window.scrollTo({
-
-            top:
-                postComposer.offsetTop - 30,
-
-            behavior:
-                "smooth"
-
-        });
-
-    }
-);
-
+    );
 }
 
 // ======================================================
@@ -351,24 +235,18 @@ addPostButton.addEventListener(
 // ======================================================
 
 if (closeComposer) {
+    closeComposer.addEventListener(
+        "click",
+        () => {
+            if (postComposer) {
+                postComposer.classList.add(
+                    "hidden"
+                );
+            }
 
-closeComposer.addEventListener(
-    "click",
-    () => {
-
-        if (postComposer) {
-
-            postComposer.classList.add(
-                "hidden"
-            );
-
+            resetComposer();
         }
-
-        resetComposer();
-
-    }
-);
-
+    );
 }
 
 // ======================================================
@@ -376,122 +254,70 @@ closeComposer.addEventListener(
 // ======================================================
 
 if (imageInput) {
+    imageInput.addEventListener(
+        "change",
+        (event) => {
+            const file =
+                event.target.files?.[0];
 
-imageInput.addEventListener(
-    "change",
-    (event) => {
+            if (!file) return;
 
-        const file =
-            event.target.files?.[0];
+            const fileNameLower =
+                file.name.toLowerCase();
 
+            const isWebP =
+                file.type === "image/webp" &&
+                fileNameLower.endsWith(
+                    ".webp"
+                );
 
-        if (!file) {
-            return;
+            if (!isWebP) {
+                resetSelectedImage();
+
+                showNotification(
+                    "Hanya untuk gambar berformat WEBP",
+                    true
+                );
+
+                return;
+            }
+
+            const maxSize =
+                1 * 1024 * 1024;
+
+            if (file.size > maxSize) {
+                resetSelectedImage();
+
+                showNotification(
+                    "Ukuran gambar maksimal 1 MB.",
+                    true
+                );
+
+                return;
+            }
+
+            selectedFile = file;
+
+            if (fileName) {
+                fileName.textContent =
+                    file.name;
+            }
+
+            const objectUrl =
+                URL.createObjectURL(file);
+
+            if (previewImage) {
+                previewImage.src =
+                    objectUrl;
+            }
+
+            if (imagePreview) {
+                imagePreview.classList.remove(
+                    "hidden"
+                );
+            }
         }
-
-
-        // ==========================================
-        // FORMAT WEBP
-        // ==========================================
-
-        const fileNameLower =
-            file.name.toLowerCase();
-
-
-        const isWebP =
-            file.type === "image/webp" &&
-            fileNameLower.endsWith(
-                ".webp"
-            );
-
-
-        if (!isWebP) {
-
-            resetSelectedImage();
-
-
-            showNotification(
-                "Hanya untuk gambar berformat WEBP",
-                true
-            );
-
-            return;
-
-        }
-
-
-        // ==========================================
-        // MAXIMUM 1 MB
-        // ==========================================
-
-        const maxSize =
-            1 * 1024 * 1024;
-
-
-        if (
-            file.size >
-            maxSize
-        ) {
-
-            resetSelectedImage();
-
-
-            showNotification(
-                "Ukuran gambar maksimal 1 MB.",
-                true
-            );
-
-            return;
-
-        }
-
-
-        // ==========================================
-        // SIMPAN FILE
-        // ==========================================
-
-        selectedFile =
-            file;
-
-
-        if (fileName) {
-
-            fileName.textContent =
-                file.name;
-
-        }
-
-
-        // ==========================================
-        // PREVIEW
-        // ==========================================
-
-        const objectUrl =
-            URL.createObjectURL(
-                file
-            );
-
-
-        if (previewImage) {
-
-            previewImage.src =
-                objectUrl;
-
-        }
-
-
-        if (imagePreview) {
-
-            imagePreview.classList.remove(
-                "hidden"
-            );
-
-        }
-
-    }
-);
-
-
+    );
 }
 
 // ======================================================
@@ -499,43 +325,26 @@ imageInput.addEventListener(
 // ======================================================
 
 function resetSelectedImage() {
+    selectedFile = null;
 
-selectedFile =
-    null;
+    if (imageInput) {
+        imageInput.value = "";
+    }
 
+    if (fileName) {
+        fileName.textContent =
+            "Belum ada gambar";
+    }
 
-if (imageInput) {
+    if (imagePreview) {
+        imagePreview.classList.add(
+            "hidden"
+        );
+    }
 
-    imageInput.value =
-        "";
-
-}
-
-
-if (fileName) {
-
-    fileName.textContent =
-        "Belum ada gambar";
-
-}
-
-
-if (imagePreview) {
-
-    imagePreview.classList.add(
-        "hidden"
-    );
-
-}
-
-
-if (previewImage) {
-
-    previewImage.src =
-        "";
-
-}
-
+    if (previewImage) {
+        previewImage.src = "";
+    }
 }
 
 // ======================================================
@@ -543,12 +352,10 @@ if (previewImage) {
 // ======================================================
 
 if (publishButton) {
-
-publishButton.addEventListener(
-    "click",
-    publishPost
-);
-
+    publishButton.addEventListener(
+        "click",
+        publishPost
+    );
 }
 
 // ======================================================
@@ -556,247 +363,171 @@ publishButton.addEventListener(
 // ======================================================
 
 async function publishPost() {
-
-if (!currentUser) {
-
-    showNotification(
-        "Login diperlukan untuk membuat postingan.",
-        true
-    );
-
-    return;
-
-}
-
-
-const content =
-    postContent?.value.trim() ||
-    "";
-
-
-// ==================================================
-// CEK ISI
-// ==================================================
-
-if (
-    !content &&
-    !selectedFile
-) {
-
-    showNotification(
-        "Tulis sesuatu atau pilih gambar terlebih dahulu.",
-        true
-    );
-
-    return;
-
-}
-
-
-// ==================================================
-// CEK WEBP ULANG
-// ==================================================
-
-if (selectedFile) {
-
-    const validWebP =
-        selectedFile.type ===
-            "image/webp" &&
-        selectedFile.name
-            .toLowerCase()
-            .endsWith(".webp");
-
-
-    if (!validWebP) {
-
+    if (!currentUser) {
         showNotification(
-            "Hanya untuk gambar berformat WEBP",
+            "Login diperlukan untuk membuat postingan.",
             true
         );
 
         return;
-
     }
 
+    const content =
+        postContent?.value
+            .replace(/^[ \t]+/gm, "")
+            .trim() || "";
 
-    // ==============================================
-    // CEK UKURAN ULANG
-    // ==============================================
-
-    const maxSize =
-        1 * 1024 * 1024;
-
-
-    if (
-        selectedFile.size >
-        maxSize
-    ) {
-
+    if (!content && !selectedFile) {
         showNotification(
-            "Ukuran gambar maksimal 1 MB.",
+            "Tulis sesuatu atau pilih gambar terlebih dahulu.",
             true
         );
 
         return;
-
     }
-
-}
-
-
-// ==================================================
-// BUTTON LOADING
-// ==================================================
-
-publishButton.disabled =
-    true;
-
-
-publishButton.innerHTML =
-    '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim...';
-
-
-try {
-
-    let imageUrl =
-        null;
-
 
     // ==================================================
-    // UPLOAD IMAGE
+    // VALIDATE IMAGE
     // ==================================================
 
     if (selectedFile) {
+        const validWebP =
+            selectedFile.type === "image/webp" &&
+            selectedFile.name
+                .toLowerCase()
+                .endsWith(".webp");
 
-        const filePath =
-            `${currentUser.id}/${crypto.randomUUID()}.webp`;
+        if (!validWebP) {
+            showNotification(
+                "Hanya untuk gambar berformat WEBP",
+                true
+            );
 
-
-        const {
-            error: uploadError
-        } =
-            await supabase.storage
-                .from("avatars")
-                .upload(
-                    filePath,
-                    selectedFile,
-                    {
-                        contentType:
-                            "image/webp",
-
-                        upsert:
-                            false
-                    }
-                );
-
-
-        if (uploadError) {
-
-            throw uploadError;
-
+            return;
         }
 
+        const maxSize =
+            1 * 1024 * 1024;
+
+        if (selectedFile.size > maxSize) {
+            showNotification(
+                "Ukuran gambar maksimal 1 MB.",
+                true
+            );
+
+            return;
+        }
+    }
+
+    publishButton.disabled = true;
+
+    publishButton.innerHTML =
+        '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim...';
+
+    try {
+        let imageUrl = null;
 
         // ==============================================
-        // PUBLIC URL
+        // UPLOAD IMAGE
+        // ==============================================
+
+        if (selectedFile) {
+            const filePath =
+                `${currentUser.id}/${crypto.randomUUID()}.webp`;
+
+            const {
+                error: uploadError
+            } =
+                await supabase.storage
+                    .from("avatars")
+                    .upload(
+                        filePath,
+                        selectedFile,
+                        {
+                            contentType:
+                                "image/webp",
+                            upsert: false
+                        }
+                    );
+
+            if (uploadError) {
+                throw uploadError;
+            }
+
+            const {
+                data: publicData
+            } =
+                supabase.storage
+                    .from("avatars")
+                    .getPublicUrl(
+                        filePath
+                    );
+
+            imageUrl =
+                publicData?.publicUrl ||
+                null;
+        }
+
+        // ==============================================
+        // INSERT POST
         // ==============================================
 
         const {
-            data:
-                publicData
+            error: postError
         } =
-            supabase.storage
-                .from("avatars")
-                .getPublicUrl(
-                    filePath
-                );
+            await supabase
+                .from("posts")
+                .insert({
+                    user_id:
+                        currentUser.id,
 
+                    content:
+                        content,
 
-        imageUrl =
-            publicData?.publicUrl ||
-            null;
+                    image_url:
+                        imageUrl
+                });
 
-    }
+        if (postError) {
+            throw postError;
+        }
 
+        // ==============================================
+        // SUCCESS
+        // ==============================================
 
-    // ==================================================
-    // INSERT POST
-    // ==================================================
-
-    const {
-        error: postError
-    } =
-        await supabase
-            .from("posts")
-            .insert({
-
-                user_id:
-                    currentUser.id,
-
-                content:
-                    content,
-
-                image_url:
-                    imageUrl
-
-            });
-
-
-    if (postError) {
-
-        throw postError;
-
-    }
-
-
-    // ==================================================
-    // SUCCESS
-    // ==================================================
-
-    showNotification(
-        "Postingan berhasil dibuat!"
-    );
-
-
-    resetComposer();
-
-
-    if (postComposer) {
-
-        postComposer.classList.add(
-            "hidden"
+        showNotification(
+            "Postingan berhasil dibuat!"
         );
 
+        resetComposer();
+
+        if (postComposer) {
+            postComposer.classList.add(
+                "hidden"
+            );
+        }
+
+        await loadPosts();
+
+    } catch (error) {
+        console.error(
+            "Publish post:",
+            error
+        );
+
+        showNotification(
+            error?.message ||
+                "Gagal membuat postingan.",
+            true
+        );
+
+    } finally {
+        publishButton.disabled = false;
+
+        publishButton.innerHTML =
+            '<i class="fa-solid fa-paper-plane"></i> Posting';
     }
-
-
-    await loadPosts();
-
-} catch (error) {
-
-    console.error(
-        "Publish post:",
-        error
-    );
-
-
-    showNotification(
-        error?.message ||
-        "Gagal membuat postingan.",
-        true
-    );
-
-} finally {
-
-    publishButton.disabled =
-        false;
-
-
-    publishButton.innerHTML =
-        '<i class="fa-solid fa-paper-plane"></i> Posting';
-
-}
-
 }
 
 // ======================================================
@@ -804,413 +535,294 @@ try {
 // ======================================================
 
 async function loadPosts() {
+    if (!feed) return;
 
-if (!feed) {
-    return;
-}
-
-
-feed.innerHTML =
-    `
-    <div class="empty-state">
-        Memuat postingan...
-    </div>
+    feed.innerHTML = `
+        <div class="empty-state">
+            Memuat postingan...
+        </div>
     `;
 
+    const {
+        data: posts,
+        error
+    } =
+        await supabase
+            .from("posts")
+            .select(`
+                id,
+                user_id,
+                content,
+                image_url,
+                created_at,
+                profiles (
+                    username,
+                    full_name,
+                    avatar_url
+                )
+            `)
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
 
-const {
-    data: posts,
-    error
-} =
-    await supabase
-        .from("posts")
-        .select(`
-            id,
-            user_id,
-            content,
-            image_url,
-            created_at,
-            profiles (
-                username,
-                full_name,
-                avatar_url
-            )
-        `)
-        .order(
-            "created_at",
-            {
-                ascending:
-                    false
-            }
+    if (error) {
+        console.error(
+            "Load posts:",
+            error
         );
 
+        feed.innerHTML = "";
 
-if (error) {
+        if (emptyState) {
+            emptyState.classList.add(
+                "hidden"
+            );
+        }
 
-    console.error(
-        "Load posts:",
-        error
-    );
+        showNotification(
+            "Gagal memuat postingan.",
+            true
+        );
 
+        return;
+    }
 
-    feed.innerHTML =
-        "";
+    feed.innerHTML = "";
 
+    if (
+        !posts ||
+        posts.length === 0
+    ) {
+        if (emptyState) {
+            emptyState.classList.remove(
+                "hidden"
+            );
+        }
+
+        return;
+    }
 
     if (emptyState) {
-
         emptyState.classList.add(
             "hidden"
         );
-
     }
 
-
-    showNotification(
-        "Gagal memuat postingan.",
-        true
-    );
-
-    return;
-
-}
-
-
-feed.innerHTML =
-    "";
-
-
-// ==================================================
-// EMPTY
-// ==================================================
-
-if (
-    !posts ||
-    posts.length === 0
-) {
-
-    if (emptyState) {
-
-        emptyState.classList.remove(
-            "hidden"
-        );
-
-    }
-
-    return;
-
-}
-
-
-if (emptyState) {
-
-    emptyState.classList.add(
-        "hidden"
-    );
-
-}
-
-
-// ==================================================
-// CREATE CARDS
-// ==================================================
-
-posts.forEach(
-    (post) => {
-
+    posts.forEach((post) => {
         feed.appendChild(
-            createPostCard(
-                post
-            )
+            createPostCard(post)
         );
-
-    }
-);
-
+    });
 }
 
 // ======================================================
 // CREATE POST CARD
 // ======================================================
 
-function createPostCard(
-post
-) {
+function createPostCard(post) {
+    const card =
+        document.createElement(
+            "article"
+        );
 
-const card =
-    document.createElement(
-        "article"
-    );
+    card.className =
+        "post-card";
 
+    const profile =
+        Array.isArray(post.profiles)
+            ? post.profiles[0]
+            : post.profiles;
 
-card.className =
-    "post-card";
+    const name =
+        profile?.full_name ||
+        profile?.username ||
+        "User";
 
+    const username =
+        profile?.username ||
+        "user";
 
-// ==================================================
-// PROFILE
-// ==================================================
+    const avatar =
+        profile?.avatar_url ||
+        `https://ui-avatars.com/api/?name=${encodeURIComponent(
+            name
+        )}&background=111111&color=f4f3ed`;
 
-const profile =
-    Array.isArray(
-        post.profiles
-    )
-        ? post.profiles[0]
-        : post.profiles;
+    const date =
+        new Date(
+            post.created_at
+        );
 
+    const formattedDate =
+        date.toLocaleString(
+            "id-ID",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
 
-const name =
-    profile?.full_name ||
-    profile?.username ||
-    "User";
+    const canDelete =
+        currentUser &&
+        currentUser.id ===
+            post.user_id;
 
+    card.innerHTML = `
+        <div class="post-top">
 
-const username =
-    profile?.username ||
-    "user";
+            <div class="post-user">
 
+                <img
+                    class="post-avatar"
+                    src="${escapeHtml(avatar)}"
+                    alt="${escapeHtml(name)}"
+                    loading="lazy"
+                >
 
-const avatar =
-    profile?.avatar_url ||
-    `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=111111&color=f4f3ed`;
+                <div>
 
+                    <div class="post-name">
+                        ${escapeHtml(name)}
+                    </div>
 
-// ==================================================
-// DATE
-// ==================================================
+                    <div class="post-time">
+                        @${escapeHtml(username)}
+                        ·
+                        ${formattedDate}
+                    </div>
 
-const date =
-    new Date(
-        post.created_at
-    );
-
-
-const formattedDate =
-    date.toLocaleString(
-        "id-ID",
-        {
-            day:
-                "2-digit",
-
-            month:
-                "short",
-
-            year:
-                "numeric",
-
-            hour:
-                "2-digit",
-
-            minute:
-                "2-digit"
-        }
-    );
-
-
-// ==================================================
-// DELETE PERMISSION
-// ==================================================
-
-const canDelete =
-    currentUser &&
-    currentUser.id ===
-        post.user_id;
-
-
-// ==================================================
-// CARD HTML
-// ==================================================
-
-card.innerHTML =
-    `
-
-    <div class="post-top">
-
-        <div class="post-user">
-
-            <img
-                class="post-avatar"
-                src="${escapeHtml(avatar)}"
-                alt="${escapeHtml(name)}"
-                loading="lazy"
-            >
-
-            <div>
-
-                <div class="post-name">
-                    ${escapeHtml(name)}
-                </div>
-
-                <div class="post-time">
-                    @${escapeHtml(username)}
-                    ·
-                    ${formattedDate}
                 </div>
 
             </div>
 
+            ${
+                canDelete
+                    ? `
+                        <button
+                            class="delete-post"
+                            data-id="${post.id}"
+                            type="button"
+                            title="Hapus postingan"
+                            aria-label="Hapus postingan"
+                        >
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    `
+                    : ""
+            }
+
         </div>
 
-
         ${
-            canDelete
+            post.image_url
                 ? `
-                <button
-                    class="delete-post"
-                    data-id="${post.id}"
-                    type="button"
-                    title="Hapus postingan"
-                    aria-label="Hapus postingan"
-                >
-                    <i class="fa-solid fa-trash"></i>
-                </button>
+                    <div class="post-image">
+
+                        <img
+                            src="${escapeHtml(
+                                post.image_url
+                            )}"
+                            alt="Postingan Kelas 5B"
+                            loading="lazy"
+                        >
+
+                    </div>
                 `
                 : ""
         }
 
-    </div>
-
-
-    ${
-        post.image_url
-            ? `
-            <div class="post-image">
-
-                <img
-                    src="${escapeHtml(post.image_url)}"
-                    alt="Postingan Kelas 5B"
-                    loading="lazy"
-                >
-
-            </div>
-            `
-            : ""
-    }
-
-
-    ${
-        post.content
-            ? `
-            <div class="post-content">
-                ${escapeHtml(post.content)}
-            </div>
-            `
-            : ""
-    }
-
+        ${
+            post.content
+                ? `<div class="post-content">${escapeHtml(
+                      post.content
+                  )}</div>`
+                : ""
+        }
     `;
 
+    const deleteButton =
+        card.querySelector(
+            ".delete-post"
+        );
 
-// ==================================================
-// DELETE BUTTON
-// ==================================================
+    if (deleteButton) {
+        deleteButton.addEventListener(
+            "click",
+            async () => {
+                await deletePost(post);
+            }
+        );
+    }
 
-const deleteButton =
-    card.querySelector(
-        ".delete-post"
-    );
-
-
-if (deleteButton) {
-
-    deleteButton.addEventListener(
-        "click",
-        async () => {
-
-            await deletePost(
-                post
-            );
-
-        }
-    );
-
-}
-
-
-return card;
-
+    return card;
 }
 
 // ======================================================
 // DELETE POST
 // ======================================================
 
-async function deletePost(
-post
-) {
+async function deletePost(post) {
+    if (!currentUser) return;
 
-if (!currentUser) {
-    return;
-}
-
-
-if (
-    currentUser.id !==
-    post.user_id
-) {
-
-    showNotification(
-        "Kamu hanya bisa menghapus postingan sendiri.",
-        true
-    );
-
-    return;
-
-}
-
-
-const confirmed =
-    confirm(
-        "Hapus postingan ini?"
-    );
-
-
-if (!confirmed) {
-    return;
-}
-
-
-const {
-    error
-} =
-    await supabase
-        .from("posts")
-        .delete()
-        .eq(
-            "id",
-            post.id
-        )
-        .eq(
-            "user_id",
-            currentUser.id
+    if (
+        currentUser.id !==
+        post.user_id
+    ) {
+        showNotification(
+            "Kamu hanya bisa menghapus postingan sendiri.",
+            true
         );
 
+        return;
+    }
 
-if (error) {
+    const confirmed =
+        confirm(
+            "Hapus postingan ini?"
+        );
 
-    console.error(
-        "Delete post:",
+    if (!confirmed) return;
+
+    const {
         error
-    );
+    } =
+        await supabase
+            .from("posts")
+            .delete()
+            .eq(
+                "id",
+                post.id
+            )
+            .eq(
+                "user_id",
+                currentUser.id
+            );
 
+    if (error) {
+        console.error(
+            "Delete post:",
+            error
+        );
+
+        showNotification(
+            "Gagal menghapus postingan.",
+            true
+        );
+
+        return;
+    }
 
     showNotification(
-        "Gagal menghapus postingan.",
-        true
+        "Postingan dihapus."
     );
 
-    return;
-
-}
-
-
-showNotification(
-    "Postingan dihapus."
-);
-
-
-await loadPosts();
-
+    await loadPosts();
 }
 
 // ======================================================
@@ -1218,55 +830,43 @@ await loadPosts();
 // ======================================================
 
 function resetComposer() {
+    selectedFile = null;
 
-selectedFile =
-    null;
+    if (postContent) {
+        postContent.value = "";
+    }
 
-
-if (postContent) {
-
-    postContent.value =
-        "";
-
-}
-
-
-resetSelectedImage();
-
+    resetSelectedImage();
 }
 
 // ======================================================
 // ESCAPE HTML
 // ======================================================
 
-function escapeHtml(
-value
-) {
-
-return String(
-    value ?? ""
-)
-    .replace(
-        /&/g,
-        "&amp;"
+function escapeHtml(value) {
+    return String(
+        value ?? ""
     )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
-
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 }
 
 // ======================================================
@@ -1274,44 +874,33 @@ return String(
 // ======================================================
 
 if (refreshButton) {
+    refreshButton.addEventListener(
+        "click",
+        async () => {
+            const icon =
+                refreshButton.querySelector(
+                    "i"
+                );
 
-refreshButton.addEventListener(
-    "click",
-    async () => {
-
-        const icon =
-            refreshButton.querySelector(
-                "i"
-            );
-
-
-        icon?.classList.add(
-            "fa-spin"
-        );
-
-
-        refreshButton.disabled =
-            true;
-
-
-        try {
-
-            await loadPosts();
-
-        } finally {
-
-            icon?.classList.remove(
+            icon?.classList.add(
                 "fa-spin"
             );
 
             refreshButton.disabled =
-                false;
+                true;
 
+            try {
+                await loadPosts();
+            } finally {
+                icon?.classList.remove(
+                    "fa-spin"
+                );
+
+                refreshButton.disabled =
+                    false;
+            }
         }
-
-    }
-);
-
+    );
 }
 
 // ======================================================
@@ -1319,90 +908,66 @@ refreshButton.addEventListener(
 // ======================================================
 
 const dot =
-document.querySelector(
-".cursor-dot"
-);
-
-const ring =
-document.querySelector(
-".cursor-ring"
-);
-
-if (
-dot &&
-ring &&
-window.matchMedia(
-"(pointer: fine)"
-).matches
-) {
-
-let mouseX =
-    0;
-
-let mouseY =
-    0;
-
-let ringX =
-    0;
-
-let ringY =
-    0;
-
-
-document.addEventListener(
-    "mousemove",
-    (event) => {
-
-        mouseX =
-            event.clientX;
-
-        mouseY =
-            event.clientY;
-
-
-        dot.style.left =
-            mouseX + "px";
-
-        dot.style.top =
-            mouseY + "px";
-
-    }
-);
-
-
-function animateCursor() {
-
-    ringX +=
-        (
-            mouseX -
-            ringX
-        ) * 0.12;
-
-
-    ringY +=
-        (
-            mouseY -
-            ringY
-        ) * 0.12;
-
-
-    ring.style.left =
-        ringX + "px";
-
-
-    ring.style.top =
-        ringY + "px";
-
-
-    requestAnimationFrame(
-        animateCursor
+    document.querySelector(
+        ".cursor-dot"
     );
 
-}
+const ring =
+    document.querySelector(
+        ".cursor-ring"
+    );
 
+if (
+    dot &&
+    ring &&
+    window.matchMedia(
+        "(pointer: fine)"
+    ).matches
+) {
+    let mouseX = 0;
+    let mouseY = 0;
 
-animateCursor();
+    let ringX = 0;
+    let ringY = 0;
 
+    document.addEventListener(
+        "mousemove",
+        (event) => {
+            mouseX =
+                event.clientX;
+
+            mouseY =
+                event.clientY;
+
+            dot.style.left =
+                mouseX + "px";
+
+            dot.style.top =
+                mouseY + "px";
+        }
+    );
+
+    function animateCursor() {
+        ringX +=
+            (mouseX - ringX) *
+            0.12;
+
+        ringY +=
+            (mouseY - ringY) *
+            0.12;
+
+        ring.style.left =
+            ringX + "px";
+
+        ring.style.top =
+            ringY + "px";
+
+        requestAnimationFrame(
+            animateCursor
+        );
+    }
+
+    animateCursor();
 }
 
 // ======================================================
@@ -1410,28 +975,19 @@ animateCursor();
 // ======================================================
 
 async function start() {
+    await loadSidebar();
 
-await loadSidebar();
+    const isLoggedIn =
+        await checkAuth();
 
-const isLoggedIn =
-    await checkAuth();
-
-
-// ==================================================
-// FEED TETAP BOLEH DILIHAT GUEST
-// ==================================================
-
-if (
-    isLoggedIn ||
-    sessionStorage.getItem(
-        "guestMode"
-    ) === "true"
-) {
-
-    await loadPosts();
-
-}
-
+    if (
+        isLoggedIn ||
+        sessionStorage.getItem(
+            "guestMode"
+        ) === "true"
+    ) {
+        await loadPosts();
+    }
 }
 
 start();

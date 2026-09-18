@@ -1,1032 +1,1083 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  }
 
 :root {
-    --black: #080808;
-    --white: #f4f3ed;
-    --yellow: #d8ff00;
-    --muted: #8b8b84;
-    --line: rgba(244, 243, 237, 0.16);
+--black: #080808;
+--white: #f4f3ed;
+--yellow: #d8ff00;
+--muted: #8b8b84;
+--line: rgba(244, 243, 237, 0.16);
 }
 
-
 /* =========================================
-   BODY
+BODY
 ========================================= */
 
 body {
-    min-height: 100vh;
+min-height: 100vh;
 
-    background:
-        linear-gradient(
-            rgba(8, 8, 8, 0.88),
-            rgba(8, 8, 8, 0.95)
-        ),
-        url("/background.jpg");
+background:
+    linear-gradient(
+        rgba(8, 8, 8, 0.88),
+        rgba(8, 8, 8, 0.95)
+    ),
+    url("/assets/background.jpeg");
 
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+background-size: cover;
+background-position: center;
+background-attachment: fixed;
 
-    color: var(--white);
+color: var(--white);
 
-    font-family:
-        "Google Sans",
-        system-ui,
-        sans-serif;
+font-family:
+    "Google Sans",
+    system-ui,
+    sans-serif;
+
 }
 
-
 /* =========================================
-   GRID BACKGROUND
+GRID BACKGROUND
 ========================================= */
 
 body::before {
-    content: "";
+content: "";
 
-    position: fixed;
+position: fixed;
+inset: 0;
 
-    inset: 0;
+pointer-events: none;
 
-    pointer-events: none;
+background-image:
+    linear-gradient(
+        rgba(244, 243, 237, 0.035) 1px,
+        transparent 1px
+    ),
+    linear-gradient(
+        90deg,
+        rgba(244, 243, 237, 0.035) 1px,
+        transparent 1px
+    );
 
-    background-image:
-        linear-gradient(
-            rgba(244, 243, 237, 0.035) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(244, 243, 237, 0.035) 1px,
-            transparent 1px
-        );
+background-size: 32px 32px;
 
-    background-size: 32px 32px;
+z-index: -1;
 
-    z-index: -1;
 }
 
-
 /* =========================================
-   DASHBOARD
+DASHBOARD
 ========================================= */
 
 .dashboard {
-    margin-left: 260px;
+margin-left: 260px;
 
-    width: calc(100% - 260px);
+width: calc(100% - 260px);
 
-    min-height: 100vh;
+min-height: 100vh;
 
-    padding: 35px;
+padding: 35px;
 
-    max-width: 1400px;
+max-width: 1400px;
+
 }
 
-
 /* =========================================
-   TOPBAR
+TOPBAR
 ========================================= */
 
 .topbar {
-    display: flex;
+display: flex;
 
-    justify-content: space-between;
+justify-content: space-between;
+align-items: center;
 
-    align-items: center;
+margin-bottom: 35px;
 
-    margin-bottom: 35px;
 }
-
 
 .mini-label {
-    font-family:
-        "JetBrains Mono",
-        monospace;
+font-family:
+"JetBrains Mono",
+monospace;
 
-    color:
-        var(--yellow);
+color: var(--yellow);
 
-    font-size: 10px;
+font-size: 10px;
 
-    font-weight: 700;
+font-weight: 700;
 
-    letter-spacing: 3px;
+letter-spacing: 3px;
 
-    text-transform: uppercase;
+text-transform: uppercase;
+
 }
-
 
 .topbar h1 {
-    color:
-        var(--white);
+color: var(--white);
 
-    font-size: 30px;
+font-size: 30px;
 
-    font-weight: 900;
+font-weight: 900;
 
-    line-height: 1;
+line-height: 1;
 
-    margin-top: 7px;
+margin-top: 7px;
 
-    letter-spacing: -1px;
+letter-spacing: -1px;
+
+text-shadow: none;
+
 }
 
-
 /* =========================================
-   MINI PROFILE
+MINI PROFILE
 ========================================= */
 
 .profile-mini {
-    display: flex;
+display: flex;
 
-    align-items: center;
+align-items: center;
 
-    gap: 9px;
+gap: 9px;
 
-    color:
-        var(--white);
+color: var(--white);
 
-    font-size: 12px;
+font-size: 12px;
 
-    font-weight: 700;
+font-weight: 700;
+
+text-shadow: none;
+
 }
 
-
 /* =========================================
-   MINI AVATAR
+MINI AVATAR
 ========================================= */
 
 #miniAvatar {
-    width: 30px;
-    height: 30px;
+width: 30px;
+height: 30px;
 
-    min-width: 30px;
-    min-height: 30px;
+min-width: 30px;
+min-height: 30px;
 
-    flex-shrink: 0;
+flex-shrink: 0;
 
-    display: flex;
+display: flex;
 
-    align-items: center;
-    justify-content: center;
+align-items: center;
+justify-content: center;
 
-    border-radius: 50%;
+border-radius: 50%;
 
-    background:
-        var(--yellow);
+background: var(--yellow);
 
-    color:
-        var(--black);
+color: var(--black);
 
-    border:
-        1.5px solid var(--white);
+border: 1.5px solid var(--white);
 
-    box-shadow:
-        3px 3px 0 var(--white);
+overflow: hidden;
 
-    overflow: hidden;
+font-family:
+    "JetBrains Mono",
+    monospace;
 
-    font-family:
-        "JetBrains Mono",
-        monospace;
+font-size: 11px;
 
-    font-size: 11px;
+font-weight: 900;
 
-    font-weight: 900;
+text-shadow: none;
+
+box-shadow: none;
+
 }
 
-
 /* =========================================
-   MINI AVATAR IMAGE
+MINI AVATAR IMAGE
 ========================================= */
 
 #miniAvatar.has-image {
-    background:
-        transparent;
+background: transparent;
 
-    border:
-        1.5px solid var(--yellow);
+border: 1.5px solid var(--yellow);
+
 }
-
 
 #miniAvatar img {
-    width: 100%;
-    height: 100%;
+width: 100%;
+height: 100%;
 
-    display: block;
+display: block;
 
-    object-fit: cover;
+object-fit: cover;
 
-    border-radius: 50%;
+border-radius: 50%;
+
 }
 
-
 /* =========================================
-   MINI NAME
+MINI NAME
 ========================================= */
 
 #miniName {
-    max-width: 150px;
+max-width: 150px;
 
-    color:
-        var(--white);
+color: var(--white);
 
-    overflow: hidden;
+overflow: hidden;
 
-    white-space: nowrap;
+white-space: nowrap;
 
-    text-overflow: ellipsis;
+text-overflow: ellipsis;
+
+text-shadow: none;
+
+filter: none;
+
 }
 
-
 /* =========================================
-   HERO
+HERO
 ========================================= */
 
 .hero {
-    min-height: 310px;
+min-height: 310px;
 
-    padding: 45px;
+padding: 45px;
 
-    position: relative;
+position: relative;
 
-    overflow: hidden;
+overflow: hidden;
 
-    display: flex;
+display: flex;
 
-    justify-content: space-between;
+justify-content: space-between;
 
-    align-items: center;
+align-items: center;
 
-    gap: 30px;
+gap: 30px;
 
-    background:
-        rgba(8, 8, 8, 0.82);
+background:
+    rgba(8, 8, 8, 0.82);
 
-    border:
-        1px solid var(--line);
+border: 1px solid var(--line);
 
-    border-left:
-        5px solid var(--yellow);
+border-left: 5px solid var(--yellow);
 
-    border-radius: 0;
+border-radius: 0;
 
-    box-shadow:
-        9px 9px 0 var(--yellow);
+box-shadow:
+    9px 9px 0 var(--yellow);
 
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
 }
-
 
 .hero:hover {
-    transform:
-        translate(-3px, -3px);
+transform:
+translate(-3px, -3px);
 
-    box-shadow:
-        13px 13px 0 var(--yellow);
+box-shadow:
+    13px 13px 0 var(--yellow);
+
 }
 
-
 /* =========================================
-   HERO DECORATION
+HERO DECORATION
 ========================================= */
 
 .hero::after {
-    content: "01";
+content: "01";
 
-    position: absolute;
+position: absolute;
 
-    right: 35px;
+right: 35px;
+bottom: 20px;
 
-    bottom: 20px;
+color:
+    rgba(244, 243, 237, 0.08);
 
-    color:
-        rgba(244, 243, 237, 0.08);
+font-family:
+    "JetBrains Mono",
+    monospace;
 
-    font-family:
-        "JetBrains Mono",
-        monospace;
+font-size: 90px;
 
-    font-size: 90px;
+font-weight: 900;
 
-    font-weight: 900;
+line-height: 1;
 
-    line-height: 1;
+pointer-events: none;
 
-    pointer-events: none;
 }
 
-
 /* =========================================
-   HERO CONTENT
+HERO CONTENT
 ========================================= */
 
 .hero > div:first-child {
-    position: relative;
+position: relative;
 
-    z-index: 2;
+z-index: 2;
 
-    max-width: 720px;
+max-width: 720px;
+
 }
-
 
 .hero-label {
-    font-family:
-        "JetBrains Mono",
-        monospace;
+font-family:
+"JetBrains Mono",
+monospace;
 
-    color:
-        var(--yellow);
+color: var(--yellow);
 
-    font-size: 10px;
+font-size: 10px;
 
-    font-weight: 700;
+font-weight: 700;
 
-    letter-spacing: 3px;
+letter-spacing: 3px;
 
-    margin-bottom: 18px;
+margin-bottom: 18px;
 
-    text-transform: uppercase;
+text-transform: uppercase;
+
+text-shadow: none;
+
 }
-
 
 .hero h2 {
-    color:
-        var(--white);
+color: var(--white);
 
-    font-size:
-        clamp(35px, 5vw, 65px);
+font-size:
+    clamp(35px, 5vw, 65px);
 
-    line-height: 0.98;
+line-height: 0.98;
 
-    letter-spacing: -3px;
+letter-spacing: -3px;
 
-    font-weight: 900;
+font-weight: 900;
+
+text-shadow: none;
+
 }
-
 
 .hero h2 span {
-    color:
-        var(--yellow);
-}
+color: var(--yellow);
 
+text-shadow: none;
+
+}
 
 .hero p {
-    color:
-        var(--muted);
+color: var(--muted);
 
-    margin-top: 20px;
+margin-top: 20px;
 
-    max-width: 600px;
+max-width: 600px;
 
-    font-size: 14px;
+font-size: 14px;
 
-    line-height: 1.6;
+line-height: 1.6;
+
+text-shadow: none;
+
+filter: none;
+
 }
 
-
 /* =========================================
-   HERO ORB
+HERO ORB
 ========================================= */
 
 .hero-orb {
-    width: 150px;
-    height: 150px;
+width: 150px;
+height: 150px;
 
-    flex-shrink: 0;
+flex-shrink: 0;
 
-    display: flex;
+display: flex;
 
-    align-items: center;
-    justify-content: center;
+align-items: center;
+justify-content: center;
 
-    background:
-        transparent;
+background: transparent;
 
-    border:
-        4px solid var(--yellow);
+border: 4px solid var(--yellow);
 
-    border-radius: 50%;
+border-radius: 50%;
 
-    overflow: hidden;
+overflow: hidden;
 
-    box-shadow:
-        none;
+box-shadow: none;
 
-    animation:
-        brutalFloat 4s ease-in-out infinite;
+animation:
+    brutalFloat 4s ease-in-out infinite;
+
 }
-
 
 .hero-orb img {
-    width: 100%;
-    height: 100%;
+width: 100%;
+height: 100%;
 
-    display: block;
+display: block;
 
-    object-fit: cover;
+object-fit: cover;
 
-    border-radius: 50%;
+border-radius: 50%;
+
 }
-
 
 @keyframes brutalFloat {
+0% {
+transform:
+translateY(0)
+rotate(0deg);
+}
 
-    0% {
-        transform:
-            translateY(0)
-            rotate(0deg);
-    }
+50% {
+    transform:
+        translateY(-8px)
+        rotate(-2deg);
+}
 
-    50% {
-        transform:
-            translateY(-8px)
-            rotate(-2deg);
-    }
-
-    100% {
-        transform:
-            translateY(0)
-            rotate(0deg);
-    }
+100% {
+    transform:
+        translateY(0)
+        rotate(0deg);
+}
 
 }
 
-
 /* =========================================
-   STATS
+STATS
 ========================================= */
 
 .stats {
-    display: grid;
+display: grid;
 
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+grid-template-columns:
+    repeat(3, minmax(0, 1fr));
 
-    gap: 18px;
+gap: 18px;
 
-    margin-top: 25px;
+margin-top: 25px;
+
 }
 
-
 /* =========================================
-   STAT CARD
+STAT CARD
 ========================================= */
 
 .stat-card {
-    min-height: 150px;
+min-height: 150px;
+
+padding: 25px;
+
+background:
+    rgba(244, 243, 237, 0.035);
+
+border:
+    1px solid var(--line);
+
+border-radius: 0;
+
+position: relative;
+
+text-decoration: none;
+
+color: inherit;
+
+text-shadow: none;
+
+filter: none;
+
+transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
+
+}
+
+.stat-card::before {
+content: "";
+
+position: absolute;
+
+top: -1px;
+left: -1px;
+
+width: 8px;
+height: 8px;
+
+background:
+    var(--yellow);
+
+box-shadow: none;
+
+}
+
+.stat-card:hover {
+transform:
+translate(-3px, -3px);
+
+background:
+    rgba(216, 255, 0, 0.045);
+
+border-color:
+    rgba(216, 255, 0, 0.5);
+
+box-shadow:
+    5px 5px 0 var(--yellow);
+
+}
+
+/* =========================================
+STAT LABEL
+========================================= */
+
+.stat-card span {
+color:
+var(--yellow);
+
+font-family:
+    "JetBrains Mono",
+    monospace;
+
+font-size: 10px;
+
+font-weight: 700;
+
+letter-spacing: 1.5px;
+
+text-transform: uppercase;
+
+text-shadow: none;
+
+filter: none;
+
+}
+
+/* =========================================
+STAT VALUE
+========================================= */
+
+.stat-card strong {
+display: block;
+
+color:
+    var(--white);
+
+font-size: 20px;
+
+font-weight: 900;
+
+margin-top: 25px;
+
+line-height: 1;
+
+text-shadow: none !important;
+
+filter: none !important;
+
+-webkit-text-stroke: 0;
+
+text-decoration: none;
+
+}
+
+/* =========================================
+STAT DESCRIPTION
+========================================= */
+
+.stat-card p {
+color:
+var(--muted);
+
+font-size: 12px;
+
+margin-top: 8px;
+
+line-height: 1.5;
+
+text-shadow: none !important;
+
+filter: none !important;
+
+-webkit-text-stroke: 0;
+
+text-decoration: none;
+
+}
+
+/* =========================================
+LINK STATES
+========================================= */
+
+.stat-card:link,
+.stat-card:visited,
+.stat-card:hover,
+.stat-card:active {
+text-decoration: none;
+
+color: inherit;
+
+}
+
+.stat-card strong,
+.stat-card p {
+text-decoration: none !important;
+}
+
+/* =========================================
+SELECTION
+========================================= */
+
+::selection {
+background:
+var(--yellow);
+
+color:
+    var(--black);
+
+}
+
+/* =========================================
+SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar {
+width: 8px;
+}
+
+::-webkit-scrollbar-track {
+background:
+var(--black);
+}
+
+::-webkit-scrollbar-thumb {
+background:
+var(--yellow);
+
+border:
+    2px solid var(--black);
+
+}
+
+/* =========================================
+TABLET
+========================================= */
+
+@media (max-width: 850px) {
+
+.dashboard {
+    margin-left: 0;
+
+    width: 100%;
 
     padding: 25px;
 
-    background:
-        rgba(244, 243, 237, 0.035);
-
-    border:
-        1px solid var(--line);
-
-    border-radius: 0;
-
-    position: relative;
-
-    transition:
-        transform 0.18s ease,
-        background 0.18s ease,
-        border-color 0.18s ease;
+    padding-bottom: 100px;
 }
 
+.hero {
+    padding: 30px;
 
-.stat-card::before {
-    content: "";
+    min-height: 280px;
 
-    position: absolute;
-
-    top: -1px;
-    left: -1px;
-
-    width: 8px;
-    height: 8px;
-
-    background:
-        var(--yellow);
+    box-shadow:
+        6px 6px 0 var(--yellow);
 }
 
+.hero:hover {
+    box-shadow:
+        8px 8px 0 var(--yellow);
+}
 
-.stat-card:hover {
-    transform:
-        translate(-3px, -3px);
+.hero-orb {
+    width: 110px;
+    height: 110px;
+}
 
-    background:
-        rgba(216, 255, 0, 0.045);
+.stats {
+    grid-template-columns: 1fr;
+}
 
-    border-color:
-        rgba(216, 255, 0, 0.5);
+}
+
+/* =========================================
+602px
+========================================= */
+
+@media (max-width: 602px) {
+
+.dashboard {
+    padding: 25px;
+
+    padding-bottom: 100px;
+}
+
+.topbar {
+    align-items: flex-start;
+
+    gap: 15px;
+}
+
+.topbar h1 {
+    font-size: 28px;
+}
+
+.profile-mini {
+    font-size: 0;
+
+    gap: 6px;
+}
+
+#miniAvatar {
+    width: 28px;
+    height: 28px;
+
+    min-width: 28px;
+    min-height: 28px;
+
+    font-size: 10px;
+}
+
+#miniName {
+    display: none;
+}
+
+.hero {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    min-height: 300px;
+
+    padding: 27px;
+}
+
+.hero h2 {
+    font-size: 42px;
+
+    letter-spacing: -2px;
+}
+
+.hero-orb {
+    width: 85px;
+    height: 85px;
+}
+
+.hero::after {
+    font-size: 65px;
+
+    right: 20px;
+
+    bottom: 15px;
+}
+
+.stat-card {
+    min-height: 130px;
+
+    padding: 22px;
+}
+
+}
+
+/* =========================================
+480px
+========================================= */
+
+@media (max-width: 480px) {
+
+.dashboard {
+    padding: 20px;
+
+    padding-bottom: 95px;
+}
+
+.topbar {
+    margin-bottom: 28px;
+}
+
+.topbar h1 {
+    font-size: 26px;
+}
+
+.mini-label {
+    font-size: 8px;
+
+    letter-spacing: 2px;
+}
+
+#miniAvatar {
+    width: 26px;
+    height: 26px;
+
+    min-width: 26px;
+    min-height: 26px;
+
+    font-size: 9px;
+}
+
+.hero {
+    padding: 23px;
+
+    min-height: 290px;
+
+    border-left-width: 4px;
 
     box-shadow:
         5px 5px 0 var(--yellow);
 }
 
+.hero h2 {
+    font-size: 38px;
 
-/* =========================================
-   STAT LABEL
-========================================= */
-
-.stat-card span {
-    color:
-        var(--yellow);
-
-    font-family:
-        "JetBrains Mono",
-        monospace;
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    letter-spacing: 1.5px;
-
-    text-transform: uppercase;
+    letter-spacing: -1.8px;
 }
 
-
-/* =========================================
-   STAT VALUE
-========================================= */
-
-.stat-card strong {
-    display: block;
-
-    color:
-        var(--white);
-
-    font-size: 20px;
-
-    font-weight: 900;
-
-    margin-top: 25px;
-
-    line-height: 1;
-}
-
-
-/* =========================================
-   STAT DESCRIPTION
-========================================= */
-
-.stat-card p {
-    color:
-        var(--muted);
-
+.hero p {
     font-size: 12px;
-
-    margin-top: 8px;
-
-    line-height: 1.5;
 }
 
+.hero-orb {
+    width: 78px;
+    height: 78px;
+}
+
+.stat-card {
+    padding: 20px;
+}
+
+}
 
 /* =========================================
-   SELECTION
-========================================= */
-
-::selection {
-    background:
-        var(--yellow);
-
-    color:
-        var(--black);
-}
-
-
-/* =========================================
-   SCROLLBAR
-========================================= */
-
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-
-::-webkit-scrollbar-track {
-    background:
-        var(--black);
-}
-
-
-::-webkit-scrollbar-thumb {
-    background:
-        var(--yellow);
-
-    border:
-        2px solid var(--black);
-}
-
-
-/* =========================================
-   TABLET
-========================================= */
-
-@media (max-width: 850px) {
-
-    .dashboard {
-        margin-left: 0;
-
-        width: 100%;
-
-        padding: 25px;
-
-        padding-bottom: 100px;
-    }
-
-
-    .hero {
-        padding: 30px;
-
-        min-height: 280px;
-
-        box-shadow:
-            6px 6px 0 var(--yellow);
-    }
-
-
-    .hero:hover {
-        box-shadow:
-            8px 8px 0 var(--yellow);
-    }
-
-
-    .hero-orb {
-        width: 110px;
-        height: 110px;
-    }
-
-
-    .stats {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-
-/* =========================================
-   602px
-========================================= */
-
-@media (max-width: 602px) {
-
-    .dashboard {
-        padding: 25px;
-
-        padding-bottom: 100px;
-    }
-
-
-    .topbar {
-        align-items: flex-start;
-
-        gap: 15px;
-    }
-
-
-    .topbar h1 {
-        font-size: 28px;
-    }
-
-
-    .profile-mini {
-        font-size: 0;
-
-        gap: 6px;
-    }
-
-
-    #miniAvatar {
-        width: 28px;
-        height: 28px;
-
-        min-width: 28px;
-        min-height: 28px;
-
-        box-shadow:
-            2px 2px 0 var(--white);
-
-        font-size: 10px;
-    }
-
-
-    #miniName {
-        display: none;
-    }
-
-
-    .hero {
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        min-height: 300px;
-
-        padding: 27px;
-    }
-
-
-    .hero h2 {
-        font-size: 42px;
-
-        letter-spacing: -2px;
-    }
-
-
-    .hero-orb {
-        width: 85px;
-        height: 85px;
-    }
-
-
-    .hero::after {
-        font-size: 65px;
-
-        right: 20px;
-
-        bottom: 15px;
-    }
-
-
-    .stat-card {
-        min-height: 130px;
-
-        padding: 22px;
-    }
-
-}
-
-
-/* =========================================
-   480px
-========================================= */
-
-@media (max-width: 480px) {
-
-    .dashboard {
-        padding: 20px;
-
-        padding-bottom: 95px;
-    }
-
-
-    .topbar {
-        margin-bottom: 28px;
-    }
-
-
-    .topbar h1 {
-        font-size: 26px;
-    }
-
-
-    .mini-label {
-        font-size: 8px;
-
-        letter-spacing: 2px;
-    }
-
-
-    #miniAvatar {
-        width: 26px;
-        height: 26px;
-
-        min-width: 26px;
-        min-height: 26px;
-
-        box-shadow:
-            2px 2px 0 var(--white);
-
-        font-size: 9px;
-    }
-
-
-    .hero {
-        padding: 23px;
-
-        min-height: 290px;
-
-        border-left-width: 4px;
-
-        box-shadow:
-            5px 5px 0 var(--yellow);
-    }
-
-
-    .hero h2 {
-        font-size: 38px;
-
-        letter-spacing: -1.8px;
-    }
-
-
-    .hero p {
-        font-size: 12px;
-    }
-
-
-    .hero-orb {
-        width: 78px;
-        height: 78px;
-    }
-
-
-    .stat-card {
-        padding: 20px;
-    }
-
-}
-
-
-/* =========================================
-   360px
+360px
 ========================================= */
 
 @media (max-width: 360px) {
 
-    .dashboard {
-        padding: 16px;
+.dashboard {
+    padding: 16px;
 
-        padding-bottom: 90px;
-    }
+    padding-bottom: 90px;
+}
 
+.topbar {
+    margin-bottom: 25px;
 
-    .topbar {
-        margin-bottom: 25px;
+    gap: 8px;
+}
 
-        gap: 8px;
-    }
+.topbar h1 {
+    font-size: 23px;
+}
 
+.mini-label {
+    font-size: 7px;
 
-    .topbar h1 {
-        font-size: 23px;
-    }
+    letter-spacing: 1.5px;
+}
 
+#miniAvatar {
+    width: 24px;
+    height: 24px;
 
-    .mini-label {
-        font-size: 7px;
+    min-width: 24px;
+    min-height: 24px;
 
-        letter-spacing: 1.5px;
-    }
+    font-size: 8px;
+}
 
+.hero {
+    padding: 19px;
 
-    #miniAvatar {
-        width: 24px;
-        height: 24px;
+    min-height: 260px;
 
-        min-width: 24px;
-        min-height: 24px;
+    box-shadow:
+        4px 4px 0 var(--yellow);
+}
 
-        box-shadow:
-            1px 1px 0 var(--white);
+.hero h2 {
+    font-size: 31px;
 
-        font-size: 8px;
-    }
+    letter-spacing: -1.2px;
+}
 
+.hero-label {
+    font-size: 8px;
 
-    .hero {
-        padding: 19px;
+    letter-spacing: 2px;
+}
 
-        min-height: 260px;
+.hero p {
+    font-size: 11px;
+}
 
-        box-shadow:
-            4px 4px 0 var(--yellow);
-    }
+.hero-orb {
+    width: 65px;
+    height: 65px;
+}
 
+.stat-card {
+    padding: 18px;
+}
 
-    .hero h2 {
-        font-size: 31px;
-
-        letter-spacing: -1.2px;
-    }
-
-
-    .hero-label {
-        font-size: 8px;
-
-        letter-spacing: 2px;
-    }
-
-
-    .hero p {
-        font-size: 11px;
-    }
-
-
-    .hero-orb {
-        width: 65px;
-        height: 65px;
-    }
-
-
-    .stat-card {
-        padding: 18px;
-    }
-
-
-    .stat-card strong {
-        font-size: 18px;
-    }
+.stat-card strong {
+    font-size: 18px;
+}
 
 }
 
-
 /* =========================================
-   330px
+330px
 ========================================= */
 
 @media (max-width: 330px) {
 
-    .dashboard {
-        padding: 14px;
+.dashboard {
+    padding: 14px;
 
-        padding-bottom: 85px;
-    }
+    padding-bottom: 85px;
+}
 
+.topbar {
+    margin-bottom: 23px;
+}
 
-    .topbar {
-        margin-bottom: 23px;
-    }
+.topbar h1 {
+    font-size: 21px;
+}
 
+.mini-label {
+    font-size: 6px;
 
-    .topbar h1 {
-        font-size: 21px;
-    }
+    letter-spacing: 1.2px;
+}
 
+#miniAvatar {
+    width: 22px;
+    height: 22px;
 
-    .mini-label {
-        font-size: 6px;
+    min-width: 22px;
+    min-height: 22px;
 
-        letter-spacing: 1.2px;
-    }
+    font-size: 7px;
+}
 
+.hero {
+    padding: 17px;
 
-    #miniAvatar {
-        width: 22px;
-        height: 22px;
+    min-height: 245px;
 
-        min-width: 22px;
-        min-height: 22px;
+    box-shadow:
+        3px 3px 0 var(--yellow);
+}
 
-        box-shadow:
-            1px 1px 0 var(--white);
+.hero h2 {
+    font-size: 28px;
 
-        font-size: 7px;
-    }
+    letter-spacing: -1px;
+}
 
+.hero-label {
+    font-size: 7px;
 
-    .hero {
-        padding: 17px;
+    letter-spacing: 1.5px;
+}
 
-        min-height: 245px;
+.hero p {
+    font-size: 10px;
+}
 
-        box-shadow:
-            3px 3px 0 var(--yellow);
-    }
+.hero-orb {
+    width: 58px;
+    height: 58px;
+}
 
+.stat-card {
+    padding: 15px;
+}
 
-    .hero h2 {
-        font-size: 28px;
+.stat-card strong {
+    font-size: 17px;
+}
 
-        letter-spacing: -1px;
-    }
+}
 
+/* =========================================
+REDUCED MOTION
+========================================= */
 
-    .hero-label {
-        font-size: 7px;
+@media (prefers-reduced-motion: reduce) {
 
-        letter-spacing: 1.5px;
-    }
+*,
+*::before,
+*::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
 
+}
 
-    .hero p {
-        font-size: 10px;
-    }
+/* =========================================
+   FORCE REMOVE BLUE TEXT EFFECT
+========================================= */
 
+.dashboard,
+.dashboard *,
+.dashboard a,
+.dashboard a *,
+.stat-card,
+.stat-card *,
+.stat-card strong,
+.stat-card p,
+.stat-card span,
+.topbar,
+.topbar *,
+.hero,
+.hero *,
+.profile-mini,
+.profile-mini *,
+#miniAvatar,
+#miniName {
 
-    .hero-orb {
-        width: 58px;
-        height: 58px;
-    }
+    text-shadow: none !important;
+    -webkit-text-shadow: none !important;
 
+    filter: none !important;
 
-    .stat-card {
-        padding: 15px;
-    }
+    -webkit-text-stroke: 0 !important;
 
+    text-decoration: none !important;
+}
 
-    .stat-card strong {
-        font-size: 17px;
-    }
+/* Hilangkan efek biru link browser */
+.stat-card:link,
+.stat-card:visited,
+.stat-card:hover,
+.stat-card:active {
+    color: inherit !important;
+    text-decoration: none !important;
+}
 
+/* Pastikan teks stat benar-benar putih */
+.stat-card strong {
+    color: var(--white) !important;
+}
+
+.stat-card p {
+    color: var(--muted) !important;
+}
+
+.stat-card span {
+    color: var(--yellow) !important;
 }

@@ -33,6 +33,10 @@ try {
     sidebar.innerHTML =
         await response.text();
 
+    sidebar
+    .querySelector('a[href="dashboard.html"]')
+    ?.classList.add("active");
+
     setupLogout();
 
 } catch (error) {

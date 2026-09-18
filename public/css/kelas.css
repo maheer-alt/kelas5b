@@ -8,22 +8,21 @@
     --bg: #080808;
     --surface: #111111;
     --surface-2: #161616;
-
     --white: #f4f3ed;
     --muted: #8b8b84;
-
     --yellow: #d8ff00;
-
     --border: rgba(244, 243, 237, 0.18);
-
     --danger: #ff4d4d;
-
     --sidebar: 260px;
 }
 
 html {
     scroll-behavior: smooth;
 }
+
+/* =========================================================
+   BODY
+========================================================= */
 
 body {
     min-height: 100vh;
@@ -49,6 +48,10 @@ body {
     overflow-x: hidden;
 }
 
+/* =========================================================
+   GLOBAL
+========================================================= */
+
 a {
     color: inherit;
     text-decoration: none;
@@ -64,9 +67,12 @@ button {
     -webkit-tap-highlight-color: transparent;
 }
 
+/* =========================================================
+   BACKGROUND GRID
+========================================================= */
+
 .background-grid {
     position: fixed;
-
     inset: 0;
 
     pointer-events: none;
@@ -89,6 +95,10 @@ button {
     z-index: -1;
 }
 
+/* =========================================================
+   MAIN PAGE
+========================================================= */
+
 .kelas-page {
     margin-left: var(--sidebar);
 
@@ -102,6 +112,10 @@ button {
 
     max-width: 1250px;
 }
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .kelas-header {
     display: flex;
@@ -117,6 +131,9 @@ button {
         1px solid var(--border);
 }
 
+/* =========================================================
+   LABELS
+========================================================= */
 
 .eyebrow,
 .section-label,
@@ -138,6 +155,9 @@ button {
     letter-spacing: 0.15em;
 }
 
+/* =========================================================
+   HEADER TITLE
+========================================================= */
 
 .kelas-header h1 {
     font-size:
@@ -154,6 +174,9 @@ button {
     letter-spacing: -0.05em;
 }
 
+/* =========================================================
+   HEADER DESCRIPTION
+========================================================= */
 
 .kelas-header p {
     margin-top: 16px;
@@ -167,7 +190,6 @@ button {
     line-height: 1.6;
 }
 
-
 /* =========================================================
    ADD POST BUTTON
 ========================================================= */
@@ -180,7 +202,8 @@ button {
 
     min-height: 48px;
 
-    border: 2px solid var(--yellow);
+    border:
+        2px solid var(--yellow);
 
     background: var(--yellow);
 
@@ -202,7 +225,6 @@ button {
         box-shadow 0.12s ease;
 }
 
-
 .add-post-button:hover {
     transform:
         translate(
@@ -213,7 +235,6 @@ button {
     box-shadow:
         2px 2px 0 #f4f3ed;
 }
-
 
 .add-post-button:active {
     transform:
@@ -226,11 +247,9 @@ button {
         0 0 0 #f4f3ed;
 }
 
-
 .add-post-button i {
     margin-right: 8px;
 }
-
 
 /* =========================================================
    NOTIFICATION
@@ -278,7 +297,6 @@ button {
     z-index: 100;
 }
 
-
 .notification.show {
     transform:
         translateY(0);
@@ -286,14 +304,10 @@ button {
     opacity: 1;
 }
 
-
 .notification.error {
-    background:
-        var(--danger);
-
+    background: var(--danger);
     color: #ffffff;
 }
-
 
 /* =========================================================
    HIDDEN
@@ -302,7 +316,6 @@ button {
 .hidden {
     display: none !important;
 }
-
 
 /* =========================================================
    POST COMPOSER
@@ -339,16 +352,16 @@ button {
         ease;
 }
 
+/* =========================================================
+   COMPOSER ANIMATION
+========================================================= */
 
 @keyframes composerIn {
-
     from {
         opacity: 0;
 
         transform:
-            translateY(
-                -10px
-            );
+            translateY(-10px);
     }
 
     to {
@@ -357,9 +370,7 @@ button {
         transform:
             translateY(0);
     }
-
 }
-
 
 /* =========================================================
    COMPOSER HEADER
@@ -376,13 +387,10 @@ button {
     margin-bottom: 22px;
 }
 
-
 .composer-header h2 {
     font-size: 25px;
-
     line-height: 1.1;
 }
-
 
 /* =========================================================
    ICON BUTTON
@@ -402,11 +410,9 @@ button {
     border:
         1px solid var(--border);
 
-    background:
-        transparent;
+    background: transparent;
 
-    color:
-        var(--white);
+    color: var(--white);
 
     cursor: pointer;
 
@@ -416,13 +422,10 @@ button {
         transform 0.12s ease;
 }
 
-
 .icon-button:hover {
-    border-color:
-        var(--yellow);
+    border-color: var(--yellow);
 
-    color:
-        var(--yellow);
+    color: var(--yellow);
 
     transform:
         translate(
@@ -430,7 +433,6 @@ button {
             -2px
         );
 }
-
 
 /* =========================================================
    TEXTAREA
@@ -452,11 +454,9 @@ button {
 
     outline: none;
 
-    background:
-        #090909;
+    background: #090909;
 
-    color:
-        var(--white);
+    color: var(--white);
 
     font-family:
         "Google Sans",
@@ -471,18 +471,13 @@ button {
         border-color 0.15s ease;
 }
 
-
 #postContent::placeholder {
-    color:
-        #686862;
+    color: #686862;
 }
-
 
 #postContent:focus {
-    border-color:
-        var(--yellow);
+    border-color: var(--yellow);
 }
-
 
 /* =========================================================
    UPLOAD AREA
@@ -499,7 +494,6 @@ button {
 
     margin-top: 15px;
 }
-
 
 /* =========================================================
    UPLOAD BUTTON
@@ -521,11 +515,9 @@ button {
     border:
         1px solid var(--border);
 
-    background:
-        #0d0d0d;
+    background: #0d0d0d;
 
-    color:
-        var(--white);
+    color: var(--white);
 
     cursor: pointer;
 
@@ -539,24 +531,19 @@ button {
         transform 0.12s ease;
 }
 
-
 .upload-button:hover {
-    border-color:
-        var(--yellow);
+    border-color: var(--yellow);
 
-    color:
-        var(--yellow);
+    color: var(--yellow);
 
     transform:
         translateY(-2px);
 }
 
-
 .upload-button:active {
     transform:
         translateY(0);
 }
-
 
 /* =========================================================
    FILE NAME
@@ -567,8 +554,7 @@ button {
 
     overflow: hidden;
 
-    color:
-        var(--muted);
+    color: var(--muted);
 
     font-family:
         "JetBrains Mono",
@@ -576,13 +562,10 @@ button {
 
     font-size: 11px;
 
-    text-overflow:
-        ellipsis;
+    text-overflow: ellipsis;
 
-    white-space:
-        nowrap;
+    white-space: nowrap;
 }
-
 
 /* =========================================================
    IMAGE PREVIEW
@@ -596,12 +579,10 @@ button {
     border:
         1px solid var(--border);
 
-    background:
-        #050505;
+    background: #050505;
 
     overflow: hidden;
 }
-
 
 .image-preview img {
     display: block;
@@ -612,10 +593,8 @@ button {
 
     object-fit: contain;
 
-    background:
-        #050505;
+    background: #050505;
 }
-
 
 /* =========================================================
    PUBLISH BUTTON
@@ -638,11 +617,9 @@ button {
     border:
         2px solid var(--yellow);
 
-    background:
-        var(--yellow);
+    background: var(--yellow);
 
-    color:
-        #080808;
+    color: #080808;
 
     padding:
         0 20px;
@@ -662,7 +639,6 @@ button {
         opacity 0.15s ease;
 }
 
-
 .publish-button:hover {
     transform:
         translate(
@@ -673,7 +649,6 @@ button {
     box-shadow:
         2px 2px 0 #f4f3ed;
 }
-
 
 .publish-button:active {
     transform:
@@ -686,21 +661,16 @@ button {
         0 0 0 #f4f3ed;
 }
 
-
 .publish-button:disabled {
-    opacity:
-        0.55;
+    opacity: 0.55;
 
-    cursor:
-        not-allowed;
+    cursor: not-allowed;
 
-    transform:
-        none;
+    transform: none;
 
     box-shadow:
         3px 3px 0 #f4f3ed;
 }
-
 
 /* =========================================================
    FEED SECTION
@@ -709,7 +679,6 @@ button {
 .feed-section {
     margin-top: 55px;
 }
-
 
 /* =========================================================
    FEED HEADING
@@ -726,13 +695,10 @@ button {
     margin-bottom: 25px;
 }
 
-
 .feed-heading h2 {
     font-size: 25px;
-
     line-height: 1.15;
 }
-
 
 /* =========================================================
    REFRESH BUTTON
@@ -752,11 +718,9 @@ button {
     border:
         1px solid var(--border);
 
-    background:
-        transparent;
+    background: transparent;
 
-    color:
-        var(--white);
+    color: var(--white);
 
     cursor: pointer;
 
@@ -766,27 +730,20 @@ button {
         transform 0.12s ease;
 }
 
-
 .refresh-button:hover {
-    border-color:
-        var(--yellow);
+    border-color: var(--yellow);
 
-    color:
-        var(--yellow);
+    color: var(--yellow);
 
     transform:
         rotate(8deg);
 }
 
-
 .refresh-button:disabled {
-    opacity:
-        0.55;
+    opacity: 0.55;
 
-    cursor:
-        not-allowed;
+    cursor: not-allowed;
 }
-
 
 /* =========================================================
    FEED
@@ -802,7 +759,6 @@ button {
     max-width: 700px;
 }
 
-
 /* =========================================================
    POST CARD
 ========================================================= */
@@ -810,8 +766,7 @@ button {
 .post-card {
     width: 100%;
 
-    background:
-        #101010;
+    background: #101010;
 
     border:
         1px solid var(--border);
@@ -824,16 +779,16 @@ button {
         ease;
 }
 
+/* =========================================================
+   POST ANIMATION
+========================================================= */
 
 @keyframes postIn {
-
     from {
         opacity: 0;
 
         transform:
-            translateY(
-                8px
-            );
+            translateY(8px);
     }
 
     to {
@@ -842,9 +797,7 @@ button {
         transform:
             translateY(0);
     }
-
 }
-
 
 /* =========================================================
    POST TOP
@@ -861,7 +814,6 @@ button {
     padding: 15px;
 }
 
-
 /* =========================================================
    POST USER
 ========================================================= */
@@ -875,7 +827,6 @@ button {
 
     gap: 12px;
 }
-
 
 /* =========================================================
    POST AVATAR
@@ -894,10 +845,8 @@ button {
 
     object-fit: cover;
 
-    background:
-        #1a1a1a;
+    background: #1a1a1a;
 }
-
 
 /* =========================================================
    POST NAME
@@ -906,20 +855,16 @@ button {
 .post-name {
     overflow: hidden;
 
-    color:
-        var(--white);
+    color: var(--white);
 
     font-size: 14px;
 
     font-weight: 700;
 
-    text-overflow:
-        ellipsis;
+    text-overflow: ellipsis;
 
-    white-space:
-        nowrap;
+    white-space: nowrap;
 }
-
 
 /* =========================================================
    POST TIME
@@ -930,8 +875,7 @@ button {
 
     overflow: hidden;
 
-    color:
-        var(--muted);
+    color: var(--muted);
 
     font-family:
         "JetBrains Mono",
@@ -939,13 +883,10 @@ button {
 
     font-size: 10px;
 
-    text-overflow:
-        ellipsis;
+    text-overflow: ellipsis;
 
-    white-space:
-        nowrap;
+    white-space: nowrap;
 }
-
 
 /* =========================================================
    DELETE POST
@@ -964,24 +905,19 @@ button {
 
     border: 0;
 
-    background:
-        transparent;
+    background: transparent;
 
-    color:
-        var(--muted);
+    color: var(--muted);
 
-    cursor:
-        pointer;
+    cursor: pointer;
 
     transition:
         color 0.15s ease,
         background 0.15s ease;
 }
 
-
 .delete-post:hover {
-    color:
-        var(--danger);
+    color: var(--danger);
 
     background:
         rgba(
@@ -992,19 +928,23 @@ button {
         );
 }
 
-
 /* =========================================================
    POST IMAGE
 ========================================================= */
 
 .post-image {
+    display: block;
+
     width: 100%;
 
-    background:
-        #050505;
+    margin: 0;
+    padding: 0;
+
+    background: #050505;
 
     border-top:
-        1px solid rgba(
+        1px solid
+        rgba(
             244,
             243,
             237,
@@ -1012,7 +952,8 @@ button {
         );
 
     border-bottom:
-        1px solid rgba(
+        1px solid
+        rgba(
             244,
             243,
             237,
@@ -1020,45 +961,65 @@ button {
         );
 }
 
-
 .post-image img {
     display: block;
 
     width: 100%;
 
+    height: auto;
+
     max-height: 650px;
+
+    margin: 0;
+    padding: 0;
 
     object-fit: contain;
 
-    background:
-        #050505;
+    background: #050505;
 }
-
 
 /* =========================================================
    POST CONTENT
 ========================================================= */
 
 .post-content {
-    padding:
-        18px;
+    display: block !important;
 
-    color:
-        var(--white);
+    width: 100% !important;
 
-    font-size:
-        15px;
+    max-width: 100% !important;
 
-    line-height:
-        1.6;
+    min-width: 0;
 
-    white-space:
-        pre-wrap;
+    margin: 0 !important;
 
-    overflow-wrap:
-        anywhere;
+    padding: 18px !important;
+
+    box-sizing: border-box;
+
+    color: var(--white) !important;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+
+    text-align: left;
+
+    text-indent: 0;
+
+    /*
+       Tetap mendukung enter/baris baru,
+       tetapi whitespace kosong di awal
+       tidak dibuat menjadi jarak besar.
+    */
+    white-space: pre-line;
+
+    overflow: visible;
+
+    overflow-wrap: anywhere;
+
+    word-break: break-word;
 }
-
 
 /* =========================================================
    EMPTY STATE
@@ -1072,54 +1033,39 @@ button {
     padding:
         70px 20px;
 
-    text-align:
-        center;
+    text-align: center;
 
     border:
         1px dashed var(--border);
 
-    color:
-        var(--muted);
+    color: var(--muted);
 }
-
 
 .empty-state i {
     display: block;
 
-    margin-bottom:
-        18px;
+    margin-bottom: 18px;
 
-    color:
-        var(--yellow);
+    color: var(--yellow);
 
-    font-size:
-        35px;
+    font-size: 35px;
 }
-
 
 .empty-state h3 {
-    margin-bottom:
-        8px;
+    margin-bottom: 8px;
 
-    color:
-        var(--white);
+    color: var(--white);
 
-    font-size:
-        20px;
+    font-size: 20px;
 }
-
 
 .empty-state p {
-    color:
-        var(--muted);
+    color: var(--muted);
 
-    font-size:
-        13px;
+    font-size: 13px;
 
-    line-height:
-        1.5;
+    line-height: 1.5;
 }
-
 
 /* =========================================================
    CUSTOM CURSOR
@@ -1137,44 +1083,31 @@ button {
             -50%
         );
 
-    z-index:
-        9999;
+    z-index: 9999;
 }
-
 
 .cursor-dot {
-    width:
-        5px;
+    width: 5px;
+    height: 5px;
 
-    height:
-        5px;
+    background: var(--yellow);
 
-    background:
-        var(--yellow);
-
-    border-radius:
-        50%;
+    border-radius: 50%;
 }
 
-
 .cursor-ring {
-    width:
-        30px;
-
-    height:
-        30px;
+    width: 30px;
+    height: 30px;
 
     border:
         1px solid var(--yellow);
 
-    border-radius:
-        50%;
+    border-radius: 50%;
 
     transition:
         width 0.15s ease,
         height 0.15s ease;
 }
-
 
 /* =========================================================
    TABLET
@@ -1183,45 +1116,32 @@ button {
 @media (max-width: 900px) {
 
     .kelas-page {
-        margin-left:
-            0;
+        margin-left: 0;
 
-        width:
-            100%;
+        width: 100%;
 
         padding:
             35px 25px;
     }
 
-
     .kelas-header {
-        align-items:
-            flex-start;
+        align-items: flex-start;
 
-        flex-direction:
-            column;
+        flex-direction: column;
     }
-
 
     .add-post-button {
-        width:
-            100%;
+        width: 100%;
     }
-
 
     .feed {
-        max-width:
-            100%;
+        max-width: 100%;
     }
-
 
     .empty-state {
-        max-width:
-            100%;
+        max-width: 100%;
     }
-
 }
-
 
 /* =========================================================
    MOBILE
@@ -1230,32 +1150,36 @@ button {
 @media (max-width: 602px) {
 
     .kelas-page {
-        padding:
-            25px 15px;
-    }
+        margin-left: 0 !important;
 
+        width: 100% !important;
+        max-width: none !important;
+
+        /*
+           Sidebar berada di bawah pada mobile.
+           Beri ruang supaya konten tidak tertutup.
+        */
+        padding:
+            25px 15px 110px;
+
+        position: relative;
+        z-index: 1;
+    }
 
     .kelas-header {
-        gap:
-            22px;
+        gap: 22px;
     }
-
 
     .kelas-header h1 {
-        font-size:
-            42px;
+        font-size: 42px;
     }
-
 
     .kelas-header p {
-        font-size:
-            14px;
+        font-size: 14px;
     }
 
-
     .post-composer {
-        padding:
-            18px;
+        padding: 18px;
 
         box-shadow:
             4px 4px 0
@@ -1267,151 +1191,323 @@ button {
             );
     }
 
-
     .composer-header h2 {
-        font-size:
-            22px;
+        font-size: 22px;
     }
-
 
     .feed-section {
-        margin-top:
-            40px;
+        margin-top: 40px;
     }
-
 
     .feed-heading {
-        margin-bottom:
-            20px;
+        margin-bottom: 20px;
     }
-
 
     .feed-heading h2 {
-        font-size:
-            21px;
+        font-size: 21px;
     }
-
 
     .notification {
-        left:
-            15px;
+        left: 15px;
+        right: 15px;
 
-        right:
-            15px;
+        bottom: 15px;
 
-        bottom:
-            15px;
-
-        max-width:
-            none;
+        max-width: none;
     }
-
 
     .post-top {
-        padding:
-            13px;
+        padding: 13px;
     }
-
-
-    .post-content {
-        padding:
-            15px;
-
-        font-size:
-            14px;
-    }
-
 
     .post-image img {
-        max-height:
-            500px;
+        max-height: 500px;
     }
-
 
     .empty-state {
         padding:
             55px 15px;
     }
 
+    .post-content {
+        display: block !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        margin: 0 !important;
+        padding: 15px !important;
+
+        visibility: visible !important;
+        opacity: 1 !important;
+
+        color: var(--white) !important;
+
+        font-size: 14px;
+
+        line-height: 1.55;
+
+        text-align: left !important;
+
+        white-space: pre-line !important;
+
+        overflow: visible !important;
+
+        overflow-wrap: anywhere;
+
+        word-break: break-word;
+    }
 }
 
 
 /* =========================================================
-   SMALL MOBILE
+   SMALL MOBILE — 480px
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .kelas-page {
+        margin-left: 0 !important;
+
+        width: 100% !important;
+        max-width: none !important;
+
+        padding:
+            22px 12px 110px;
+    }
+
+    .kelas-header h1 {
+        font-size: 38px;
+    }
+
+    .add-post-button {
+        min-height: 46px;
+    }
+
+    .post-composer {
+        padding: 15px;
+    }
+
+    .upload-area {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .upload-button {
+        width: 100%;
+    }
+
+    .file-name {
+        max-width: 100%;
+    }
+
+    .feed-heading h2 {
+        font-size: 19px;
+    }
+
+    .post-avatar {
+        width: 38px;
+        height: 38px;
+    }
+
+    .post-name {
+        font-size: 13px;
+    }
+
+    .post-time {
+        font-size: 9px;
+    }
+
+    .post-content {
+        display: block !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        margin: 0 !important;
+        padding: 15px !important;
+
+        visibility: visible !important;
+        opacity: 1 !important;
+
+        color: var(--white) !important;
+
+        font-size: 14px;
+
+        line-height: 1.55;
+
+        text-align: left !important;
+
+        white-space: pre-line !important;
+
+        overflow: visible !important;
+
+        overflow-wrap: anywhere;
+
+        word-break: break-word;
+    }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE — 360px
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .kelas-page {
+        margin-left: 0 !important;
+
+        width: 100% !important;
+        max-width: none !important;
+
+        /*
+           Sidebar berada di bawah.
+           Ruang bawah dibuat lebih besar agar
+           post terakhir tidak tertutup sidebar.
+        */
+        padding:
+            20px 10px 220px !important;
+
+        position: relative;
+        z-index: 1;
+    }
+
+    .kelas-header h1 {
+        font-size: 34px;
+    }
+
+    .kelas-header p {
+        font-size: 13px;
+    }
+
+    .composer-header h2 {
+        font-size: 20px;
+    }
+
+    .feed-heading h2 {
+        font-size: 18px;
+    }
+
+    .post-top {
+        padding: 11px;
+    }
+
+    .post-content {
+        display: block !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        margin: 0 !important;
+        padding: 13px !important;
+
+        visibility: visible !important;
+        opacity: 1 !important;
+
+        color: var(--white) !important;
+
+        font-size: 14px;
+
+        line-height: 1.5;
+
+        text-align: left !important;
+
+        white-space: pre-line !important;
+
+        overflow: visible !important;
+
+        overflow-wrap: anywhere;
+
+        word-break: break-word;
+    }
+}
+
+/* =========================================================
+   SMALL MOBILE — 480px
 ========================================================= */
 
 @media (max-width: 480px) {
 
     .kelas-header h1 {
-        font-size:
-            38px;
+        font-size: 38px;
     }
-
 
     .add-post-button {
-        min-height:
-            46px;
+        min-height: 46px;
     }
-
 
     .post-composer {
-        padding:
-            15px;
+        padding: 15px;
     }
-
 
     .upload-area {
-        align-items:
-            flex-start;
+        align-items: flex-start;
 
-        flex-direction:
-            column;
+        flex-direction: column;
     }
-
 
     .upload-button {
-        width:
-            100%;
+        width: 100%;
     }
-
 
     .file-name {
-        max-width:
-            100%;
+        max-width: 100%;
     }
-
 
     .feed-heading h2 {
-        font-size:
-            19px;
+        font-size: 19px;
     }
-
 
     .post-avatar {
-        width:
-            38px;
-
-        height:
-            38px;
+        width: 38px;
+        height: 38px;
     }
-
 
     .post-name {
-        font-size:
-            13px;
+        font-size: 13px;
     }
-
 
     .post-time {
-        font-size:
-            9px;
+        font-size: 9px;
     }
 
+    /*
+       FIX POST CONTENT 480px
+       Tidak disembunyikan.
+    */
+
+    .post-content {
+        display: block !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        margin: 0 !important;
+        padding: 15px !important;
+
+        visibility: visible !important;
+        opacity: 1 !important;
+
+        color: var(--white) !important;
+
+        font-size: 14px;
+
+        line-height: 1.55;
+
+        text-align: left !important;
+
+        white-space: pre-line !important;
+
+        overflow: visible !important;
+
+        overflow-wrap: anywhere;
+
+        word-break: break-word;
+    }
 }
 
-
 /* =========================================================
-   VERY SMALL MOBILE
+   VERY SMALL MOBILE — 360px
 ========================================================= */
 
 @media (max-width: 360px) {
@@ -1421,47 +1517,59 @@ button {
             22px 12px;
     }
 
-
     .kelas-header h1 {
-        font-size:
-            34px;
+        font-size: 34px;
     }
-
 
     .kelas-header p {
-        font-size:
-            13px;
+        font-size: 13px;
     }
-
 
     .composer-header h2 {
-        font-size:
-            20px;
+        font-size: 20px;
     }
-
 
     .feed-heading h2 {
-        font-size:
-            18px;
+        font-size: 18px;
     }
-
 
     .post-top {
-        padding:
-            11px;
+        padding: 11px;
     }
 
+    /*
+       FIX POST CONTENT 360px
+    */
 
     .post-content {
-        padding:
-            13px;
+        display: block !important;
 
-        font-size:
-            13px;
+        width: 100% !important;
+        max-width: 100% !important;
+
+        margin: 0 !important;
+        padding: 13px !important;
+
+        visibility: visible !important;
+        opacity: 1 !important;
+
+        color: var(--white) !important;
+
+        font-size: 14px;
+
+        line-height: 1.5;
+
+        text-align: left !important;
+
+        white-space: pre-line !important;
+
+        overflow: visible !important;
+
+        overflow-wrap: anywhere;
+
+        word-break: break-word;
     }
-
 }
-
 
 /* =========================================================
    TOUCH DEVICE
@@ -1471,12 +1579,9 @@ button {
 
     .cursor-dot,
     .cursor-ring {
-        display:
-            none;
+        display: none;
     }
-
 }
-
 
 /* =========================================================
    REDUCED MOTION
@@ -1485,14 +1590,13 @@ button {
 @media (prefers-reduced-motion: reduce) {
 
     html {
-        scroll-behavior:
-            auto;
+        scroll-behavior: auto;
     }
-
 
     *,
     *::before,
     *::after {
+
         animation-duration:
             0.01ms !important;
 
@@ -1502,5 +1606,4 @@ button {
         transition-duration:
             0.01ms !important;
     }
-
 }

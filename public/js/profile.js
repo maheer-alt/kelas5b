@@ -88,6 +88,9 @@ async function loadSidebar() {
         sidebar.innerHTML =
             await response.text();
 
+        sidebar
+            .querySelector('a[href="profile.html"]')
+            ?.classList.add("active");
 
         const logout =
             document.getElementById(
