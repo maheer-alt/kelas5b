@@ -64,20 +64,28 @@ function showNotification(
 ) {
     if (!notification) return;
 
-    notification.textContent = message;
+    notification.textContent =
+        message;
 
     notification.classList.toggle(
         "error",
         isError
     );
 
-    notification.classList.add("show");
+    notification.classList.add(
+        "show"
+    );
 
-    clearTimeout(notificationTimer);
+    clearTimeout(
+        notificationTimer
+    );
 
-    notificationTimer = setTimeout(() => {
-        notification.classList.remove("show");
-    }, 3000);
+    notificationTimer =
+        setTimeout(() => {
+            notification.classList.remove(
+                "show"
+            );
+        }, 3000);
 }
 
 // ======================================================
@@ -109,7 +117,9 @@ async function loadSidebar() {
             .querySelector(
                 'a[href="kelas.html"]'
             )
-            ?.classList.add("active");
+            ?.classList.add(
+                "active"
+            );
 
         setupSidebar();
 
@@ -136,11 +146,15 @@ function setupSidebar() {
     logoutButton.addEventListener(
         "click",
         async () => {
-            logoutButton.disabled = true;
+
+            logoutButton.disabled =
+                true;
 
             try {
                 await supabase.auth.signOut();
+
             } catch (error) {
+
                 console.error(
                     "Logout:",
                     error
@@ -162,6 +176,7 @@ function setupSidebar() {
 // ======================================================
 
 async function checkAuth() {
+
     const {
         data,
         error
@@ -176,7 +191,10 @@ async function checkAuth() {
     }
 
     if (data?.user) {
-        currentUser = data.user;
+
+        currentUser =
+            data.user;
+
         return true;
     }
 
@@ -185,8 +203,12 @@ async function checkAuth() {
             "guestMode"
         );
 
-    if (guestMode === "true") {
+    if (
+        guestMode === "true"
+    ) {
+
         currentUser = null;
+
         return false;
     }
 
@@ -201,14 +223,18 @@ async function checkAuth() {
 // ======================================================
 
 if (addPostButton) {
+
     addPostButton.addEventListener(
         "click",
         () => {
+
             if (!currentUser) {
+
                 showNotification(
                     "Login diperlukan untuk membuat postingan.",
                     true
                 );
+
                 return;
             }
 
@@ -224,7 +250,9 @@ if (addPostButton) {
                 top:
                     postComposer.offsetTop -
                     30,
-                behavior: "smooth"
+
+                behavior:
+                    "smooth"
             });
         }
     );
@@ -235,10 +263,13 @@ if (addPostButton) {
 // ======================================================
 
 if (closeComposer) {
+
     closeComposer.addEventListener(
         "click",
         () => {
+
             if (postComposer) {
+
                 postComposer.classList.add(
                     "hidden"
                 );
@@ -254,9 +285,11 @@ if (closeComposer) {
 // ======================================================
 
 if (imageInput) {
+
     imageInput.addEventListener(
         "change",
         (event) => {
+
             const file =
                 event.target.files?.[0];
 
@@ -266,12 +299,14 @@ if (imageInput) {
                 file.name.toLowerCase();
 
             const isWebP =
-                file.type === "image/webp" &&
+                file.type ===
+                    "image/webp" &&
                 fileNameLower.endsWith(
                     ".webp"
                 );
 
             if (!isWebP) {
+
                 resetSelectedImage();
 
                 showNotification(
@@ -285,7 +320,11 @@ if (imageInput) {
             const maxSize =
                 1 * 1024 * 1024;
 
-            if (file.size > maxSize) {
+            if (
+                file.size >
+                maxSize
+            ) {
+
                 resetSelectedImage();
 
                 showNotification(
@@ -296,22 +335,28 @@ if (imageInput) {
                 return;
             }
 
-            selectedFile = file;
+            selectedFile =
+                file;
 
             if (fileName) {
+
                 fileName.textContent =
                     file.name;
             }
 
             const objectUrl =
-                URL.createObjectURL(file);
+                URL.createObjectURL(
+                    file
+                );
 
             if (previewImage) {
+
                 previewImage.src =
                     objectUrl;
             }
 
             if (imagePreview) {
+
                 imagePreview.classList.remove(
                     "hidden"
                 );
@@ -325,25 +370,32 @@ if (imageInput) {
 // ======================================================
 
 function resetSelectedImage() {
+
     selectedFile = null;
 
     if (imageInput) {
-        imageInput.value = "";
+
+        imageInput.value =
+            "";
     }
 
     if (fileName) {
+
         fileName.textContent =
             "Belum ada gambar";
     }
 
     if (imagePreview) {
+
         imagePreview.classList.add(
             "hidden"
         );
     }
 
     if (previewImage) {
-        previewImage.src = "";
+
+        previewImage.src =
+            "";
     }
 }
 
@@ -352,6 +404,7 @@ function resetSelectedImage() {
 // ======================================================
 
 if (publishButton) {
+
     publishButton.addEventListener(
         "click",
         publishPost
@@ -363,7 +416,9 @@ if (publishButton) {
 // ======================================================
 
 async function publishPost() {
+
     if (!currentUser) {
+
         showNotification(
             "Login diperlukan untuk membuat postingan.",
             true
@@ -374,10 +429,17 @@ async function publishPost() {
 
     const content =
         postContent?.value
-            .replace(/^[ \t]+/gm, "")
+            .replace(
+                /^[ \t]+/gm,
+                ""
+            )
             .trim() || "";
 
-    if (!content && !selectedFile) {
+    if (
+        !content &&
+        !selectedFile
+    ) {
+
         showNotification(
             "Tulis sesuatu atau pilih gambar terlebih dahulu.",
             true
@@ -391,13 +453,18 @@ async function publishPost() {
     // ==================================================
 
     if (selectedFile) {
+
         const validWebP =
-            selectedFile.type === "image/webp" &&
+            selectedFile.type ===
+                "image/webp" &&
             selectedFile.name
                 .toLowerCase()
-                .endsWith(".webp");
+                .endsWith(
+                    ".webp"
+                );
 
         if (!validWebP) {
+
             showNotification(
                 "Hanya untuk gambar berformat WEBP",
                 true
@@ -409,7 +476,11 @@ async function publishPost() {
         const maxSize =
             1 * 1024 * 1024;
 
-        if (selectedFile.size > maxSize) {
+        if (
+            selectedFile.size >
+            maxSize
+        ) {
+
             showNotification(
                 "Ukuran gambar maksimal 1 MB.",
                 true
@@ -419,12 +490,14 @@ async function publishPost() {
         }
     }
 
-    publishButton.disabled = true;
+    publishButton.disabled =
+        true;
 
     publishButton.innerHTML =
         '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim...';
 
     try {
+
         let imageUrl = null;
 
         // ==============================================
@@ -432,6 +505,7 @@ async function publishPost() {
         // ==============================================
 
         if (selectedFile) {
+
             const filePath =
                 `${currentUser.id}/${crypto.randomUUID()}.webp`;
 
@@ -446,7 +520,9 @@ async function publishPost() {
                         {
                             contentType:
                                 "image/webp",
-                            upsert: false
+
+                            upsert:
+                                false
                         }
                     );
 
@@ -503,6 +579,7 @@ async function publishPost() {
         resetComposer();
 
         if (postComposer) {
+
             postComposer.classList.add(
                 "hidden"
             );
@@ -511,6 +588,7 @@ async function publishPost() {
         await loadPosts();
 
     } catch (error) {
+
         console.error(
             "Publish post:",
             error
@@ -523,7 +601,9 @@ async function publishPost() {
         );
 
     } finally {
-        publishButton.disabled = false;
+
+        publishButton.disabled =
+            false;
 
         publishButton.innerHTML =
             '<i class="fa-solid fa-paper-plane"></i> Posting';
@@ -535,6 +615,7 @@ async function publishPost() {
 // ======================================================
 
 async function loadPosts() {
+
     if (!feed) return;
 
     feed.innerHTML = `
@@ -558,7 +639,8 @@ async function loadPosts() {
                 profiles (
                     username,
                     full_name,
-                    avatar_url
+                    avatar_url,
+                    is_verified
                 )
             `)
             .order(
@@ -569,14 +651,17 @@ async function loadPosts() {
             );
 
     if (error) {
+
         console.error(
             "Load posts:",
             error
         );
 
-        feed.innerHTML = "";
+        feed.innerHTML =
+            "";
 
         if (emptyState) {
+
             emptyState.classList.add(
                 "hidden"
             );
@@ -590,13 +675,16 @@ async function loadPosts() {
         return;
     }
 
-    feed.innerHTML = "";
+    feed.innerHTML =
+        "";
 
     if (
         !posts ||
         posts.length === 0
     ) {
+
         if (emptyState) {
+
             emptyState.classList.remove(
                 "hidden"
             );
@@ -606,16 +694,44 @@ async function loadPosts() {
     }
 
     if (emptyState) {
+
         emptyState.classList.add(
             "hidden"
         );
     }
 
-    posts.forEach((post) => {
-        feed.appendChild(
-            createPostCard(post)
-        );
-    });
+    posts.forEach(
+        (post) => {
+
+            feed.appendChild(
+                createPostCard(post)
+            );
+        }
+    );
+}
+
+// ======================================================
+// VERIFIED BADGE
+// ======================================================
+
+function getVerifiedBadge(
+    isVerified
+) {
+
+    if (
+        isVerified !== true
+    ) {
+        return "";
+    }
+
+    return `
+        <img
+            class="verified-badge"
+            src="/assets/centang.png"
+            alt="Verified"
+            title="Verified"
+        >
+    `;
 }
 
 // ======================================================
@@ -623,6 +739,7 @@ async function loadPosts() {
 // ======================================================
 
 function createPostCard(post) {
+
     const card =
         document.createElement(
             "article"
@@ -632,7 +749,9 @@ function createPostCard(post) {
         "post-card";
 
     const profile =
-        Array.isArray(post.profiles)
+        Array.isArray(
+            post.profiles
+        )
             ? post.profiles[0]
             : post.profiles;
 
@@ -651,6 +770,11 @@ function createPostCard(post) {
             name
         )}&background=111111&color=f4f3ed`;
 
+    const verifiedBadge =
+        getVerifiedBadge(
+            profile?.is_verified
+        );
+
     const date =
         new Date(
             post.created_at
@@ -660,11 +784,20 @@ function createPostCard(post) {
         date.toLocaleString(
             "id-ID",
             {
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit"
+                day:
+                    "2-digit",
+
+                month:
+                    "short",
+
+                year:
+                    "numeric",
+
+                hour:
+                    "2-digit",
+
+                minute:
+                    "2-digit"
             }
         );
 
@@ -674,27 +807,48 @@ function createPostCard(post) {
             post.user_id;
 
     card.innerHTML = `
+
         <div class="post-top">
 
             <div class="post-user">
 
                 <img
                     class="post-avatar"
-                    src="${escapeHtml(avatar)}"
-                    alt="${escapeHtml(name)}"
+                    src="${escapeHtml(
+                        avatar
+                    )}"
+                    alt="${escapeHtml(
+                        name
+                    )}"
                     loading="lazy"
                 >
 
                 <div>
 
                     <div class="post-name">
-                        ${escapeHtml(name)}
+                        ${escapeHtml(
+                            name
+                        )}
                     </div>
 
                     <div class="post-time">
-                        @${escapeHtml(username)}
-                        ·
-                        ${formattedDate}
+
+                        <span class="post-username">
+                            @${escapeHtml(
+                                username
+                            )}
+                        </span>
+
+                        ${verifiedBadge}
+
+                        <span class="post-separator">
+                            ·
+                        </span>
+
+                        <span>
+                            ${formattedDate}
+                        </span>
+
                     </div>
 
                 </div>
@@ -739,11 +893,16 @@ function createPostCard(post) {
 
         ${
             post.content
-                ? `<div class="post-content">${escapeHtml(
-                      post.content
-                  )}</div>`
+                ? `
+                    <div class="post-content">
+                        ${escapeHtml(
+                            post.content
+                        )}
+                    </div>
+                `
                 : ""
         }
+
     `;
 
     const deleteButton =
@@ -752,10 +911,14 @@ function createPostCard(post) {
         );
 
     if (deleteButton) {
+
         deleteButton.addEventListener(
             "click",
             async () => {
-                await deletePost(post);
+
+                await deletePost(
+                    post
+                );
             }
         );
     }
@@ -767,13 +930,17 @@ function createPostCard(post) {
 // DELETE POST
 // ======================================================
 
-async function deletePost(post) {
+async function deletePost(
+    post
+) {
+
     if (!currentUser) return;
 
     if (
         currentUser.id !==
         post.user_id
     ) {
+
         showNotification(
             "Kamu hanya bisa menghapus postingan sendiri.",
             true
@@ -805,6 +972,7 @@ async function deletePost(post) {
             );
 
     if (error) {
+
         console.error(
             "Delete post:",
             error
@@ -830,10 +998,13 @@ async function deletePost(post) {
 // ======================================================
 
 function resetComposer() {
+
     selectedFile = null;
 
     if (postContent) {
-        postContent.value = "";
+
+        postContent.value =
+            "";
     }
 
     resetSelectedImage();
@@ -843,7 +1014,10 @@ function resetComposer() {
 // ESCAPE HTML
 // ======================================================
 
-function escapeHtml(value) {
+function escapeHtml(
+    value
+) {
+
     return String(
         value ?? ""
     )
@@ -874,9 +1048,11 @@ function escapeHtml(value) {
 // ======================================================
 
 if (refreshButton) {
+
     refreshButton.addEventListener(
         "click",
         async () => {
+
             const icon =
                 refreshButton.querySelector(
                     "i"
@@ -890,8 +1066,11 @@ if (refreshButton) {
                 true;
 
             try {
+
                 await loadPosts();
+
             } finally {
+
                 icon?.classList.remove(
                     "fa-spin"
                 );
@@ -924,6 +1103,7 @@ if (
         "(pointer: fine)"
     ).matches
 ) {
+
     let mouseX = 0;
     let mouseY = 0;
 
@@ -933,6 +1113,7 @@ if (
     document.addEventListener(
         "mousemove",
         (event) => {
+
             mouseX =
                 event.clientX;
 
@@ -948,6 +1129,7 @@ if (
     );
 
     function animateCursor() {
+
         ringX +=
             (mouseX - ringX) *
             0.12;
@@ -975,6 +1157,7 @@ if (
 // ======================================================
 
 async function start() {
+
     await loadSidebar();
 
     const isLoggedIn =
@@ -986,6 +1169,7 @@ async function start() {
             "guestMode"
         ) === "true"
     ) {
+
         await loadPosts();
     }
 }

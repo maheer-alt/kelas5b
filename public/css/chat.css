@@ -316,7 +316,7 @@ body {
 
     flex-direction: column;
 
-    gap: 10px;
+    gap: 8px;
 }
 
 .messages::-webkit-scrollbar {
@@ -382,7 +382,8 @@ body {
 
     width: fit-content;
 
-    max-width: min(80%, 700px);
+    max-width:
+        min(80%, 700px);
 
     min-width: 0;
 
@@ -390,7 +391,8 @@ body {
 
     min-height: 0;
 
-    padding: 5px 9px;
+    padding:
+        5px 9px;
 
     margin: 0;
 
@@ -430,8 +432,7 @@ body {
 .message-author {
     display: block;
 
-    margin:
-        0 0 2px 0;
+    margin: 0;
 
     padding: 0;
 
@@ -457,33 +458,6 @@ body {
 
 
 /* ======================================================
-   FULL NAME
-====================================================== */
-
-.message-fullname {
-    display: block;
-
-    margin: 0;
-    padding: 0;
-
-    color:
-        var(--yellow);
-
-    font-size:
-        9px;
-
-    font-weight:
-        700;
-
-    line-height:
-        1.05;
-
-    overflow-wrap:
-        anywhere;
-}
-
-
-/* ======================================================
    USERNAME + VERIFIED
 ====================================================== */
 
@@ -492,10 +466,9 @@ body {
 
     align-items: center;
 
-    gap: 4px;
+    gap: 3px;
 
-    margin:
-        2px 0 0 0;
+    margin: 0;
 
     padding: 0;
 
@@ -534,12 +507,16 @@ body {
 .message-author .verified-badge {
     display: inline-block;
 
-    width: 12px;
-    height: 12px;
+    width:
+        11px;
+
+    height:
+        11px;
 
     flex-shrink: 0;
 
     margin: 0;
+
     padding: 0;
 
     object-fit: contain;
@@ -555,11 +532,6 @@ body {
 .message-row.own .message-author {
     color:
         #444;
-}
-
-.message-row.own .message-fullname {
-    color:
-        #080808;
 }
 
 .message-row.own .message-username {
@@ -579,7 +551,8 @@ body {
 
     max-width: 100%;
 
-    margin: 0;
+    margin:
+        2px 0 0 0;
 
     padding: 0;
 
@@ -596,13 +569,11 @@ body {
         14px;
 
     line-height:
-        1.2;
+        1.15;
 
-    height:
-        auto;
+    height: auto;
 
-    min-height:
-        0;
+    min-height: 0;
 }
 
 
@@ -617,18 +588,17 @@ body {
 
     justify-content: flex-end;
 
-    gap: 4px;
+    gap:
+        3px;
 
     margin:
         1px 0 0 0;
 
     padding: 0;
 
-    height:
-        auto;
+    height: auto;
 
-    min-height:
-        0;
+    min-height: 0;
 
     line-height:
         1;
@@ -666,19 +636,29 @@ body {
 ====================================================== */
 
 .delete-message {
-    display: inline-flex;
+    display:
+        inline-flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    width: auto;
-    height: auto;
+    width:
+        auto;
 
-    margin: 0;
-    padding: 0;
+    height:
+        auto;
 
-    border: 0;
+    margin:
+        0;
+
+    padding:
+        0;
+
+    border:
+        0;
 
     background:
         transparent;
@@ -1067,22 +1047,23 @@ body {
             9px;
     }
 
-    .message-fullname {
-        font-size:
-            9px;
-    }
-
     .message-username {
         font-size:
             8px;
+
+        gap:
+            3px;
+
+        margin:
+            0;
     }
 
     .message-author .verified-badge {
         width:
-            11px;
+            10px;
 
         height:
-            11px;
+            10px;
     }
 
     .message-text {
@@ -1090,7 +1071,15 @@ body {
             14px;
 
         line-height:
-            1.2;
+            1.15;
+
+        margin-top:
+            2px;
+    }
+
+    .message-bottom {
+        margin-top:
+            1px;
     }
 }
 
@@ -1140,25 +1129,23 @@ body {
             8px;
     }
 
-    .message-fullname {
-        font-size:
-            8px;
-    }
-
     .message-username {
         font-size:
             7px;
 
         gap:
-            3px;
+            2px;
+
+        margin:
+            0;
     }
 
     .message-author .verified-badge {
         width:
-            10px;
+            9px;
 
         height:
-            10px;
+            9px;
     }
 
     .message-text {
@@ -1166,7 +1153,10 @@ body {
             13px;
 
         line-height:
-            1.2;
+            1.15;
+
+        margin-top:
+            2px;
     }
 
     .message-time {
@@ -1177,6 +1167,14 @@ body {
     .delete-message {
         font-size:
             8px;
+    }
+
+    .message-bottom {
+        gap:
+            2px;
+
+        margin-top:
+            1px;
     }
 
     .chat-composer {
@@ -1241,14 +1239,12 @@ body {
     .message-bubble {
         max-width:
             92%;
+
+        padding:
+            4px 8px;
     }
 
     .message-author {
-        font-size:
-            7px;
-    }
-
-    .message-fullname {
         font-size:
             7px;
     }
@@ -1258,18 +1254,18 @@ body {
             6px;
 
         gap:
-            3px;
-
-        margin-top:
             2px;
+
+        margin:
+            0;
     }
 
     .message-author .verified-badge {
         width:
-            9px;
+            8px;
 
         height:
-            9px;
+            8px;
     }
 
     .message-text {
@@ -1277,12 +1273,15 @@ body {
             12px;
 
         line-height:
-            1.15;
+            1.1;
+
+        margin-top:
+            2px;
     }
 
     .message-bottom {
         gap:
-            3px;
+            2px;
 
         margin-top:
             1px;

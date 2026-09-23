@@ -353,6 +353,12 @@ function createMessage(message) {
             : message.profiles;
 
 
+    /*
+       FULL NAME TIDAK DITAMPILKAN
+       Tetapi tetap digunakan untuk
+       fallback avatar.
+    */
+
     const name =
         profile?.full_name ||
         profile?.username ||
@@ -401,6 +407,7 @@ function createMessage(message) {
 
     /* =================================================
        AUTHOR
+       HANYA USERNAME + VERIFIED
     ================================================= */
 
     const author =
@@ -408,10 +415,6 @@ function createMessage(message) {
             ? ""
             : `
                 <div class="message-author">
-
-                    <div class="message-fullname">
-                        ${escapeHtml(name)}
-                    </div>
 
                     <div class="message-username">
 
