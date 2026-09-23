@@ -30,8 +30,8 @@ body {
 
     background:
         linear-gradient(
-            rgba(8, 8, 8, .82),
-            rgba(8, 8, 8, .92)
+            rgba(8, 8, 8, 0.82),
+            rgba(8, 8, 8, 0.92)
         ),
         url("../assets/background.jpeg");
 
@@ -62,12 +62,12 @@ body {
 
     background-image:
         linear-gradient(
-            rgba(244, 243, 237, .025) 1px,
+            rgba(244, 243, 237, 0.025) 1px,
             transparent 1px
         ),
         linear-gradient(
             90deg,
-            rgba(244, 243, 237, .025) 1px,
+            rgba(244, 243, 237, 0.025) 1px,
             transparent 1px
         );
 
@@ -128,7 +128,7 @@ body {
 .chat-header h1 {
     font-size: clamp(40px, 6vw, 70px);
 
-    line-height: .95;
+    line-height: 0.95;
 
     letter-spacing: -2px;
 }
@@ -159,6 +159,10 @@ body {
     cursor: pointer;
 
     font-size: 18px;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
 .refresh-button:hover {
@@ -166,6 +170,12 @@ body {
 
     box-shadow:
         -5px 5px 0 var(--white);
+}
+
+.refresh-button:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
 }
 
 
@@ -200,7 +210,9 @@ body {
 
     pointer-events: none;
 
-    transition: .2s ease;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
 }
 
 .notification.show {
@@ -227,7 +239,8 @@ body {
 
     border: 1px solid var(--border);
 
-    background: rgba(17, 17, 17, .96);
+    background:
+        rgba(17, 17, 17, 0.96);
 }
 
 
@@ -259,6 +272,8 @@ body {
 
     align-items: center;
     justify-content: center;
+
+    flex-shrink: 0;
 
     background:
         var(--yellow);
@@ -308,9 +323,12 @@ body {
     width: 7px;
 }
 
+.messages::-webkit-scrollbar-track {
+    background: var(--surface);
+}
+
 .messages::-webkit-scrollbar-thumb {
-    background:
-        var(--yellow);
+    background: var(--yellow);
 }
 
 
@@ -359,30 +377,22 @@ body {
    MESSAGE BUBBLE
 ====================================================== */
 
-/*
-    IMPORTANT:
-
-    Bubble tidak mempunyai height tetap.
-
-    Lebarnya mengikuti isi sampai batas max-width.
-    Kalau teks semakin panjang, teks akan wrap.
-    Tinggi bubble otomatis mengikuti jumlah baris.
-*/
-
 .message-bubble {
-    width: auto;
+    display: block;
 
-    max-width:
-        min(80%, 700px);
+    width: fit-content;
 
-    min-width: 90px;
+    max-width: min(80%, 700px);
+
+    min-width: 0;
 
     height: auto;
 
     min-height: 0;
 
-    padding:
-        8px 11px;
+    padding: 5px 9px;
+
+    margin: 0;
 
     border:
         1px solid var(--border);
@@ -390,15 +400,16 @@ body {
     background:
         #1b1b1b;
 
-    display: block;
-
-    flex: 0 1 auto;
+    flex:
+        0 1 auto;
 
     overflow: hidden;
 }
 
 
-/* OWN MESSAGE */
+/* ======================================================
+   OWN MESSAGE
+====================================================== */
 
 .message-row.own .message-bubble {
     background:
@@ -417,7 +428,12 @@ body {
 ====================================================== */
 
 .message-author {
-    margin-bottom: 3px;
+    display: block;
+
+    margin:
+        0 0 2px 0;
+
+    padding: 0;
 
     color:
         var(--yellow);
@@ -426,16 +442,129 @@ body {
         "JetBrains Mono",
         monospace;
 
-    font-size: 10px;
+    font-size:
+        9px;
 
-    font-weight: 700;
+    font-weight:
+        700;
 
-    line-height: 1.2;
+    line-height:
+        1;
+
+    overflow-wrap:
+        anywhere;
 }
+
+
+/* ======================================================
+   FULL NAME
+====================================================== */
+
+.message-fullname {
+    display: block;
+
+    margin: 0;
+    padding: 0;
+
+    color:
+        var(--yellow);
+
+    font-size:
+        9px;
+
+    font-weight:
+        700;
+
+    line-height:
+        1.05;
+
+    overflow-wrap:
+        anywhere;
+}
+
+
+/* ======================================================
+   USERNAME + VERIFIED
+====================================================== */
+
+.message-username {
+    display: flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+    margin:
+        2px 0 0 0;
+
+    padding: 0;
+
+    min-width: 0;
+
+    color:
+        var(--muted);
+
+    font-size:
+        8px;
+
+    font-weight:
+        700;
+
+    line-height:
+        1;
+
+    overflow-wrap:
+        anywhere;
+}
+
+.message-username > span {
+    display: inline-block;
+
+    min-width: 0;
+
+    overflow-wrap:
+        anywhere;
+}
+
+
+/* ======================================================
+   VERIFIED BADGE
+====================================================== */
+
+.message-author .verified-badge {
+    display: inline-block;
+
+    width: 12px;
+    height: 12px;
+
+    flex-shrink: 0;
+
+    margin: 0;
+    padding: 0;
+
+    object-fit: contain;
+
+    vertical-align: middle;
+}
+
+
+/* ======================================================
+   OWN AUTHOR
+====================================================== */
 
 .message-row.own .message-author {
     color:
         #444;
+}
+
+.message-row.own .message-fullname {
+    color:
+        #080808;
+}
+
+.message-row.own .message-username {
+    color:
+        #555;
 }
 
 
@@ -444,6 +573,16 @@ body {
 ====================================================== */
 
 .message-text {
+    display: block;
+
+    width: auto;
+
+    max-width: 100%;
+
+    margin: 0;
+
+    padding: 0;
+
     white-space:
         pre-wrap;
 
@@ -457,21 +596,18 @@ body {
         14px;
 
     line-height:
-        1.35;
+        1.2;
 
     height:
         auto;
 
     min-height:
         0;
-
-    max-width:
-        100%;
 }
 
 
 /* ======================================================
-   MESSAGE BOTTOM
+   TIME + TRASH
 ====================================================== */
 
 .message-bottom {
@@ -481,16 +617,30 @@ body {
 
     justify-content: flex-end;
 
-    gap: 7px;
+    gap: 4px;
 
-    margin-top: 3px;
+    margin:
+        1px 0 0 0;
 
-    height: auto;
+    padding: 0;
 
-    min-height: 0;
+    height:
+        auto;
+
+    min-height:
+        0;
+
+    line-height:
+        1;
 }
 
 .message-time {
+    display: block;
+
+    margin: 0;
+
+    padding: 0;
+
     color:
         var(--muted);
 
@@ -498,9 +648,11 @@ body {
         "JetBrains Mono",
         monospace;
 
-    font-size: 9px;
+    font-size:
+        8px;
 
-    line-height: 1;
+    line-height:
+        1;
 }
 
 .message-row.own .message-time {
@@ -510,10 +662,22 @@ body {
 
 
 /* ======================================================
-   DELETE BUTTON
+   TRASH
 ====================================================== */
 
 .delete-message {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: auto;
+    height: auto;
+
+    margin: 0;
+    padding: 0;
+
     border: 0;
 
     background:
@@ -525,9 +689,11 @@ body {
     cursor:
         pointer;
 
-    padding: 0;
+    font-size:
+        9px;
 
-    font-size: 10px;
+    line-height:
+        1;
 }
 
 .delete-message:hover {
@@ -577,7 +743,7 @@ body {
 
 
 /* ======================================================
-   GUEST
+   GUEST NOTICE
 ====================================================== */
 
 .guest-notice {
@@ -735,6 +901,9 @@ body {
     background:
         #0b0b0b;
 
+    color:
+        var(--white);
+
     font-size:
         21px;
 }
@@ -756,6 +925,10 @@ body {
 
     font-size:
         15px;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
 .send-button:hover {
@@ -764,6 +937,14 @@ body {
 
     box-shadow:
         -4px 4px 0 var(--white);
+}
+
+.send-button:disabled {
+    opacity:
+        0.6;
+
+    cursor:
+        not-allowed;
 }
 
 
@@ -877,23 +1058,31 @@ body {
     }
 
     .message-bubble {
-        width:
-            auto;
-
         max-width:
             88%;
+    }
 
-        min-width:
-            80px;
+    .message-author {
+        font-size:
+            9px;
+    }
+
+    .message-fullname {
+        font-size:
+            9px;
+    }
+
+    .message-username {
+        font-size:
+            8px;
+    }
+
+    .message-author .verified-badge {
+        width:
+            11px;
 
         height:
-            auto;
-
-        min-height:
-            0;
-
-        padding:
-            7px 10px;
+            11px;
     }
 
     .message-text {
@@ -901,7 +1090,7 @@ body {
             14px;
 
         line-height:
-            1.35;
+            1.2;
     }
 }
 
@@ -942,31 +1131,34 @@ body {
     }
 
     .message-bubble {
-        width:
-            auto;
-
         max-width:
             90%;
-
-        min-width:
-            70px;
-
-        height:
-            auto;
-
-        min-height:
-            0;
-
-        padding:
-            7px 9px;
     }
 
     .message-author {
         font-size:
-            9px;
+            8px;
+    }
 
-        margin-bottom:
+    .message-fullname {
+        font-size:
+            8px;
+    }
+
+    .message-username {
+        font-size:
+            7px;
+
+        gap:
             3px;
+    }
+
+    .message-author .verified-badge {
+        width:
+            10px;
+
+        height:
+            10px;
     }
 
     .message-text {
@@ -974,15 +1166,15 @@ body {
             13px;
 
         line-height:
-            1.35;
-    }
-
-    .message-bottom {
-        margin-top:
-            3px;
+            1.2;
     }
 
     .message-time {
+        font-size:
+            7px;
+    }
+
+    .delete-message {
         font-size:
             8px;
     }
@@ -1047,31 +1239,37 @@ body {
     }
 
     .message-bubble {
-        width:
-            auto;
-
         max-width:
             92%;
-
-        min-width:
-            60px;
-
-        height:
-            auto;
-
-        min-height:
-            0;
-
-        padding:
-            6px 8px;
     }
 
     .message-author {
         font-size:
-            8px;
+            7px;
+    }
 
-        margin-bottom:
+    .message-fullname {
+        font-size:
+            7px;
+    }
+
+    .message-username {
+        font-size:
+            6px;
+
+        gap:
+            3px;
+
+        margin-top:
             2px;
+    }
+
+    .message-author .verified-badge {
+        width:
+            9px;
+
+        height:
+            9px;
     }
 
     .message-text {
@@ -1079,25 +1277,25 @@ body {
             12px;
 
         line-height:
-            1.3;
+            1.15;
     }
 
     .message-bottom {
-        margin-top:
-            2px;
-
         gap:
-            5px;
+            3px;
+
+        margin-top:
+            1px;
     }
 
     .message-time {
         font-size:
-            7px;
+            6px;
     }
 
     .delete-message {
         font-size:
-            8px;
+            7px;
     }
 
     .emoji-button,

@@ -65,11 +65,9 @@ function showNotification(
 ===================================================== */
 
 async function loadSidebar() {
-
     if (!sidebar) return;
 
     try {
-
         const response =
             await fetch("sidebar.html");
 
@@ -91,18 +89,15 @@ async function loadSidebar() {
         setupSidebar();
 
     } catch (error) {
-
         console.error(
             "Sidebar:",
             error
         );
-
     }
 }
 
 
 function setupSidebar() {
-
     const logoutButton =
         document.getElementById(
             "logoutButton"
@@ -203,6 +198,8 @@ async function loadMessages(
     scroll = true
 ) {
 
+    if (!messages) return;
+
     messages.innerHTML = `
         <div class="chat-loading">
             <i class="fa-solid fa-spinner fa-spin"></i>
@@ -214,7 +211,9 @@ async function loadMessages(
         data,
         error
     } = await supabase
+
         .from("messages")
+
         .select(`
             id,
             user_id,
@@ -223,15 +222,18 @@ async function loadMessages(
             profiles (
                 username,
                 full_name,
-                avatar_url
+                avatar_url,
+                is_verified
             )
         `)
+
         .order(
             "created_at",
             {
                 ascending: true
             }
         );
+
 
     if (error) {
 
@@ -247,7 +249,9 @@ async function loadMessages(
         return;
     }
 
+
     messages.innerHTML = "";
+
 
     if (!data?.length) {
 
@@ -261,6 +265,7 @@ async function loadMessages(
         return;
     }
 
+
     data.forEach(message => {
 
         messages.appendChild(
@@ -268,6 +273,7 @@ async function loadMessages(
         );
 
     });
+
 
     if (scroll) {
         scrollBottom();
@@ -299,6 +305,7 @@ function isEmojiOnly(text) {
             /\p{Extended_Pictographic}/u.test(
                 char
             ) ||
+
             /\p{Emoji_Presentation}/u.test(
                 char
             )
@@ -317,15 +324,18 @@ function createMessage(message) {
     const row =
         document.createElement("div");
 
+
     const own =
         currentUser &&
         currentUser.id ===
             message.user_id;
 
+
     const emojiOnly =
         isEmojiOnly(
             message.content
         );
+
 
     row.className =
         `message-row ${
@@ -336,25 +346,30 @@ function createMessage(message) {
                 : ""
         }`;
 
+
     const profile =
         Array.isArray(message.profiles)
             ? message.profiles[0]
             : message.profiles;
+
 
     const name =
         profile?.full_name ||
         profile?.username ||
         "User";
 
+
     const username =
         profile?.username ||
         "user";
+
 
     const avatar =
         profile?.avatar_url ||
         `https://ui-avatars.com/api/?name=${encodeURIComponent(
             name
         )}&background=111111&color=f4f3ed`;
+
 
     const time =
         new Date(
@@ -366,6 +381,73 @@ function createMessage(message) {
                 minute: "2-digit"
             }
         );
+
+
+    /* =================================================
+       VERIFIED BADGE
+    ================================================= */
+
+    const verifiedBadge =
+        profile?.is_verified === true
+            ? `
+                <img
+                    class="verified-badge"
+                    src="/assets/centang.png"
+                    alt="Verified"
+                >
+            `
+            : "";
+
+
+    /* =================================================
+       AUTHOR
+    ================================================= */
+
+    const author =
+        emojiOnly
+            ? ""
+            : `
+                <div class="message-author">
+
+                    <div class="message-fullname">
+                        ${escapeHtml(name)}
+                    </div>
+
+                    <div class="message-username">
+
+                        <span>
+                            @${escapeHtml(username)}
+                        </span>
+
+                        ${verifiedBadge}
+
+                    </div>
+
+                </div>
+            `;
+
+
+    /* =================================================
+       DELETE BUTTON
+    ================================================= */
+
+    const deleteButton =
+        own
+            ? `
+                <button
+                    class="delete-message"
+                    type="button"
+                    title="Hapus"
+                >
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            `
+            : "";
+
+
+    /* =================================================
+       MESSAGE HTML
+    ================================================= */
 
     row.innerHTML = `
 
@@ -381,25 +463,16 @@ function createMessage(message) {
                 : ""
         }
 
+
         <div class="message-bubble">
 
-            ${
-                emojiOnly
-                    ? ""
-                    : `
-                        <div class="message-author">
-                            ${
-                                own
-                                    ? "KAMU"
-                                    : `@${escapeHtml(username)}`
-                            }
-                        </div>
-                    `
-            }
+            ${author}
+
 
             <div class="message-text">
                 ${escapeHtml(message.content)}
             </div>
+
 
             <div class="message-bottom">
 
@@ -407,23 +480,12 @@ function createMessage(message) {
                     ${time}
                 </span>
 
-                ${
-                    own
-                        ? `
-                            <button
-                                class="delete-message"
-                                type="button"
-                                title="Hapus"
-                            >
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        `
-                        : ""
-                }
+                ${deleteButton}
 
             </div>
 
         </div>
+
 
         ${
             own
@@ -436,17 +498,25 @@ function createMessage(message) {
                 `
                 : ""
         }
+
     `;
 
-    const deleteButton =
+
+    /* =================================================
+       DELETE EVENT
+    ================================================= */
+
+    const deleteButtonElement =
         row.querySelector(
             ".delete-message"
         );
 
-    deleteButton?.addEventListener(
+
+    deleteButtonElement?.addEventListener(
         "click",
         () => deleteMessage(message)
     );
+
 
     return row;
 }
@@ -468,18 +538,24 @@ async function sendMessage() {
         return;
     }
 
+
     const content =
         messageInput.value.trim();
 
+
     if (!content) return;
 
+
     sendButton.disabled = true;
+
 
     try {
 
         const { error } =
             await supabase
+
                 .from("messages")
+
                 .insert({
                     user_id:
                         currentUser.id,
@@ -487,13 +563,16 @@ async function sendMessage() {
                     content
                 });
 
+
         if (error) {
             throw error;
         }
 
+
         messageInput.value = "";
 
         autoResize();
+
 
     } catch (error) {
 
@@ -504,6 +583,7 @@ async function sendMessage() {
                 "Gagal mengirim pesan.",
             true
         );
+
 
     } finally {
 
@@ -520,12 +600,14 @@ async function deleteMessage(message) {
 
     if (!currentUser) return;
 
+
     if (
         currentUser.id !==
         message.user_id
     ) {
         return;
     }
+
 
     if (
         !confirm(
@@ -535,19 +617,25 @@ async function deleteMessage(message) {
         return;
     }
 
+
     const {
         error
     } = await supabase
+
         .from("messages")
+
         .delete()
+
         .eq(
             "id",
             message.id
         )
+
         .eq(
             "user_id",
             currentUser.id
         );
+
 
     if (error) {
 
@@ -558,6 +646,7 @@ async function deleteMessage(message) {
 
         return;
     }
+
 
     showNotification(
         "Pesan dihapus."
@@ -572,7 +661,9 @@ async function deleteMessage(message) {
 function setupRealtime() {
 
     supabase
+
         .channel("kelas5b-chat")
+
         .on(
             "postgres_changes",
             {
@@ -580,6 +671,7 @@ function setupRealtime() {
                 schema: "public",
                 table: "messages"
             },
+
             async () => {
 
                 await loadMessages(
@@ -588,6 +680,7 @@ function setupRealtime() {
 
             }
         )
+
         .subscribe();
 }
 
@@ -622,13 +715,17 @@ function receiveEmoji() {
             "selectedEmoji"
         );
 
+
     if (!emoji) return;
+
 
     localStorage.removeItem(
         "selectedEmoji"
     );
 
+
     if (!messageInput) return;
+
 
     messageInput.value += emoji;
 
@@ -644,8 +741,12 @@ function receiveEmoji() {
 
 function autoResize() {
 
+    if (!messageInput) return;
+
+
     messageInput.style.height =
         "auto";
+
 
     messageInput.style.height =
         Math.min(
@@ -674,6 +775,7 @@ messageInput?.addEventListener(
 
             sendMessage();
         }
+
     }
 );
 
@@ -699,6 +801,7 @@ refreshButton?.addEventListener(
 
         refreshButton.disabled =
             false;
+
     }
 );
 
@@ -708,6 +811,9 @@ refreshButton?.addEventListener(
 ===================================================== */
 
 function scrollBottom() {
+
+    if (!messages) return;
+
 
     requestAnimationFrame(() => {
 
@@ -723,22 +829,27 @@ function escapeHtml(value) {
     return String(
         value ?? ""
     )
+
         .replace(
             /&/g,
             "&amp;"
         )
+
         .replace(
             /</g,
             "&lt;"
         )
+
         .replace(
             />/g,
             "&gt;"
         )
+
         .replace(
             /"/g,
             "&quot;"
         )
+
         .replace(
             /'/g,
             "&#039;"
@@ -764,5 +875,6 @@ async function start() {
 
     receiveEmoji();
 }
+
 
 start();

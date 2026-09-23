@@ -14,73 +14,59 @@ const avatarInput =
     document.getElementById("avatarInput");
 
 const avatarUploadButton =
-    document.getElementById(
-        "avatarUploadButton"
-    );
+    document.getElementById("avatarUploadButton");
 
 const avatarMessage =
-    document.getElementById(
-        "avatarMessage"
-    );
+    document.getElementById("avatarMessage");
 
 const editProfileButton =
-    document.getElementById(
-        "editProfileButton"
-    );
+    document.getElementById("editProfileButton");
 
 const cancelEditButton =
-    document.getElementById(
-        "cancelEditButton"
-    );
+    document.getElementById("cancelEditButton");
 
 const editProfile =
-    document.getElementById(
-        "editProfile"
-    );
+    document.getElementById("editProfile");
 
 const profileForm =
-    document.getElementById(
-        "profileForm"
-    );
+    document.getElementById("profileForm");
 
 const nameInput =
-    document.getElementById(
-        "nameInput"
-    );
+    document.getElementById("nameInput");
 
 const usernameInput =
-    document.getElementById(
-        "usernameInput"
-    );
+    document.getElementById("usernameInput");
 
 const bioInput =
-    document.getElementById(
-        "bioInput"
-    );
+    document.getElementById("bioInput");
 
 const bioCounter =
-    document.getElementById(
-        "bioCounter"
-    );
+    document.getElementById("bioCounter");
 
 const editMessage =
-    document.getElementById(
-        "editMessage"
-    );
-
-/* =========================================
-   VERIFIED BADGE
-========================================= */
+    document.getElementById("editMessage");
 
 const fullNameText =
-    document.getElementById(
-        "fullNameText"
-    );
+    document.getElementById("fullNameText");
+
+const usernameElement =
+    document.getElementById("username");
+
+const username2 =
+    document.getElementById("username2");
 
 const verifiedBadge =
-    document.getElementById(
-        "verifiedBadge"
-    );
+    document.getElementById("verifiedBadge");
+
+const emailElement =
+    document.getElementById("email");
+
+const bioElement =
+    document.getElementById("bio");
+
+const avatarHint =
+    document.getElementById("avatarHint");
+
 
 /* =========================================
    STATE
@@ -96,10 +82,18 @@ let currentProfile = null;
 
 async function loadSidebar() {
 
+    if (!sidebar) return;
+
     try {
 
         const response =
             await fetch("sidebar.html");
+
+        if (!response.ok) {
+            throw new Error(
+                "sidebar.html tidak ditemukan."
+            );
+        }
 
         sidebar.innerHTML =
             await response.text();
@@ -183,8 +177,11 @@ function showAvatarLetter(name) {
 
     avatar.innerHTML = "";
 
+    const safeName =
+        String(name || "U");
+
     avatar.textContent =
-        name
+        safeName
             .charAt(0)
             .toUpperCase();
 
@@ -243,6 +240,10 @@ function showAvatarImage(url) {
 
 function getAvatarUrl(userId) {
 
+    if (!userId) {
+        return null;
+    }
+
     const filePath =
         `${userId}/avatar.webp`;
 
@@ -258,9 +259,7 @@ function getAvatarUrl(userId) {
         !data ||
         !data.publicUrl
     ) {
-
         return null;
-
     }
 
     return data.publicUrl;
@@ -287,12 +286,6 @@ async function loadAvatar(
         return;
 
     }
-
-    /*
-        URL avatar berdasarkan:
-
-        USER_ID/avatar.webp
-    */
 
     showAvatarImage(
         avatarUrl +
@@ -322,7 +315,10 @@ async function uploadAvatar(file) {
 
     if (!file) return;
 
-    /* WEBP ONLY */
+
+    /* =====================================
+       WEBP ONLY
+    ===================================== */
 
     if (
         file.type !==
@@ -340,7 +336,10 @@ async function uploadAvatar(file) {
 
     }
 
-    /* MAX 1 MB */
+
+    /* =====================================
+       MAX 1 MB
+    ===================================== */
 
     const maxSize =
         1 * 1024 * 1024;
@@ -361,24 +360,35 @@ async function uploadAvatar(file) {
 
     }
 
+
     try {
 
         showAvatarMessage(
             "Mengupload foto..."
         );
 
-        avatarUploadButton.style.pointerEvents =
-            "none";
+        if (avatarUploadButton) {
 
-        avatarUploadButton.style.opacity =
-            "0.5";
+            avatarUploadButton.style.pointerEvents =
+                "none";
 
-        /* PATH */
+            avatarUploadButton.style.opacity =
+                "0.5";
+
+        }
+
+
+        /* =====================================
+           STORAGE PATH
+        ===================================== */
 
         const filePath =
             `${currentUser.id}/avatar.webp`;
 
-        /* UPLOAD */
+
+        /* =====================================
+           UPLOAD
+        ===================================== */
 
         const {
             error: uploadError
@@ -401,13 +411,15 @@ async function uploadAvatar(file) {
                     }
                 );
 
+
         if (uploadError) {
-
             throw uploadError;
-
         }
 
-        /* CLEAN PUBLIC URL */
+
+        /* =====================================
+           PUBLIC URL
+        ===================================== */
 
         const avatarUrl =
             getAvatarUrl(
@@ -422,7 +434,10 @@ async function uploadAvatar(file) {
 
         }
 
-        /* SAVE URL */
+
+        /* =====================================
+           SAVE URL TO PROFILE
+        ===================================== */
 
         const {
             error: profileError
@@ -438,13 +453,23 @@ async function uploadAvatar(file) {
                     currentUser.id
                 );
 
+
         if (profileError) {
-
             throw profileError;
-
         }
 
-        /* DISPLAY */
+
+        /* =====================================
+           UPDATE LOCAL PROFILE
+        ===================================== */
+
+        currentProfile.avatar_url =
+            avatarUrl;
+
+
+        /* =====================================
+           DISPLAY
+        ===================================== */
 
         showAvatarImage(
             avatarUrl +
@@ -474,13 +499,19 @@ async function uploadAvatar(file) {
 
     } finally {
 
-        avatarInput.value = "";
+        if (avatarInput) {
+            avatarInput.value = "";
+        }
 
-        avatarUploadButton.style.pointerEvents =
-            "auto";
+        if (avatarUploadButton) {
 
-        avatarUploadButton.style.opacity =
-            "1";
+            avatarUploadButton.style.pointerEvents =
+                "auto";
+
+            avatarUploadButton.style.opacity =
+                "1";
+
+        }
 
     }
 
@@ -498,12 +529,37 @@ if (avatarInput) {
         () => {
 
             const file =
-                avatarInput.files[0];
+                avatarInput.files?.[0];
 
             uploadAvatar(file);
 
         }
     );
+
+}
+
+
+/* =========================================
+   VERIFIED BADGE
+========================================= */
+
+function updateVerifiedBadge() {
+
+    if (!verifiedBadge) {
+        return;
+    }
+
+    const isVerified =
+        currentProfile?.is_verified === true;
+
+    verifiedBadge.src =
+        "/assets/centang.png";
+
+    verifiedBadge.alt =
+        "Verified";
+
+    verifiedBadge.hidden =
+        !isVerified;
 
 }
 
@@ -536,31 +592,49 @@ function showEditMessage(
 
 function openEditor() {
 
-    if (!currentProfile) return;
+    if (!currentProfile) {
+        return;
+    }
 
-    nameInput.value =
-        currentProfile.full_name ||
-        "";
+    if (nameInput) {
 
-    usernameInput.value =
-        currentProfile.username ||
-        "";
+        nameInput.value =
+            currentProfile.full_name ||
+            "";
 
-    bioInput.value =
-        currentProfile.bio ||
-        "";
+    }
+
+    if (usernameInput) {
+
+        usernameInput.value =
+            currentProfile.username ||
+            "";
+
+    }
+
+    if (bioInput) {
+
+        bioInput.value =
+            currentProfile.bio ||
+            "";
+
+    }
 
     updateBioCounter();
 
     showEditMessage("");
 
-    editProfile.hidden =
-        false;
+    if (editProfile) {
 
-    editProfile.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
+        editProfile.hidden =
+            false;
+
+        editProfile.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }
 
 }
 
@@ -570,6 +644,10 @@ function openEditor() {
 ========================================= */
 
 function closeEditor() {
+
+    if (!editProfile) {
+        return;
+    }
 
     editProfile.hidden =
         true;
@@ -585,7 +663,10 @@ function closeEditor() {
 
 function updateBioCounter() {
 
-    if (!bioInput || !bioCounter) {
+    if (
+        !bioInput ||
+        !bioCounter
+    ) {
         return;
     }
 
@@ -660,6 +741,7 @@ if (profileForm) {
 
             event.preventDefault();
 
+
             if (!currentUser) {
 
                 showEditMessage(
@@ -670,6 +752,7 @@ if (profileForm) {
                 return;
 
             }
+
 
             const fullName =
                 nameInput.value.trim();
@@ -825,10 +908,9 @@ if (profileForm) {
                         )
                         .maybeSingle();
 
+
                 if (usernameError) {
-
                     throw usernameError;
-
                 }
 
 
@@ -847,7 +929,7 @@ if (profileForm) {
 
 
                 /* =====================================
-                   UPDATE
+                   UPDATE PROFILE
                 ===================================== */
 
                 const {
@@ -870,15 +952,14 @@ if (profileForm) {
                             currentUser.id
                         );
 
+
                 if (error) {
-
                     throw error;
-
                 }
 
 
                 /* =====================================
-                   UPDATE LOCAL
+                   UPDATE LOCAL STATE
                 ===================================== */
 
                 currentProfile.full_name =
@@ -895,16 +976,6 @@ if (profileForm) {
                    UPDATE DISPLAY
                 ===================================== */
 
-                /*
-                    PENTING:
-                    Jangan menggunakan:
-
-                    fullName.textContent = ...
-
-                    karena itu akan menghapus
-                    elemen verifiedBadge.
-                */
-
                 if (fullNameText) {
 
                     fullNameText.textContent =
@@ -912,34 +983,36 @@ if (profileForm) {
 
                 }
 
-                if (username) {
+                if (usernameElement) {
 
-                    document.getElementById(
-                        "username"
-                    ).textContent =
+                    usernameElement.textContent =
                         "@" +
-                        username;
-
-                    document.getElementById(
-                        "username2"
-                    ).textContent =
                         username;
 
                 }
 
-                document.getElementById(
-                    "bio"
-                ).textContent =
-                    bio ||
-                    "Belum ada bio.";
+                if (username2) {
+
+                    username2.textContent =
+                        username;
+
+                }
+
+                if (bioElement) {
+
+                    bioElement.textContent =
+                        bio ||
+                        "Belum ada bio.";
+
+                }
 
 
                 /* =====================================
-                   UPDATE AVATAR LETTER
+                   AVATAR LETTER
                 ===================================== */
 
                 const hasAvatar =
-                    avatar.classList.contains(
+                    avatar?.classList.contains(
                         "has-image"
                     );
 
@@ -952,21 +1025,16 @@ if (profileForm) {
                 }
 
 
-                /*
-                    VERIFIED BADGE TIDAK DIUBAH
-                    SAAT USER EDIT PROFILE.
+                /* =====================================
+                   KEEP VERIFIED STATUS
+                ===================================== */
 
-                    Status badge tetap berasal
-                    dari database.
-                */
+                updateVerifiedBadge();
 
-                if (verifiedBadge) {
 
-                    verifiedBadge.hidden =
-                        currentProfile.is_verified !== true;
-
-                }
-
+                /* =====================================
+                   SUCCESS
+                ===================================== */
 
                 showEditMessage(
                     "✓ Profile berhasil diperbarui."
@@ -981,7 +1049,6 @@ if (profileForm) {
                     },
                     800
                 );
-
 
             } catch (error) {
 
@@ -1020,10 +1087,18 @@ async function loadProfile() {
 
 
     /* =====================================
-       GUEST
+       GUEST MODE
     ===================================== */
 
     if (guest === "true") {
+
+        currentProfile = {
+            full_name: "Guest",
+            username: "guest",
+            bio: "Mode Guest — profil demo.",
+            is_verified: false
+        };
+
 
         if (fullNameText) {
 
@@ -1032,34 +1107,42 @@ async function loadProfile() {
 
         }
 
-        if (verifiedBadge) {
 
-            verifiedBadge.hidden =
-                true;
+        if (usernameElement) {
+
+            usernameElement.textContent =
+                "@guest";
 
         }
 
-        document.getElementById(
-            "username"
-        ).textContent =
-            "@guest";
 
-        document.getElementById(
-            "username2"
-        ).textContent =
-            "guest";
+        if (username2) {
 
-        document.getElementById(
-            "email"
-        ).textContent =
-            "-";
+            username2.textContent =
+                "guest";
 
-        document.getElementById(
-            "bio"
-        ).textContent =
-            "Mode Guest — profil demo.";
+        }
 
-        showAvatarLetter("G");
+
+        if (emailElement) {
+
+            emailElement.textContent =
+                "-";
+
+        }
+
+
+        if (bioElement) {
+
+            bioElement.textContent =
+                "Mode Guest — profil demo.";
+
+        }
+
+
+        updateVerifiedBadge();
+
+        showAvatarLetter("Guest");
 
 
         if (avatarUploadButton) {
@@ -1069,11 +1152,6 @@ async function loadProfile() {
 
         }
 
-
-        const avatarHint =
-            document.querySelector(
-                ".avatar-hint"
-            );
 
         if (avatarHint) {
 
@@ -1090,6 +1168,7 @@ async function loadProfile() {
 
         }
 
+
         return;
 
     }
@@ -1102,9 +1181,20 @@ async function loadProfile() {
     const {
         data: {
             user
-        }
+        },
+        error: authError
     } =
         await supabase.auth.getUser();
+
+
+    if (authError) {
+
+        console.error(
+            "Auth error:",
+            authError
+        );
+
+    }
 
 
     if (!user) {
@@ -1146,6 +1236,13 @@ async function loadProfile() {
             error
         );
 
+        if (fullNameText) {
+
+            fullNameText.textContent =
+                "Profile Error";
+
+        }
+
         return;
 
     }
@@ -1155,10 +1252,14 @@ async function loadProfile() {
         profile || {};
 
 
+    /* =====================================
+       DEFAULT DATA
+    ===================================== */
+
     const name =
         profile?.full_name ||
-        user.email
-            .split("@")[0];
+        user.email?.split("@")[0] ||
+        "User";
 
     const username =
         profile?.username ||
@@ -1166,7 +1267,7 @@ async function loadProfile() {
 
 
     /* =====================================
-       DISPLAY
+       DISPLAY NAME
     ===================================== */
 
     if (fullNameText) {
@@ -1176,45 +1277,59 @@ async function loadProfile() {
 
     }
 
-    /*
-        VERIFIED BADGE
 
-        true  = tampil
-        false = hidden
-    */
+    /* =====================================
+       DISPLAY USERNAME
+    ===================================== */
 
-    if (verifiedBadge) {
+    if (usernameElement) {
 
-        verifiedBadge.hidden =
-            profile?.is_verified !== true;
+        usernameElement.textContent =
+            "@" +
+            username;
 
     }
 
 
-    document.getElementById(
-        "username"
-    ).textContent =
-        "@" +
-        username;
+    if (username2) {
+
+        username2.textContent =
+            username;
+
+    }
 
 
-    document.getElementById(
-        "username2"
-    ).textContent =
-        username;
+    /* =====================================
+       DISPLAY EMAIL
+    ===================================== */
+
+    if (emailElement) {
+
+        emailElement.textContent =
+            user.email ||
+            "-";
+
+    }
 
 
-    document.getElementById(
-        "email"
-    ).textContent =
-        user.email;
+    /* =====================================
+       DISPLAY BIO
+    ===================================== */
+
+    if (bioElement) {
+
+        bioElement.textContent =
+            profile?.bio ||
+            "Belum ada bio.";
+
+    }
 
 
-    document.getElementById(
-        "bio"
-    ).textContent =
-        profile?.bio ||
-        "Belum ada bio.";
+    /* =====================================
+       VERIFIED BADGE
+    ===================================== */
+
+    updateVerifiedBadge();
 
 
     /* =====================================
@@ -1233,6 +1348,14 @@ async function loadProfile() {
    START
 ========================================= */
 
-loadSidebar();
+async function start() {
 
-loadProfile();
+    await loadSidebar();
+
+    await loadProfile();
+
+    updateBioCounter();
+
+}
+
+start();

@@ -15,51 +15,90 @@
 
 <body>
 
+    <!-- SIDEBAR -->
     <div id="sidebar"></div>
 
+    <!-- PROFILE PAGE -->
     <main class="profile-page">
 
+        <!-- HEADER -->
         <header>
             <p>ACCOUNT</p>
             <h1>Profile</h1>
         </header>
 
+        <!-- PROFILE CARD -->
         <section class="profile-card">
 
+            <!-- AVATAR -->
             <div class="avatar-wrapper">
 
                 <div class="avatar" id="avatar">
                     ?
                 </div>
 
-                <label for="avatarInput" class="avatar-upload" id="avatarUploadButton">
+                <label
+                    for="avatarInput"
+                    class="avatar-upload"
+                    id="avatarUploadButton"
+                >
                     Ganti Foto
                 </label>
 
-                <input type="file" id="avatarInput" accept="image/webp" hidden>
+                <input
+                    type="file"
+                    id="avatarInput"
+                    accept="image/webp"
+                    hidden
+                >
 
-                <small class="avatar-hint" id="avatarHint">
+                <small
+                    class="avatar-hint"
+                    id="avatarHint"
+                >
                     WebP • Maks. 1 MB
                 </small>
 
             </div>
 
+            <!-- PROFILE INFO -->
             <div class="profile-info">
 
+                <!-- FULL NAME -->
                 <h2 id="fullName">
-                    <span id="fullNameText">Loading...</span>
-                    <span id="verifiedBadge" class="verified-badge" hidden>✓</span>
+                    <span id="fullNameText">
+                        Loading...
+                    </span>
                 </h2>
 
-                <span id="username">
-                    @loading
-                </span>
+                <!-- USERNAME + VERIFIED -->
+                <div class="username-row">
 
+                    <span id="username">
+                        @loading
+                    </span>
+
+                    <img
+                        id="verifiedBadge"
+                        class="verified-badge"
+                        src="/assets/centang.png"
+                        alt="Verified"
+                        hidden
+                    >
+
+                </div>
+
+                <!-- BIO -->
                 <p id="bio">
                     Belum ada bio.
                 </p>
 
-                <button type="button" id="editProfileButton" class="edit-profile-button">
+                <!-- EDIT BUTTON -->
+                <button
+                    type="button"
+                    id="editProfileButton"
+                    class="edit-profile-button"
+                >
                     Edit Profile
                 </button>
 
@@ -67,7 +106,12 @@
 
         </section>
 
-        <section class="edit-profile" id="editProfile" hidden>
+        <!-- EDIT PROFILE -->
+        <section
+            class="edit-profile"
+            id="editProfile"
+            hidden
+        >
 
             <div class="edit-header">
 
@@ -83,17 +127,25 @@
 
             <form id="profileForm">
 
+                <!-- NAME -->
                 <div class="form-group">
 
                     <label for="nameInput">
                         NAMA
                     </label>
 
-                    <input type="text" id="nameInput" maxlength="50" placeholder="Nama kamu" autocomplete="name"
-                        required>
+                    <input
+                        type="text"
+                        id="nameInput"
+                        maxlength="50"
+                        placeholder="Nama kamu"
+                        autocomplete="name"
+                        required
+                    >
 
                 </div>
 
+                <!-- USERNAME -->
                 <div class="form-group">
 
                     <label for="usernameInput">
@@ -104,8 +156,14 @@
 
                         <span>@</span>
 
-                        <input type="text" id="usernameInput" maxlength="30" placeholder="username"
-                            autocomplete="username" required>
+                        <input
+                            type="text"
+                            id="usernameInput"
+                            maxlength="30"
+                            placeholder="username"
+                            autocomplete="username"
+                            required
+                        >
 
                     </div>
 
@@ -115,13 +173,18 @@
 
                 </div>
 
+                <!-- BIO -->
                 <div class="form-group">
 
                     <label for="bioInput">
                         BIO
                     </label>
 
-                    <textarea id="bioInput" maxlength="500" placeholder="Ceritakan sedikit tentang kamu..."></textarea>
+                    <textarea
+                        id="bioInput"
+                        maxlength="500"
+                        placeholder="Ceritakan sedikit tentang kamu..."
+                    ></textarea>
 
                     <div class="bio-counter">
 
@@ -137,15 +200,27 @@
 
                 </div>
 
-                <p id="editMessage" class="edit-message"></p>
+                <!-- EDIT MESSAGE -->
+                <p
+                    id="editMessage"
+                    class="edit-message"
+                ></p>
 
+                <!-- ACTIONS -->
                 <div class="edit-actions">
 
-                    <button type="button" id="cancelEditButton" class="cancel-button">
+                    <button
+                        type="button"
+                        id="cancelEditButton"
+                        class="cancel-button"
+                    >
                         Batal
                     </button>
 
-                    <button type="submit" class="save-button">
+                    <button
+                        type="submit"
+                        class="save-button"
+                    >
                         Simpan Perubahan
                     </button>
 
@@ -155,8 +230,10 @@
 
         </section>
 
+        <!-- PROFILE DETAILS -->
         <section class="profile-details">
 
+            <!-- EMAIL -->
             <div>
 
                 <small>
@@ -169,6 +246,7 @@
 
             </div>
 
+            <!-- USERNAME -->
             <div>
 
                 <small>
@@ -183,11 +261,19 @@
 
         </section>
 
-        <p id="avatarMessage" class="avatar-message"></p>
+        <!-- AVATAR MESSAGE -->
+        <p
+            id="avatarMessage"
+            class="avatar-message"
+        ></p>
 
     </main>
 
-    <script type="module" src="js/profile.js"></script>
+    <!-- PROFILE JAVASCRIPT -->
+    <script
+        type="module"
+        src="js/profile.js"
+    ></script>
 
 </body>
 
