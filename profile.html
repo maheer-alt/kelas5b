@@ -2,90 +2,244 @@
 <html lang="id">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Profile — Kelas 5B</title>
 
-    <link
-        rel="stylesheet"
-        href="css/sidebar.css"
-    >
+    <link rel="icon" href="assets/rocket.ico">
 
-    <link
-        rel="stylesheet"
-        href="css/profile.css"
-    >
-
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/profile.css">
 </head>
 
 <body>
 
-<div id="sidebar"></div>
+    <div id="sidebar"></div>
 
+    <main class="profile-page">
 
-<main class="profile-page">
+        <header>
+            <p>ACCOUNT</p>
+            <h1>Profile</h1>
+        </header>
 
-    <header>
+        <section class="profile-card">
 
-        <p>ACCOUNT</p>
+            <div class="avatar-wrapper">
 
-        <h1>Profile</h1>
+                <div class="avatar" id="avatar">
+                    ?
+                </div>
 
-    </header>
+                <label
+                    for="avatarInput"
+                    class="avatar-upload"
+                    id="avatarUploadButton"
+                >
+                    Ganti Foto
+                </label>
 
+                <input
+                    type="file"
+                    id="avatarInput"
+                    accept="image/webp"
+                    hidden
+                >
 
-    <section class="profile-card">
+                <small
+                    class="avatar-hint"
+                    id="avatarHint"
+                >
+                    WebP • Maks. 1 MB
+                </small>
 
-        <div class="avatar" id="avatar">
-            ?
-        </div>
+            </div>
 
-        <div class="profile-info">
+            <div class="profile-info">
 
-            <h2 id="fullName">
-                Loading...
-            </h2>
+                <h2 id="fullName">
+                    Loading...
+                </h2>
 
-            <span id="username">
-                @loading
-            </span>
+                <span id="username">
+                    @loading
+                </span>
 
-            <p id="bio">
-                Belum ada bio.
-            </p>
+                <p id="bio">
+                    Belum ada bio.
+                </p>
 
-        </div>
+                <button
+                    type="button"
+                    id="editProfileButton"
+                    class="edit-profile-button"
+                >
+                    Edit Profile
+                </button>
 
-    </section>
+            </div>
 
+        </section>
 
-    <section class="profile-details">
+        <section
+            class="edit-profile"
+            id="editProfile"
+            hidden
+        >
 
-        <div>
-            <small>EMAIL</small>
-            <p id="email">-</p>
-        </div>
+            <div class="edit-header">
 
-        <div>
-            <small>USERNAME</small>
-            <p id="username2">-</p>
-        </div>
+                <small>
+                    EDIT ACCOUNT
+                </small>
 
-    </section>
+                <h2>
+                    Edit Profile
+                </h2>
 
-</main>
+            </div>
 
+            <form id="profileForm">
 
-<script
-    type="module"
-    src="js/profile.js"
-></script>
+                <div class="form-group">
+
+                    <label for="nameInput">
+                        NAMA
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nameInput"
+                        maxlength="50"
+                        placeholder="Nama kamu"
+                        autocomplete="name"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="usernameInput">
+                        USERNAME
+                    </label>
+
+                    <div class="username-input">
+
+                        <span>@</span>
+
+                        <input
+                            type="text"
+                            id="usernameInput"
+                            maxlength="30"
+                            placeholder="username"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+                    <small class="input-hint">
+                        Hanya huruf, angka, dan underscore.
+                    </small>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="bioInput">
+                        BIO
+                    </label>
+
+                    <textarea
+                        id="bioInput"
+                        maxlength="500"
+                        placeholder="Ceritakan sedikit tentang kamu..."
+                    ></textarea>
+
+                    <div class="bio-counter">
+
+                        <span>
+                            Maksimal 500 karakter
+                        </span>
+
+                        <strong id="bioCounter">
+                            0/500
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                <p
+                    id="editMessage"
+                    class="edit-message"
+                ></p>
+
+                <div class="edit-actions">
+
+                    <button
+                        type="button"
+                        id="cancelEditButton"
+                        class="cancel-button"
+                    >
+                        Batal
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="save-button"
+                    >
+                        Simpan Perubahan
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+        <section class="profile-details">
+
+            <div>
+
+                <small>
+                    EMAIL
+                </small>
+
+                <p id="email">
+                    -
+                </p>
+
+            </div>
+
+            <div>
+
+                <small>
+                    USERNAME
+                </small>
+
+                <p id="username2">
+                    -
+                </p>
+
+            </div>
+
+        </section>
+
+        <p
+            id="avatarMessage"
+            class="avatar-message"
+        ></p>
+
+    </main>
+
+    <script
+        type="module"
+        src="js/profile.js"
+    ></script>
 
 </body>
+
 </html>

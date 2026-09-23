@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chat — Kelas 5B</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <link rel="stylesheet" href="css/chat.css">
+</head>
+
+<body>
+
+<div class="background-grid"></div>
+
+<aside id="sidebar"></aside>
+
+<main class="chat-page">
+
+    <header class="chat-header">
+
+        <div>
+            <div class="chat-label">
+                KELAS 5B / CHAT
+            </div>
+
+            <h1>Chat</h1>
+
+            <p>
+                Ngobrol bareng teman-teman Kelas 5B.
+            </p>
+        </div>
+
+        <button
+            id="refreshButton"
+            class="refresh-button"
+            type="button"
+        >
+            <i class="fa-solid fa-rotate"></i>
+        </button>
+
+    </header>
+
+
+    <div
+        id="notification"
+        class="notification"
+    ></div>
+
+
+    <section class="chat-container">
+
+        <div class="chat-top">
+
+            <div class="chat-room-icon">
+                <i class="fa-solid fa-users"></i>
+            </div>
+
+            <div>
+                <strong>Kelas 5B</strong>
+                <span>Ruang obrolan kelas</span>
+            </div>
+
+        </div>
+
+
+        <div
+            id="messages"
+            class="messages"
+        >
+            <div class="chat-loading">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Memuat chat...
+            </div>
+        </div>
+
+
+        <div
+            id="guestNotice"
+            class="guest-notice hidden"
+        >
+            <i class="fa-solid fa-lock"></i>
+
+            <span>
+                Login untuk mengirim pesan.
+            </span>
+
+            <a href="login.html">
+                LOGIN
+            </a>
+        </div>
+
+
+        <div
+            id="chatComposer"
+            class="chat-composer"
+        >
+
+            <!-- BUKA HALAMAN EMOJI -->
+            <button
+                id="emojiButton"
+                class="emoji-button"
+                type="button"
+                title="Pilih emoji"
+            >
+                😀
+            </button>
+
+
+            <textarea
+                id="messageInput"
+                rows="1"
+                maxlength="2000"
+                placeholder="Tulis pesan..."
+                autocomplete="off"
+            ></textarea>
+
+
+            <button
+                id="sendButton"
+                class="send-button"
+                type="button"
+                title="Kirim"
+            >
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+
+<script
+    type="module"
+    src="js/chat.js"
+></script>
+
+</body>
+</html>
