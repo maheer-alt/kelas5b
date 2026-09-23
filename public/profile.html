@@ -32,25 +32,13 @@
                     ?
                 </div>
 
-                <label
-                    for="avatarInput"
-                    class="avatar-upload"
-                    id="avatarUploadButton"
-                >
+                <label for="avatarInput" class="avatar-upload" id="avatarUploadButton">
                     Ganti Foto
                 </label>
 
-                <input
-                    type="file"
-                    id="avatarInput"
-                    accept="image/webp"
-                    hidden
-                >
+                <input type="file" id="avatarInput" accept="image/webp" hidden>
 
-                <small
-                    class="avatar-hint"
-                    id="avatarHint"
-                >
+                <small class="avatar-hint" id="avatarHint">
                     WebP • Maks. 1 MB
                 </small>
 
@@ -59,7 +47,8 @@
             <div class="profile-info">
 
                 <h2 id="fullName">
-                    Loading...
+                    <span id="fullNameText">Loading...</span>
+                    <span id="verifiedBadge" class="verified-badge" hidden>✓</span>
                 </h2>
 
                 <span id="username">
@@ -70,11 +59,7 @@
                     Belum ada bio.
                 </p>
 
-                <button
-                    type="button"
-                    id="editProfileButton"
-                    class="edit-profile-button"
-                >
+                <button type="button" id="editProfileButton" class="edit-profile-button">
                     Edit Profile
                 </button>
 
@@ -82,11 +67,7 @@
 
         </section>
 
-        <section
-            class="edit-profile"
-            id="editProfile"
-            hidden
-        >
+        <section class="edit-profile" id="editProfile" hidden>
 
             <div class="edit-header">
 
@@ -108,14 +89,8 @@
                         NAMA
                     </label>
 
-                    <input
-                        type="text"
-                        id="nameInput"
-                        maxlength="50"
-                        placeholder="Nama kamu"
-                        autocomplete="name"
-                        required
-                    >
+                    <input type="text" id="nameInput" maxlength="50" placeholder="Nama kamu" autocomplete="name"
+                        required>
 
                 </div>
 
@@ -129,14 +104,8 @@
 
                         <span>@</span>
 
-                        <input
-                            type="text"
-                            id="usernameInput"
-                            maxlength="30"
-                            placeholder="username"
-                            autocomplete="username"
-                            required
-                        >
+                        <input type="text" id="usernameInput" maxlength="30" placeholder="username"
+                            autocomplete="username" required>
 
                     </div>
 
@@ -152,11 +121,7 @@
                         BIO
                     </label>
 
-                    <textarea
-                        id="bioInput"
-                        maxlength="500"
-                        placeholder="Ceritakan sedikit tentang kamu..."
-                    ></textarea>
+                    <textarea id="bioInput" maxlength="500" placeholder="Ceritakan sedikit tentang kamu..."></textarea>
 
                     <div class="bio-counter">
 
@@ -172,25 +137,15 @@
 
                 </div>
 
-                <p
-                    id="editMessage"
-                    class="edit-message"
-                ></p>
+                <p id="editMessage" class="edit-message"></p>
 
                 <div class="edit-actions">
 
-                    <button
-                        type="button"
-                        id="cancelEditButton"
-                        class="cancel-button"
-                    >
+                    <button type="button" id="cancelEditButton" class="cancel-button">
                         Batal
                     </button>
 
-                    <button
-                        type="submit"
-                        class="save-button"
-                    >
+                    <button type="submit" class="save-button">
                         Simpan Perubahan
                     </button>
 
@@ -228,17 +183,11 @@
 
         </section>
 
-        <p
-            id="avatarMessage"
-            class="avatar-message"
-        ></p>
+        <p id="avatarMessage" class="avatar-message"></p>
 
     </main>
 
-    <script
-        type="module"
-        src="js/profile.js"
-    ></script>
+    <script type="module" src="js/profile.js"></script>
 
 </body>
 

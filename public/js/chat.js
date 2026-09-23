@@ -276,6 +276,39 @@ async function loadMessages(
 
 
 /* =====================================================
+   CHECK EMOJI ONLY
+===================================================== */
+
+function isEmojiOnly(text) {
+
+    if (!text) return false;
+
+    const cleaned =
+        text
+            .replace(/\s/g, "")
+            .replace(/\u200D/g, "")
+            .replace(/\uFE0F/g, "");
+
+    if (!cleaned) return false;
+
+    return [
+        ...cleaned
+    ].every(char => {
+
+        return (
+            /\p{Extended_Pictographic}/u.test(
+                char
+            ) ||
+            /\p{Emoji_Presentation}/u.test(
+                char
+            )
+        );
+
+    });
+}
+
+
+/* =====================================================
    MESSAGE ELEMENT
 ===================================================== */
 
@@ -289,9 +322,18 @@ function createMessage(message) {
         currentUser.id ===
             message.user_id;
 
+    const emojiOnly =
+        isEmojiOnly(
+            message.content
+        );
+
     row.className =
         `message-row ${
             own ? "own" : ""
+        } ${
+            emojiOnly
+                ? "emoji-only"
+                : ""
         }`;
 
     const profile =
@@ -341,13 +383,19 @@ function createMessage(message) {
 
         <div class="message-bubble">
 
-            <div class="message-author">
-                ${
-                    own
-                        ? "KAMU"
-                        : `@${escapeHtml(username)}`
-                }
-            </div>
+            ${
+                emojiOnly
+                    ? ""
+                    : `
+                        <div class="message-author">
+                            ${
+                                own
+                                    ? "KAMU"
+                                    : `@${escapeHtml(username)}`
+                            }
+                        </div>
+                    `
+            }
 
             <div class="message-text">
                 ${escapeHtml(message.content)}

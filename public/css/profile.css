@@ -1133,3 +1133,25 @@ header h1 {
 
 }
 
+.verified-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 18px;
+    height: 18px;
+
+    margin-left: 6px;
+
+    border-radius: 50%;
+
+    background: #1877f2;
+    color: #ffffff;
+
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+
+    vertical-align: middle;
+}
+
